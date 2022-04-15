@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>第 42 章 探索性数据分析-ames房价预测 | 基于tidyverse的R语言学习笔记</title>
+  <meta name="description" content="最初看到 elegantbook 做的书籍样式很漂亮，就想把它引入到 bookdown 中，遂定制了此模版。在此基础上，做了迁移和扩展的工作，融合了 LaTeX (精美)、Pandoc (简洁) 和 R (强大) 的特性。This is a bookdown template based on ElegantBook. The output format for this template is bookdown::gitbook and bookdown::pdf_book." />
+  <meta name="generator" content="bookdown 0.25.6 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="第 42 章 探索性数据分析-ames房价预测 | 基于tidyverse的R语言学习笔记" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="最初看到 elegantbook 做的书籍样式很漂亮，就想把它引入到 bookdown 中，遂定制了此模版。在此基础上，做了迁移和扩展的工作，融合了 LaTeX (精美)、Pandoc (简洁) 和 R (强大) 的特性。This is a bookdown template based on ElegantBook. The output format for this template is bookdown::gitbook and bookdown::pdf_book." />
+  <meta name="github-repo" content="XiangyunHuang/ElegantBookdown" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="第 42 章 探索性数据分析-ames房价预测 | 基于tidyverse的R语言学习笔记" />
+  
+  <meta name="twitter:description" content="最初看到 elegantbook 做的书籍样式很漂亮，就想把它引入到 bookdown 中，遂定制了此模版。在此基础上，做了迁移和扩展的工作，融合了 LaTeX (精美)、Pandoc (简洁) 和 R (强大) 的特性。This is a bookdown template based on ElegantBook. The output format for this template is bookdown::gitbook and bookdown::pdf_book." />
+  
+
+<meta name="author" content="李凯" />
+
+
+<meta name="date" content="2022-04-15" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="41-eda-career-decision.html"/>
+<link rel="next" href="50-R-practise.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
+<script src="libs/str_view-binding-1.4.0/str_view.js"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      TeX: {
+        Macros: {
+          bm: ["{\\boldsymbol #1}",1],
+        },
+        extensions: ["cancel.js"]
+      }
+    });
+</script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">基于tidyverse的R语言学习笔记</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>简介</a>
+<ul>
+<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#custom-block"><i class="fa fa-check"></i><b>0.1</b> 自定义 block</a></li>
+<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#sec:example"><i class="fa fa-check"></i><b>0.2</b> 简单实例</a>
+<ul>
+<li class="chapter" data-level="0.2.1" data-path="index.html"><a href="index.html#例0.1-计算并绘制roc曲线"><i class="fa fa-check"></i><b>0.2.1</b> 例0.1 计算并绘制ROC曲线</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>I 基础</b></span></li>
+<li class="chapter" data-level="1" data-path="1-intro.html"><a href="1-intro.html"><i class="fa fa-check"></i><b>1</b> R语言基础语法</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="1-intro.html"><a href="1-intro.html#函数"><i class="fa fa-check"></i><b>1.1</b> 函数</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="1-intro.html"><a href="1-intro.html#向量的函数"><i class="fa fa-check"></i><b>1.1.1</b> 向量的函数</a></li>
+<li class="chapter" data-level="1.1.2" data-path="1-intro.html"><a href="1-intro.html#自定义函数"><i class="fa fa-check"></i><b>1.1.2</b> 自定义函数</a></li>
+<li class="chapter" data-level="1.1.3" data-path="1-intro.html"><a href="1-intro.html#条件语句"><i class="fa fa-check"></i><b>1.1.3</b> 条件语句</a></li>
+<li class="chapter" data-level="1.1.4" data-path="1-intro.html"><a href="1-intro.html#返回多个结果"><i class="fa fa-check"></i><b>1.1.4</b> 返回多个结果</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="1-intro.html"><a href="1-intro.html#增强型数据框"><i class="fa fa-check"></i><b>1.2</b> 增强型数据框</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="2-factor.html"><a href="2-factor.html"><i class="fa fa-check"></i><b>2</b> 因子</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="2-factor.html"><a href="2-factor.html#创建因子"><i class="fa fa-check"></i><b>2.1</b> 创建因子</a></li>
+<li class="chapter" data-level="2.2" data-path="2-factor.html"><a href="2-factor.html#有用函数"><i class="fa fa-check"></i><b>2.2</b> 有用函数</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="3-str-date.html"><a href="3-str-date.html"><i class="fa fa-check"></i><b>3</b> 字符串和时间日期</a></li>
+<li class="chapter" data-level="4" data-path="4-re.html"><a href="4-re.html"><i class="fa fa-check"></i><b>4</b> 正则表达式</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="4-re.html"><a href="4-re.html#使用正则表达式进行模式匹配"><i class="fa fa-check"></i><b>4.1</b> 使用正则表达式进行模式匹配</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="4-re.html"><a href="4-re.html#基础匹配"><i class="fa fa-check"></i><b>4.1.1</b> 基础匹配</a></li>
+<li class="chapter" data-level="4.1.2" data-path="4-re.html"><a href="4-re.html#分组与回溯"><i class="fa fa-check"></i><b>4.1.2</b> 分组与回溯</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="4-re.html"><a href="4-re.html#解决实际问题"><i class="fa fa-check"></i><b>4.2</b> 解决实际问题</a></li>
+<li class="chapter" data-level="4.3" data-path="4-re.html"><a href="4-re.html#案例分析"><i class="fa fa-check"></i><b>4.3</b> 案例分析</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="4-re.html"><a href="4-re.html#案例1"><i class="fa fa-check"></i><b>4.3.1</b> 案例1</a></li>
+<li class="chapter" data-level="4.3.2" data-path="4-re.html"><a href="4-re.html#案例2"><i class="fa fa-check"></i><b>4.3.2</b> 案例2</a></li>
+<li class="chapter" data-level="4.3.3" data-path="4-re.html"><a href="4-re.html#案例三"><i class="fa fa-check"></i><b>4.3.3</b> 案例三</a></li>
+<li class="chapter" data-level="4.3.4" data-path="4-re.html"><a href="4-re.html#案例4"><i class="fa fa-check"></i><b>4.3.4</b> 案例4</a></li>
+<li class="chapter" data-level="4.3.5" data-path="4-re.html"><a href="4-re.html#案例5"><i class="fa fa-check"></i><b>4.3.5</b> 案例5</a></li>
+<li class="chapter" data-level="4.3.6" data-path="4-re.html"><a href="4-re.html#案例6"><i class="fa fa-check"></i><b>4.3.6</b> 案例6</a></li>
+<li class="chapter" data-level="4.3.7" data-path="4-re.html"><a href="4-re.html#案例7"><i class="fa fa-check"></i><b>4.3.7</b> 案例7</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>II 数据操作</b></span></li>
+<li class="chapter" data-level="" data-path="5-tidyverse-readr.html"><a href="5-tidyverse-readr.html"><i class="fa fa-check"></i>tidyverse简介</a></li>
+<li class="chapter" data-level="5" data-path="5-tidyverse-readr.html"><a href="5-tidyverse-readr.html#tidyverse-readr"><i class="fa fa-check"></i><b>5</b> 数据读写</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="5-tidyverse-readr.html"><a href="5-tidyverse-readr.html#数据读入"><i class="fa fa-check"></i><b>5.1</b> 数据读入</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="5-tidyverse-readr.html"><a href="5-tidyverse-readr.html#例1多个文件数据读取后合并"><i class="fa fa-check"></i><b>5.1.1</b> 例1：多个文件数据读取后合并</a></li>
+<li class="chapter" data-level="5.1.2" data-path="5-tidyverse-readr.html"><a href="5-tidyverse-readr.html#例2一个excel中多个sheet表的读取合并"><i class="fa fa-check"></i><b>5.1.2</b> 例2：一个excel中多个sheet表的读取合并</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="5-tidyverse-readr.html"><a href="5-tidyverse-readr.html#数据写出"><i class="fa fa-check"></i><b>5.2</b> 数据写出</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="6-tidyverse-join.html"><a href="6-tidyverse-join.html"><i class="fa fa-check"></i><b>6</b> 数据连接</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="6-tidyverse-join.html"><a href="6-tidyverse-join.html#合并行列"><i class="fa fa-check"></i><b>6.1</b> 合并行/列</a></li>
+<li class="chapter" data-level="6.2" data-path="6-tidyverse-join.html"><a href="6-tidyverse-join.html#多个数据表连接"><i class="fa fa-check"></i><b>6.2</b> 多个数据表连接</a></li>
+<li class="chapter" data-level="6.3" data-path="6-tidyverse-join.html"><a href="6-tidyverse-join.html#集合运算"><i class="fa fa-check"></i><b>6.3</b> 集合运算</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="37-ggplot2.html"><a href="37-ggplot2.html"><i class="fa fa-check"></i><b>7</b> ggplot2</a></li>
+<li class="chapter" data-level="8" data-path="7-tidyverse-reshape.html"><a href="7-tidyverse-reshape.html"><i class="fa fa-check"></i><b>8</b> 数据重塑</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="7-tidyverse-reshape.html"><a href="7-tidyverse-reshape.html#什么是整洁的数据"><i class="fa fa-check"></i><b>8.1</b> 什么是整洁的数据</a></li>
+<li class="chapter" data-level="8.2" data-path="7-tidyverse-reshape.html"><a href="7-tidyverse-reshape.html#综合实例"><i class="fa fa-check"></i><b>8.2</b> 综合实例</a></li>
+<li class="chapter" data-level="8.3" data-path="7-tidyverse-reshape.html"><a href="7-tidyverse-reshape.html#方形化"><i class="fa fa-check"></i><b>8.3</b> 方形化</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="8-tidyverse-manipulate1.html"><a href="8-tidyverse-manipulate1.html"><i class="fa fa-check"></i><b>9</b> 数据操作-part1</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="8-tidyverse-manipulate1.html"><a href="8-tidyverse-manipulate1.html#基本数据操作"><i class="fa fa-check"></i><b>9.1</b> 基本数据操作</a></li>
+<li class="chapter" data-level="9.2" data-path="8-tidyverse-manipulate1.html"><a href="8-tidyverse-manipulate1.html#其它数据操作"><i class="fa fa-check"></i><b>9.2</b> 其它数据操作</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="8-tidyverse-manipulate1.html"><a href="8-tidyverse-manipulate1.html#按行汇总"><i class="fa fa-check"></i><b>9.2.1</b> 按行汇总</a></li>
+<li class="chapter" data-level="9.2.2" data-path="8-tidyverse-manipulate1.html"><a href="8-tidyverse-manipulate1.html#整洁计算"><i class="fa fa-check"></i><b>9.2.2</b> 整洁计算</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="9-tidyverse-manipulate2.html"><a href="9-tidyverse-manipulate2.html"><i class="fa fa-check"></i><b>10</b> 数据操作-part2</a></li>
+<li class="chapter" data-level="11" data-path="10-tidyverse-extra.html"><a href="10-tidyverse-extra.html"><i class="fa fa-check"></i><b>11</b> 其它数据操作</a></li>
+<li class="part"><span><b>III 建模</b></span></li>
+<li class="chapter" data-level="12" data-path="11-tidystats_sampling.html"><a href="11-tidystats_sampling.html"><i class="fa fa-check"></i><b>12</b> 模拟与抽样1</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="11-tidystats_sampling.html"><a href="11-tidystats_sampling.html#模拟"><i class="fa fa-check"></i><b>12.1</b> 模拟</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="11-tidystats_sampling.html"><a href="11-tidystats_sampling.html#生成随机数"><i class="fa fa-check"></i><b>12.1.1</b> 生成随机数</a></li>
+<li class="chapter" data-level="12.1.2" data-path="11-tidystats_sampling.html"><a href="11-tidystats_sampling.html#生成多元正态分布"><i class="fa fa-check"></i><b>12.1.2</b> 生成多元正态分布[^]</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="11-tidystats_sampling.html"><a href="11-tidystats_sampling.html#抽样与样本"><i class="fa fa-check"></i><b>12.2</b> 抽样与样本</a></li>
+<li class="chapter" data-level="12.3" data-path="11-tidystats_sampling.html"><a href="11-tidystats_sampling.html#让统计分析透明-重现infer基于模拟的假设检验"><i class="fa fa-check"></i><b>12.3</b> 让统计分析透明-重现infer基于模拟的假设检验</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="11-tidystats_sampling.html"><a href="11-tidystats_sampling.html#使用tidyverse重复infer的过程"><i class="fa fa-check"></i><b>12.3.1</b> 使用tidyverse重复infer的过程</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html"><i class="fa fa-check"></i><b>13</b> 线性回归</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#从案例开始"><i class="fa fa-check"></i><b>13.1</b> 从案例开始</a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#缺失值检查"><i class="fa fa-check"></i><b>13.1.1</b> 缺失值检查</a></li>
+<li class="chapter" data-level="13.1.2" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#简单变量统计"><i class="fa fa-check"></i><b>13.1.2</b> 简单变量统计</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#线性归回模型"><i class="fa fa-check"></i><b>13.2</b> 线性归回模型</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#长得高挣得多"><i class="fa fa-check"></i><b>13.2.1</b> 长得高挣得多</a></li>
+<li class="chapter" data-level="13.2.2" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#使用lm函数拟合线性回归模型"><i class="fa fa-check"></i><b>13.2.2</b> 使用lm()函数拟合线性回归模型</a></li>
+<li class="chapter" data-level="13.2.3" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#模型的解释"><i class="fa fa-check"></i><b>13.2.3</b> 模型的解释</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#多元线性回归"><i class="fa fa-check"></i><b>13.3</b> 多元线性回归</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="13-tidymodel-broom.html"><a href="13-tidymodel-broom.html"><i class="fa fa-check"></i><b>14</b> 结果整合</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="13-tidymodel-broom.html"><a href="13-tidymodel-broom.html#案例"><i class="fa fa-check"></i><b>14.1</b> 案例</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="13-tidymodel-broom.html"><a href="13-tidymodel-broom.html#可视化探索"><i class="fa fa-check"></i><b>14.1.1</b> 可视化探索</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="14-tidymodel-t-test.html"><a href="14-tidymodel-t-test.html"><i class="fa fa-check"></i><b>15</b> 双样本t检验</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="14-tidymodel-t-test.html"><a href="14-tidymodel-t-test.html#实验设计"><i class="fa fa-check"></i><b>15.1</b> 实验设计</a></li>
+<li class="chapter" data-level="15.2" data-path="14-tidymodel-t-test.html"><a href="14-tidymodel-t-test.html#提问"><i class="fa fa-check"></i><b>15.2</b> 提问</a>
+<ul>
+<li class="chapter" data-level="15.2.1" data-path="14-tidymodel-t-test.html"><a href="14-tidymodel-t-test.html#不同性别企鹅的bill_length_mm嘴峰长度是否相同"><i class="fa fa-check"></i><b>15.2.1</b> 不同性别企鹅的bill_length_mm（嘴峰长度）是否相同？</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="15-tidymodel-avo.html"><a href="15-tidymodel-avo.html"><i class="fa fa-check"></i><b>16</b> avo-方差分析</a></li>
+<li class="chapter" data-level="17" data-path="16-tidymodel-as-linear.html"><a href="16-tidymodel-as-linear.html"><i class="fa fa-check"></i><b>17</b> 统计检验与线性模型</a></li>
+<li class="chapter" data-level="18" data-path="17-tidymodel-lmm.html"><a href="17-tidymodel-lmm.html"><i class="fa fa-check"></i><b>18</b> 多层线性模型</a></li>
+<li class="chapter" data-level="19" data-path="18-tidymodel-poisson-regression.html"><a href="18-tidymodel-poisson-regression.html"><i class="fa fa-check"></i><b>19</b> 广义线性模型</a></li>
+<li class="chapter" data-level="20" data-path="19-tidymodel-logistic-regression.html"><a href="19-tidymodel-logistic-regression.html"><i class="fa fa-check"></i><b>20</b> logistic回归模型</a></li>
+<li class="chapter" data-level="21" data-path="20-tidymodel-ordinal.html"><a href="20-tidymodel-ordinal.html"><i class="fa fa-check"></i><b>21</b> 有序logistic回归</a></li>
+<li class="part"><span><b>IV tidymodels包篇</b></span></li>
+<li class="chapter" data-level="22" data-path="21-meching-leanrning-tidymodels.html"><a href="21-meching-leanrning-tidymodels.html"><i class="fa fa-check"></i><b>22</b> 机器学习</a>
+<ul>
+<li class="chapter" data-level="22.1" data-path="21-meching-leanrning-tidymodels.html"><a href="21-meching-leanrning-tidymodels.html#数据"><i class="fa fa-check"></i><b>22.1</b> 数据</a></li>
+<li class="chapter" data-level="22.2" data-path="21-meching-leanrning-tidymodels.html"><a href="21-meching-leanrning-tidymodels.html#机器学习"><i class="fa fa-check"></i><b>22.2</b> 机器学习</a></li>
+</ul></li>
+<li class="part"><span><b>V bayesian篇</b></span></li>
+<li class="chapter" data-level="23" data-path="22-bayesian-inference.html"><a href="22-bayesian-inference.html"><i class="fa fa-check"></i><b>23</b> 贝叶斯推断</a>
+<ul>
+<li class="chapter" data-level="23.1" data-path="22-bayesian-inference.html"><a href="22-bayesian-inference.html#一个简单的贝叶斯推断实例-学生身高分布"><i class="fa fa-check"></i><b>23.1</b> 一个简单的贝叶斯推断实例-学生身高分布</a></li>
+<li class="chapter" data-level="23.2" data-path="22-bayesian-inference.html"><a href="22-bayesian-inference.html#一个简单的贝叶斯推断实例-推断"><i class="fa fa-check"></i><b>23.2</b> 一个简单的贝叶斯推断实例-推断</a></li>
+</ul></li>
+<li class="chapter" data-level="24" data-path="23-bayesian-intro-stan.html"><a href="23-bayesian-intro-stan.html"><i class="fa fa-check"></i><b>24</b> stan入门</a></li>
+<li class="chapter" data-level="25" data-path="24-bayesian-intro-lm.html"><a href="24-bayesian-intro-lm.html"><i class="fa fa-check"></i><b>25</b> 贝叶斯线性回归</a></li>
+<li class="chapter" data-level="26" data-path="25-bayesian-t-test.html"><a href="25-bayesian-t-test.html"><i class="fa fa-check"></i><b>26</b> 贝叶斯假设检验</a></li>
+<li class="chapter" data-level="27" data-path="26-bayesian-glm.html"><a href="26-bayesian-glm.html"><i class="fa fa-check"></i><b>27</b> 贝叶斯广义线性模型</a></li>
+<li class="chapter" data-level="28" data-path="27-bayesian-hierarchical.html"><a href="27-bayesian-hierarchical.html"><i class="fa fa-check"></i><b>28</b> 贝叶斯层级模型</a></li>
+<li class="chapter" data-level="29" data-path="28-bayesian-mixtures.html"><a href="28-bayesian-mixtures.html"><i class="fa fa-check"></i><b>29</b> 贝叶斯混合模型</a></li>
+<li class="chapter" data-level="30" data-path="29-bayesian-categorical.html"><a href="29-bayesian-categorical.html"><i class="fa fa-check"></i><b>30</b> 贝叶斯分类模型</a></li>
+<li class="chapter" data-level="31" data-path="30-bayesian-workflow.html"><a href="30-bayesian-workflow.html"><i class="fa fa-check"></i><b>31</b> 贝叶斯工作流程</a></li>
+<li class="chapter" data-level="32" data-path="31-bayesian-vaccine-effectiveness.html"><a href="31-bayesian-vaccine-effectiveness.html"><i class="fa fa-check"></i><b>32</b> 贝叶斯分析案例-新冠疫苗有效率的计算</a></li>
+<li class="chapter" data-level="33" data-path="32-bayesian-tokyo-olympics-100m.html"><a href="32-bayesian-tokyo-olympics-100m.html"><i class="fa fa-check"></i><b>33</b> 贝叶斯分析案例-预测奥运会男子100米短跑成绩</a></li>
+<li class="part"><span><b>VI 应用篇</b></span></li>
+<li class="chapter" data-level="34" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html"><i class="fa fa-check"></i><b>34</b> 探索性数据分析-诺奖获得者</a>
+<ul>
+<li class="chapter" data-level="34.1" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#探索性"><i class="fa fa-check"></i><b>34.1</b> 探索性</a></li>
+<li class="chapter" data-level="34.2" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#数据集"><i class="fa fa-check"></i><b>34.2</b> 数据集</a></li>
+<li class="chapter" data-level="34.3" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#导入数据"><i class="fa fa-check"></i><b>34.3</b> 导入数据</a></li>
+<li class="chapter" data-level="34.4" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#数据结构"><i class="fa fa-check"></i><b>34.4</b> 数据结构</a></li>
+<li class="chapter" data-level="34.5" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#确定想探索的问题"><i class="fa fa-check"></i><b>34.5</b> 确定想探索的问题</a>
+<ul>
+<li class="chapter" data-level="34.5.1" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#每个学科获奖次数"><i class="fa fa-check"></i><b>34.5.1</b> 每个学科获奖次数</a></li>
+<li class="chapter" data-level="34.5.2" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#我国科学家获奖情况"><i class="fa fa-check"></i><b>34.5.2</b> 我国科学家获奖情况</a></li>
+<li class="chapter" data-level="34.5.3" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#哪些人多次获奖"><i class="fa fa-check"></i><b>34.5.3</b> 哪些人多次获奖</a></li>
+<li class="chapter" data-level="34.5.4" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#获奖人年龄"><i class="fa fa-check"></i><b>34.5.4</b> 获奖人年龄</a></li>
+<li class="chapter" data-level="34.5.5" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#性别比例"><i class="fa fa-check"></i><b>34.5.5</b> 性别比例</a></li>
+<li class="chapter" data-level="34.5.6" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#获奖人出生年代"><i class="fa fa-check"></i><b>34.5.6</b> 获奖人出生年代</a></li>
+<li class="chapter" data-level="34.5.7" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#最年轻的诺奖获得者"><i class="fa fa-check"></i><b>34.5.7</b> 最年轻的诺奖获得者</a></li>
+<li class="chapter" data-level="34.5.8" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#平均年龄和各领域获奖数量"><i class="fa fa-check"></i><b>34.5.8</b> 平均年龄和各领域获奖数量</a></li>
+</ul></li>
+<li class="chapter" data-level="34.6" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#地图"><i class="fa fa-check"></i><b>34.6</b> 地图</a>
+<ul>
+<li class="chapter" data-level="34.6.1" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#出生地和工作地不一样的占比"><i class="fa fa-check"></i><b>34.6.1</b> 出生地和工作地不一样的占比</a></li>
+<li class="chapter" data-level="34.6.2" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#共同获奖人"><i class="fa fa-check"></i><b>34.6.2</b> 共同获奖人</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="35" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html"><i class="fa fa-check"></i><b>35</b> 探索性数据分析-奥林匹克</a>
+<ul>
+<li class="chapter" data-level="35.1" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#导入数据-1"><i class="fa fa-check"></i><b>35.1</b> 导入数据</a></li>
+<li class="chapter" data-level="35.2" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#可视化"><i class="fa fa-check"></i><b>35.2</b> 可视化</a></li>
+<li class="chapter" data-level="35.3" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#回归分析"><i class="fa fa-check"></i><b>35.3</b> 回归分析</a></li>
+<li class="chapter" data-level="35.4" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#预测"><i class="fa fa-check"></i><b>35.4</b> 预测</a></li>
+<li class="chapter" data-level="35.5" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#再次可视化"><i class="fa fa-check"></i><b>35.5</b> 再次可视化</a></li>
+<li class="chapter" data-level="35.6" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#section"><i class="fa fa-check"></i><b>35.6</b> </a></li>
+</ul></li>
+<li class="chapter" data-level="36" data-path="35-eda-covid2019.html"><a href="35-eda-covid2019.html"><i class="fa fa-check"></i><b>36</b> 探索性数据分析-新冠疫情</a>
+<ul>
+<li class="chapter" data-level="36.1" data-path="35-eda-covid2019.html"><a href="35-eda-covid2019.html#数据来源"><i class="fa fa-check"></i><b>36.1</b> 数据来源</a></li>
+<li class="chapter" data-level="36.2" data-path="35-eda-covid2019.html"><a href="35-eda-covid2019.html#读取数据"><i class="fa fa-check"></i><b>36.2</b> 读取数据</a></li>
+<li class="chapter" data-level="36.3" data-path="35-eda-covid2019.html"><a href="35-eda-covid2019.html#数据清洗规整"><i class="fa fa-check"></i><b>36.3</b> 数据清洗规整</a></li>
+<li class="chapter" data-level="36.4" data-path="35-eda-covid2019.html"><a href="35-eda-covid2019.html#可视化探索-1"><i class="fa fa-check"></i><b>36.4</b> 可视化探索</a></li>
+</ul></li>
+<li class="chapter" data-level="37" data-path="36-eda-anscombe.html"><a href="36-eda-anscombe.html"><i class="fa fa-check"></i><b>37</b> 探索性数据分析-anscombe数据集</a>
+<ul>
+<li class="chapter" data-level="37.1" data-path="36-eda-anscombe.html"><a href="36-eda-anscombe.html#规整数据"><i class="fa fa-check"></i><b>37.1</b> 规整数据</a></li>
+<li class="chapter" data-level="37.2" data-path="36-eda-anscombe.html"><a href="36-eda-anscombe.html#统计"><i class="fa fa-check"></i><b>37.2</b> 统计</a></li>
+<li class="chapter" data-level="37.3" data-path="36-eda-anscombe.html"><a href="36-eda-anscombe.html#建模"><i class="fa fa-check"></i><b>37.3</b> 建模</a></li>
+<li class="chapter" data-level="37.4" data-path="36-eda-anscombe.html"><a href="36-eda-anscombe.html#可视化-1"><i class="fa fa-check"></i><b>37.4</b> 可视化</a></li>
+</ul></li>
+<li class="chapter" data-level="38" data-path="38-eda-height.html"><a href="38-eda-height.html"><i class="fa fa-check"></i><b>38</b> 探索性数据分析-身高体重关系</a>
+<ul>
+<li class="chapter" data-level="38.1" data-path="38-eda-height.html"><a href="38-eda-height.html#可视化-2"><i class="fa fa-check"></i><b>38.1</b> 可视化</a>
+<ul>
+<li class="chapter" data-level="38.1.1" data-path="38-eda-height.html"><a href="38-eda-height.html#不同性别的身高分布-普通方法"><i class="fa fa-check"></i><b>38.1.1</b> 不同性别的身高分布-普通方法</a></li>
+<li class="chapter" data-level="38.1.2" data-path="38-eda-height.html"><a href="38-eda-height.html#不同性别的身高分布-高级方法"><i class="fa fa-check"></i><b>38.1.2</b> 不同性别的身高分布-高级方法</a></li>
+<li class="chapter" data-level="38.1.3" data-path="38-eda-height.html"><a href="38-eda-height.html#不同性别的体重分布"><i class="fa fa-check"></i><b>38.1.3</b> 不同性别的体重分布</a></li>
+</ul></li>
+<li class="chapter" data-level="38.2" data-path="38-eda-height.html"><a href="38-eda-height.html#建模-1"><i class="fa fa-check"></i><b>38.2</b> 建模</a>
+<ul>
+<li class="chapter" data-level="38.2.1" data-path="38-eda-height.html"><a href="38-eda-height.html#身高体重的散点图"><i class="fa fa-check"></i><b>38.2.1</b> 身高体重的散点图</a></li>
+<li class="chapter" data-level="38.2.2" data-path="38-eda-height.html"><a href="38-eda-height.html#建立身高体重线性模型"><i class="fa fa-check"></i><b>38.2.2</b> 建立身高体重线性模型</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="39" data-path="39-eda-caribou.html"><a href="39-eda-caribou.html"><i class="fa fa-check"></i><b>39</b> 探索性数据分析-驯鹿迁移</a>
+<ul>
+<li class="chapter" data-level="39.1" data-path="39-eda-caribou.html"><a href="39-eda-caribou.html#数据录入"><i class="fa fa-check"></i><b>39.1</b> 数据录入</a></li>
+<li class="chapter" data-level="39.2" data-path="39-eda-caribou.html"><a href="39-eda-caribou.html#驯鹿身份信息"><i class="fa fa-check"></i><b>39.2</b> 驯鹿身份信息</a></li>
+</ul></li>
+<li class="chapter" data-level="40" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html"><i class="fa fa-check"></i><b>40</b> 探索性数据分析-企鹅的故事</a>
+<ul>
+<li class="chapter" data-level="40.1" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#数据录入-1"><i class="fa fa-check"></i><b>40.1</b> 数据录入</a>
+<ul>
+<li class="chapter" data-level="40.1.1" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#变量含义"><i class="fa fa-check"></i><b>40.1.1</b> 变量含义</a></li>
+</ul></li>
+<li class="chapter" data-level="40.2" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#数据清洗"><i class="fa fa-check"></i><b>40.2</b> 数据清洗</a></li>
+<li class="chapter" data-level="40.3" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#探索性分析"><i class="fa fa-check"></i><b>40.3</b> 探索性分析</a>
+<ul>
+<li class="chapter" data-level="40.3.1" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#每种类型的企鹅有多少只"><i class="fa fa-check"></i><b>40.3.1</b> 每种类型的企鹅有多少只</a></li>
+<li class="chapter" data-level="40.3.2" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#每种类型企鹅各种属性的均值和分布"><i class="fa fa-check"></i><b>40.3.2</b> 每种类型企鹅各种属性的均值和分布</a></li>
+<li class="chapter" data-level="40.3.3" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#嘴峰长度和深度的关联"><i class="fa fa-check"></i><b>40.3.3</b> 嘴峰长度和深度的关联</a></li>
+<li class="chapter" data-level="40.3.4" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#体重与翅膀长度的关联"><i class="fa fa-check"></i><b>40.3.4</b> 体重与翅膀长度的关联？</a></li>
+<li class="chapter" data-level="40.3.5" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#性别与不同体征信息的关系-建立模型"><i class="fa fa-check"></i><b>40.3.5</b> 性别与不同体征信息的关系-建立模型</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="41" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html"><i class="fa fa-check"></i><b>41</b> 探索性数据分析-大学生职业决策</a>
+<ul>
+<li class="chapter" data-level="41.1" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#预备知识"><i class="fa fa-check"></i><b>41.1</b> 预备知识</a></li>
+<li class="chapter" data-level="41.2" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#正式开始"><i class="fa fa-check"></i><b>41.2</b> 正式开始</a>
+<ul>
+<li class="chapter" data-level="41.2.1" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#检查缺失值"><i class="fa fa-check"></i><b>41.2.1</b> 检查缺失值</a></li>
+<li class="chapter" data-level="41.2.2" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#数据预处理"><i class="fa fa-check"></i><b>41.2.2</b> 数据预处理</a></li>
+<li class="chapter" data-level="41.2.3" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#标准化数据"><i class="fa fa-check"></i><b>41.2.3</b> 标准化数据</a></li>
+</ul></li>
+<li class="chapter" data-level="41.3" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#探索数据"><i class="fa fa-check"></i><b>41.3</b> 探索数据</a>
+<ul>
+<li class="chapter" data-level="41.3.1" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#想探索的问题"><i class="fa fa-check"></i><b>41.3.1</b> 想探索的问题</a></li>
+<li class="chapter" data-level="41.3.2" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#不同性别年纪生源地专业下各指标的分布差异"><i class="fa fa-check"></i><b>41.3.2</b> 不同性别、年纪、生源地、专业下，各指标的分布差异</a></li>
+<li class="chapter" data-level="41.3.3" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#来自不同地方的学生在职业探索上的不同"><i class="fa fa-check"></i><b>41.3.3</b> 来自不同地方的学生在职业探索上的不同</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="42" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html"><i class="fa fa-check"></i><b>42</b> 探索性数据分析-ames房价预测</a>
+<ul>
+<li class="chapter" data-level="42.1" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#探索设想"><i class="fa fa-check"></i><b>42.1</b> 探索设想</a></li>
+<li class="chapter" data-level="42.2" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#变量选取"><i class="fa fa-check"></i><b>42.2</b> 变量选取</a></li>
+<li class="chapter" data-level="42.3" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#缺失值处理"><i class="fa fa-check"></i><b>42.3</b> 缺失值处理</a></li>
+<li class="chapter" data-level="42.4" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#数据预处理-1"><i class="fa fa-check"></i><b>42.4</b> 数据预处理</a>
+<ul>
+<li class="chapter" data-level="42.4.1" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#标准化vs对数化"><i class="fa fa-check"></i><b>42.4.1</b> 标准化vs对数化</a></li>
+</ul></li>
+<li class="chapter" data-level="42.5" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#正式开始探索"><i class="fa fa-check"></i><b>42.5</b> 正式开始探索</a>
+<ul>
+<li class="chapter" data-level="42.5.1" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#各地区房屋价格均值"><i class="fa fa-check"></i><b>42.5.1</b> 各地区房屋价格均值</a></li>
+<li class="chapter" data-level="42.5.2" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#房屋价格与占地面积"><i class="fa fa-check"></i><b>42.5.2</b> 房屋价格与占地面积</a></li>
+<li class="chapter" data-level="42.5.3" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#房屋价格与房屋居住面积"><i class="fa fa-check"></i><b>42.5.3</b> 房屋价格与房屋居住面积</a></li>
+<li class="chapter" data-level="42.5.4" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#车库与房屋价格"><i class="fa fa-check"></i><b>42.5.4</b> 车库与房屋价格</a></li>
+</ul></li>
+<li class="chapter" data-level="42.6" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#建模-2"><i class="fa fa-check"></i><b>42.6</b> 建模</a></li>
+</ul></li>
+<li class="chapter" data-level="43" data-path="50-R-practise.html"><a href="50-R-practise.html"><i class="fa fa-check"></i><b>43</b> 练习</a>
+<ul>
+<li class="chapter" data-level="43.1" data-path="50-R-practise.html"><a href="50-R-practise.html#旋转数据框"><i class="fa fa-check"></i><b>43.1</b> 1-旋转数据框</a></li>
+<li class="chapter" data-level="43.2" data-path="50-R-practise.html"><a href="50-R-practise.html#排序"><i class="fa fa-check"></i><b>43.2</b> 2-排序</a></li>
+<li class="chapter" data-level="43.3" data-path="50-R-practise.html"><a href="50-R-practise.html#统计并筛选"><i class="fa fa-check"></i><b>43.3</b> 3-统计并筛选</a></li>
+<li class="chapter" data-level="43.4" data-path="50-R-practise.html"><a href="50-R-practise.html#按条件分组"><i class="fa fa-check"></i><b>43.4</b> 4-按条件分组</a></li>
+<li class="chapter" data-level="43.5" data-path="50-R-practise.html"><a href="50-R-practise.html#section-1"><i class="fa fa-check"></i><b>43.5</b> </a></li>
+</ul></li>
+<li class="appendix"><span><b>附录</b></span></li>
+<li class="chapter" data-level="A" data-path="999-appendix.html"><a href="999-appendix.html"><i class="fa fa-check"></i><b>A</b> 附录-有趣的“懒人”包</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="999-appendix.html"><a href="999-appendix.html#自动生成正则表达式"><i class="fa fa-check"></i><b>A.1</b> 自动生成正则表达式</a></li>
+<li class="chapter" data-level="A.2" data-path="999-appendix.html"><a href="999-appendix.html#janitor包"><i class="fa fa-check"></i><b>A.2</b> <span>janitor包</span></a>
+<ul>
+<li class="chapter" data-level="A.2.1" data-path="999-appendix.html"><a href="999-appendix.html#整理列名"><i class="fa fa-check"></i><b>A.2.1</b> 整理列名</a></li>
+<li class="chapter" data-level="A.2.2" data-path="999-appendix.html"><a href="999-appendix.html#统计分析"><i class="fa fa-check"></i><b>A.2.2</b> 统计分析</a></li>
+<li class="chapter" data-level="A.2.3" data-path="999-appendix.html"><a href="999-appendix.html#查看指定列有重复的行"><i class="fa fa-check"></i><b>A.2.3</b> 查看指定列有重复的行</a></li>
+</ul></li>
+<li class="chapter" data-level="A.3" data-path="999-appendix.html"><a href="999-appendix.html#自动生成模型公式"><i class="fa fa-check"></i><b>A.3</b> <span>自动生成模型公式</span></a></li>
+<li class="chapter" data-level="A.4" data-path="999-appendix.html"><a href="999-appendix.html#自动生成论文报告"><i class="fa fa-check"></i><b>A.4</b> <span>自动生成论文报告</span></a></li>
+<li class="chapter" data-level="A.5" data-path="999-appendix.html"><a href="999-appendix.html#自动评估模型"><i class="fa fa-check"></i><b>A.5</b> <span>自动评估模型</span></a></li>
+<li class="chapter" data-level="A.6" data-path="999-appendix.html"><a href="999-appendix.html#自动生成统计表格"><i class="fa fa-check"></i><b>A.6</b> <span>自动生成统计表格</span></a></li>
+<li class="chapter" data-level="A.7" data-path="999-appendix.html"><a href="999-appendix.html#把统计结果写在图上"><i class="fa fa-check"></i><b>A.7</b> <span>把统计结果写在图上</span></a></li>
+<li class="chapter" data-level="A.8" data-path="999-appendix.html"><a href="999-appendix.html#画图配色"><i class="fa fa-check"></i><b>A.8</b> 画图配色</a>
+<ul>
+<li class="chapter" data-level="A.8.1" data-path="999-appendix.html"><a href="999-appendix.html#第三方主题-ggthem"><i class="fa fa-check"></i><b>A.8.1</b> 第三方主题-<span>ggthem</span></a></li>
+<li class="chapter" data-level="A.8.2" data-path="999-appendix.html"><a href="999-appendix.html#画图颜色-scales"><i class="fa fa-check"></i><b>A.8.2</b> 画图颜色-<span>scales</span></a></li>
+</ul></li>
+<li class="chapter" data-level="A.9" data-path="999-appendix.html"><a href="999-appendix.html#其它有用的包"><i class="fa fa-check"></i><b>A.9</b> 其它有用的包</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="998-references.html"><a href="998-references.html"><i class="fa fa-check"></i>参考文献</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">基于tidyverse的R语言学习笔记</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="eda-ames-houseprice" class="section level1 hasAnchor" number="42">
+<h1><span class="header-section-number">第 42 章</span> 探索性数据分析-ames房价预测<a href="42-eda-ames-houseprice.html#eda-ames-houseprice" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>这是一份Ames房屋<a href="https://www.kaggle.com/c/house-prices-advanced-regression-techniques">数据</a>，我们可以简单的将其想象为由房屋中介推出的北京市各个区的房屋信息。</p>
+<div class="sourceCode" id="cb421"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb421-1"><a href="42-eda-ames-houseprice.html#cb421-1" aria-hidden="true" tabindex="-1"></a>ames <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;./datas/ames_houseprice.csv&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb421-2"><a href="42-eda-ames-houseprice.html#cb421-2" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>()</span></code></pre></div>
+<pre><code>## Warning in FUN(X[[i]], ...): strings not representable in native
+## encoding will be translated to UTF-8</code></pre>
+<pre><code>## Warning in FUN(X[[i]], ...): unable to translate &#39;&lt;U+00C4&gt;&#39; to native
+## encoding</code></pre>
+<pre><code>## Warning in FUN(X[[i]], ...): unable to translate &#39;&lt;U+00D6&gt;&#39; to native
+## encoding</code></pre>
+<pre><code>## Warning in FUN(X[[i]], ...): unable to translate &#39;&lt;U+00E4&gt;&#39; to native
+## encoding</code></pre>
+<pre><code>## Warning in FUN(X[[i]], ...): unable to translate &#39;&lt;U+00F6&gt;&#39; to native
+## encoding</code></pre>
+<pre><code>## Warning in FUN(X[[i]], ...): unable to translate &#39;&lt;U+00DF&gt;&#39; to native
+## encoding</code></pre>
+<pre><code>## Warning in FUN(X[[i]], ...): unable to translate &#39;&lt;U+00C6&gt;&#39; to native
+## encoding</code></pre>
+<pre><code>## Warning in FUN(X[[i]], ...): unable to translate &#39;&lt;U+00E6&gt;&#39; to native
+## encoding</code></pre>
+<pre><code>## Warning in FUN(X[[i]], ...): unable to translate &#39;&lt;U+00D8&gt;&#39; to native
+## encoding</code></pre>
+<pre><code>## Warning in FUN(X[[i]], ...): unable to translate &#39;&lt;U+00F8&gt;&#39; to native
+## encoding</code></pre>
+<pre><code>## Warning in FUN(X[[i]], ...): unable to translate &#39;&lt;U+00C5&gt;&#39; to native
+## encoding</code></pre>
+<pre><code>## Warning in FUN(X[[i]], ...): unable to translate &#39;&lt;U+00E5&gt;&#39; to native
+## encoding</code></pre>
+<div class="sourceCode" id="cb434"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb434-1"><a href="42-eda-ames-houseprice.html#cb434-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 各变量数据解释</span></span>
+<span id="cb434-2"><a href="42-eda-ames-houseprice.html#cb434-2" aria-hidden="true" tabindex="-1"></a>explanation <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">&quot;./datas/ames_houseprice_explanation.xlsx&quot;</span>)</span>
+<span id="cb434-3"><a href="42-eda-ames-houseprice.html#cb434-3" aria-hidden="true" tabindex="-1"></a>explanation</span></code></pre></div>
+<pre><code>## # A tibble: 79 x 3
+##    列名        description                                      解释 
+##    &lt;chr&gt;       &lt;chr&gt;                                            &lt;chr&gt;
+##  1 MSSubClass  Identifies the type of dwelling involved in the~ 住宅~
+##  2 MSZoning    Identifies the general zoning classification of~ 建筑~
+##  3 LotFrontage Linear feet of street connected to property      建筑~
+##  4 LotArea     Lot size in square feet                          占地~
+##  5 Street      Type of road access to property                  建筑~
+##  6 Alley       Type of alley access to property                 建筑~
+##  7 LotShape    General shape of property                        建筑~
+##  8 LandContour Flatness of the property                         地面~
+##  9 Utilities   Type of utilities available                      可用~
+## 10 LotConfig   Lot configuration                                房屋~
+## # ... with 69 more rows</code></pre>
+<div id="探索设想" class="section level2 hasAnchor" number="42.1">
+<h2><span class="header-section-number">42.1</span> 探索设想<a href="42-eda-ames-houseprice.html#探索设想" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li><p>读懂数据描述，如</p>
+<ul>
+<li>房屋设施 (bedrooms, garage, fireplace, pool, porch, etc.)</li>
+<li>地理位置 (neighborhood)</li>
+<li>土地信息 (zoning, shape, size, etc.)</li>
+<li>品相等级</li>
+<li>出售价格</li>
+</ul></li>
+<li><p>探索影响房屋价格的因素：</p>
+<ul>
+<li>必要的预处理（缺失值处理、标准化、对数化等等）</li>
+<li>必要的可视化（比如价格分布图等）</li>
+<li>必要的统计（比如各地区房屋价格的均值）</li>
+<li>合理选取若干预测变量，建立多元线性模型，并对模型结果给出解释</li>
+<li>房屋价格与预测变量（房屋大小、在城市的位置、房屋类型、与街道的距离）</li>
+</ul></li>
+</ol>
+</div>
+<div id="变量选取" class="section level2 hasAnchor" number="42.2">
+<h2><span class="header-section-number">42.2</span> 变量选取<a href="42-eda-ames-houseprice.html#变量选取" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>我们选取下列变量：</p>
+<ul>
+<li>lot_frontage, 建筑离街道的距离</li>
+<li>lot_area, 占地面积</li>
+<li>neighborhood, 建筑在城市的位置</li>
+<li>gr_liv_area, 地上居住面积</li>
+<li>bldg_type, 住宅类别(联排别墅、独栋别墅…)</li>
+<li>year_built 房屋修建日期</li>
+</ul>
+<div class="sourceCode" id="cb436"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb436-1"><a href="42-eda-ames-houseprice.html#cb436-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> ames <span class="sc">%&gt;%</span> </span>
+<span id="cb436-2"><a href="42-eda-ames-houseprice.html#cb436-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(</span>
+<span id="cb436-3"><a href="42-eda-ames-houseprice.html#cb436-3" aria-hidden="true" tabindex="-1"></a>    sale_price,</span>
+<span id="cb436-4"><a href="42-eda-ames-houseprice.html#cb436-4" aria-hidden="true" tabindex="-1"></a>    lot_frontage,</span>
+<span id="cb436-5"><a href="42-eda-ames-houseprice.html#cb436-5" aria-hidden="true" tabindex="-1"></a>    lot_area,</span>
+<span id="cb436-6"><a href="42-eda-ames-houseprice.html#cb436-6" aria-hidden="true" tabindex="-1"></a>    neighborhood,</span>
+<span id="cb436-7"><a href="42-eda-ames-houseprice.html#cb436-7" aria-hidden="true" tabindex="-1"></a>    gr_liv_area,</span>
+<span id="cb436-8"><a href="42-eda-ames-houseprice.html#cb436-8" aria-hidden="true" tabindex="-1"></a>    bldg_type,</span>
+<span id="cb436-9"><a href="42-eda-ames-houseprice.html#cb436-9" aria-hidden="true" tabindex="-1"></a>    year_built</span>
+<span id="cb436-10"><a href="42-eda-ames-houseprice.html#cb436-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb436-11"><a href="42-eda-ames-houseprice.html#cb436-11" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
+<pre><code>## # A tibble: 1,460 x 7
+##    sale_price lot_frontage lot_area neighborhood gr_liv_area
+##         &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;              &lt;dbl&gt;
+##  1     208500           65     8450 CollgCr             1710
+##  2     181500           80     9600 Veenker             1262
+##  3     223500           68    11250 CollgCr             1786
+##  4     140000           60     9550 Crawfor             1717
+##  5     250000           84    14260 NoRidge             2198
+##  6     143000           85    14115 Mitchel             1362
+##  7     307000           75    10084 Somerst             1694
+##  8     200000           NA    10382 NWAmes              2090
+##  9     129900           51     6120 OldTown             1774
+## 10     118000           50     7420 BrkSide             1077
+## # ... with 1,450 more rows, and 2 more variables: bldg_type &lt;chr&gt;,
+## #   year_built &lt;dbl&gt;</code></pre>
+</div>
+<div id="缺失值处理" class="section level2 hasAnchor" number="42.3">
+<h2><span class="header-section-number">42.3</span> 缺失值处理<a href="42-eda-ames-houseprice.html#缺失值处理" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb438"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb438-1"><a href="42-eda-ames-houseprice.html#cb438-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb438-2"><a href="42-eda-ames-houseprice.html#cb438-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb438-3"><a href="42-eda-ames-houseprice.html#cb438-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(<span class="fu">everything</span>(), <span class="sc">~</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(.x)))</span>
+<span id="cb438-4"><a href="42-eda-ames-houseprice.html#cb438-4" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb438-5"><a href="42-eda-ames-houseprice.html#cb438-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb438-6"><a href="42-eda-ames-houseprice.html#cb438-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">everything</span>(),</span>
+<span id="cb438-7"><a href="42-eda-ames-houseprice.html#cb438-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;subject&quot;</span>,</span>
+<span id="cb438-8"><a href="42-eda-ames-houseprice.html#cb438-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;NAs&quot;</span></span>
+<span id="cb438-9"><a href="42-eda-ames-houseprice.html#cb438-9" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<pre><code>## # A tibble: 7 x 2
+##   subject        NAs
+##   &lt;chr&gt;        &lt;int&gt;
+## 1 sale_price       0
+## 2 lot_frontage   259
+## 3 lot_area         0
+## 4 neighborhood     0
+## 5 gr_liv_area      0
+## 6 bldg_type        0
+## 7 year_built       0</code></pre>
+<p>可以发现，所有的缺失值均在<code>lot_fontage</code>（建筑距离街道的距离）这个变量中，此变量对于房价有一定影响，所以还是保留。</p>
+<div class="sourceCode" id="cb440"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb440-1"><a href="42-eda-ames-houseprice.html#cb440-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> </span>
+<span id="cb440-2"><a href="42-eda-ames-houseprice.html#cb440-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>()</span>
+<span id="cb440-3"><a href="42-eda-ames-houseprice.html#cb440-3" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb440-4"><a href="42-eda-ames-houseprice.html#cb440-4" aria-hidden="true" tabindex="-1"></a>  visdat<span class="sc">::</span><span class="fu">vis_dat</span>()  <span class="co"># 可视化数据分布情况</span></span></code></pre></div>
+<pre><code>## Warning: `gather_()` was deprecated in tidyr 1.2.0.
+## Please use `gather()` instead.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.</code></pre>
+<p><img src="42-eda-ames-houseprice_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="数据预处理-1" class="section level2 hasAnchor" number="42.4">
+<h2><span class="header-section-number">42.4</span> 数据预处理<a href="42-eda-ames-houseprice.html#数据预处理-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="标准化vs对数化" class="section level3 hasAnchor" number="42.4.1">
+<h3><span class="header-section-number">42.4.1</span> 标准化vs对数化<a href="42-eda-ames-houseprice.html#标准化vs对数化" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: decimal">
+<li>标准化</li>
+</ol>
+<div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb442-1"><a href="42-eda-ames-houseprice.html#cb442-1" aria-hidden="true" tabindex="-1"></a>standard <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb442-2"><a href="42-eda-ames-houseprice.html#cb442-2" aria-hidden="true" tabindex="-1"></a>  (x <span class="sc">-</span> <span class="fu">mean</span>(x)) <span class="sc">/</span> <span class="fu">sd</span>(x)</span>
+<span id="cb442-3"><a href="42-eda-ames-houseprice.html#cb442-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb442-4"><a href="42-eda-ames-houseprice.html#cb442-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb442-5"><a href="42-eda-ames-houseprice.html#cb442-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 标准化所有数字类型的变量</span></span>
+<span id="cb442-6"><a href="42-eda-ames-houseprice.html#cb442-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 将字符型的变量变为因子类型</span></span>
+<span id="cb442-7"><a href="42-eda-ames-houseprice.html#cb442-7" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb442-8"><a href="42-eda-ames-houseprice.html#cb442-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb442-9"><a href="42-eda-ames-houseprice.html#cb442-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(<span class="fu">where</span>(is.numeric), standard),</span>
+<span id="cb442-10"><a href="42-eda-ames-houseprice.html#cb442-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(<span class="fu">where</span>(is.character), as.factor)</span>
+<span id="cb442-11"><a href="42-eda-ames-houseprice.html#cb442-11" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<pre><code>## # A tibble: 1,201 x 7
+##    sale_price lot_frontage lot_area neighborhood gr_liv_area
+##         &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt; &lt;fct&gt;              &lt;dbl&gt;
+##  1    0.333       -0.208    -0.190  CollgCr            0.375
+##  2    0.00875      0.410    -0.0444 Veenker           -0.470
+##  3    0.512       -0.0844    0.164  CollgCr            0.519
+##  4   -0.489       -0.414    -0.0507 Crawfor            0.388
+##  5    0.830        0.574     0.544  NoRidge            1.30 
+##  6   -0.453        0.616     0.525  Mitchel           -0.281
+##  7    1.51         0.204     0.0167 Somerst            0.345
+##  8   -0.610       -0.784    -0.484  OldTown            0.496
+##  9   -0.753       -0.826    -0.319  BrkSide           -0.819
+## 10   -0.615       -0.00206   0.158  Sawyer            -0.889
+## # ... with 1,191 more rows, and 2 more variables: bldg_type &lt;fct&gt;,
+## #   year_built &lt;dbl&gt;</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>对数化</li>
+</ol>
+<div class="sourceCode" id="cb444"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb444-1"><a href="42-eda-ames-houseprice.html#cb444-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb444-2"><a href="42-eda-ames-houseprice.html#cb444-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb444-3"><a href="42-eda-ames-houseprice.html#cb444-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(<span class="fu">where</span>(is.numeric), log),</span>
+<span id="cb444-4"><a href="42-eda-ames-houseprice.html#cb444-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(<span class="fu">where</span>(is.character), as.factor)</span>
+<span id="cb444-5"><a href="42-eda-ames-houseprice.html#cb444-5" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<pre><code>## # A tibble: 1,201 x 7
+##    sale_price lot_frontage lot_area neighborhood gr_liv_area
+##         &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt; &lt;fct&gt;              &lt;dbl&gt;
+##  1       12.2         4.17     9.04 CollgCr             7.44
+##  2       12.1         4.38     9.17 Veenker             7.14
+##  3       12.3         4.22     9.33 CollgCr             7.49
+##  4       11.8         4.09     9.16 Crawfor             7.45
+##  5       12.4         4.43     9.57 NoRidge             7.70
+##  6       11.9         4.44     9.55 Mitchel             7.22
+##  7       12.6         4.32     9.22 Somerst             7.43
+##  8       11.8         3.93     8.72 OldTown             7.48
+##  9       11.7         3.91     8.91 BrkSide             6.98
+## 10       11.8         4.25     9.32 Sawyer              6.95
+## # ... with 1,191 more rows, and 2 more variables: bldg_type &lt;fct&gt;,
+## #   year_built &lt;dbl&gt;</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>通过图形对比标准化和对数化的结果</li>
+</ol>
+<div class="sourceCode" id="cb446"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb446-1"><a href="42-eda-ames-houseprice.html#cb446-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> </span>
+<span id="cb446-2"><a href="42-eda-ames-houseprice.html#cb446-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> sale_price)) <span class="sc">+</span></span>
+<span id="cb446-3"><a href="42-eda-ames-houseprice.html#cb446-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>()</span>
+<span id="cb446-4"><a href="42-eda-ames-houseprice.html#cb446-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb446-5"><a href="42-eda-ames-houseprice.html#cb446-5" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> </span>
+<span id="cb446-6"><a href="42-eda-ames-houseprice.html#cb446-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">log</span>(sale_price))) <span class="sc">+</span></span>
+<span id="cb446-7"><a href="42-eda-ames-houseprice.html#cb446-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>()</span>
+<span id="cb446-8"><a href="42-eda-ames-houseprice.html#cb446-8" aria-hidden="true" tabindex="-1"></a>p1<span class="sc">/</span>p2</span></code></pre></div>
+<p><img src="42-eda-ames-houseprice_files/figure-html/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>可以看到对数化后的数据分布更趋近于正态分布，故本例中选择对数化。</p>
+<div class="sourceCode" id="cb447"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb447-1"><a href="42-eda-ames-houseprice.html#cb447-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> </span>
+<span id="cb447-2"><a href="42-eda-ames-houseprice.html#cb447-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb447-3"><a href="42-eda-ames-houseprice.html#cb447-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(<span class="fu">where</span>(is.numeric),</span>
+<span id="cb447-4"><a href="42-eda-ames-houseprice.html#cb447-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">.fns =</span> <span class="fu">list</span>(<span class="at">log =</span> log),</span>
+<span id="cb447-5"><a href="42-eda-ames-houseprice.html#cb447-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">.names =</span> <span class="st">&quot;{.fn}_{.col}&quot;</span>),</span>
+<span id="cb447-6"><a href="42-eda-ames-houseprice.html#cb447-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(<span class="fu">where</span>(is.character), as.factor)</span>
+<span id="cb447-7"><a href="42-eda-ames-houseprice.html#cb447-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb447-8"><a href="42-eda-ames-houseprice.html#cb447-8" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
+<pre><code>## # A tibble: 1,201 x 12
+##    sale_price lot_frontage lot_area neighborhood gr_liv_area
+##         &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt; &lt;fct&gt;              &lt;dbl&gt;
+##  1     208500           65     8450 CollgCr             1710
+##  2     181500           80     9600 Veenker             1262
+##  3     223500           68    11250 CollgCr             1786
+##  4     140000           60     9550 Crawfor             1717
+##  5     250000           84    14260 NoRidge             2198
+##  6     143000           85    14115 Mitchel             1362
+##  7     307000           75    10084 Somerst             1694
+##  8     129900           51     6120 OldTown             1774
+##  9     118000           50     7420 BrkSide             1077
+## 10     129500           70    11200 Sawyer              1040
+## # ... with 1,191 more rows, and 7 more variables: bldg_type &lt;fct&gt;,
+## #   year_built &lt;dbl&gt;, log_sale_price &lt;dbl&gt;, log_lot_frontage &lt;dbl&gt;,
+## #   log_lot_area &lt;dbl&gt;, log_gr_liv_area &lt;dbl&gt;, log_year_built &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<div id="正式开始探索" class="section level2 hasAnchor" number="42.5">
+<h2><span class="header-section-number">42.5</span> 正式开始探索<a href="42-eda-ames-houseprice.html#正式开始探索" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="各地区房屋价格均值" class="section level3 hasAnchor" number="42.5.1">
+<h3><span class="header-section-number">42.5.1</span> 各地区房屋价格均值<a href="42-eda-ames-houseprice.html#各地区房屋价格均值" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb449"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb449-1"><a href="42-eda-ames-houseprice.html#cb449-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb449-2"><a href="42-eda-ames-houseprice.html#cb449-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(neighborhood) <span class="sc">%&gt;%</span> </span>
+<span id="cb449-3"><a href="42-eda-ames-houseprice.html#cb449-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb449-4"><a href="42-eda-ames-houseprice.html#cb449-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_sale =</span> <span class="fu">mean</span>(sale_price)</span>
+<span id="cb449-5"><a href="42-eda-ames-houseprice.html#cb449-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb449-6"><a href="42-eda-ames-houseprice.html#cb449-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> mean_sale, </span>
+<span id="cb449-7"><a href="42-eda-ames-houseprice.html#cb449-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> <span class="fu">fct_reorder</span>(neighborhood, mean_sale))) <span class="sc">+</span>  <span class="co"># 通过mean_sale对neighborhood进行排序</span></span>
+<span id="cb449-8"><a href="42-eda-ames-houseprice.html#cb449-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">fill =</span> mean_sale <span class="sc">&lt;</span> <span class="dv">150000</span>),</span>
+<span id="cb449-9"><a href="42-eda-ames-houseprice.html#cb449-9" aria-hidden="true" tabindex="-1"></a>                 <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb449-10"><a href="42-eda-ames-houseprice.html#cb449-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">round</span>(mean_sale, <span class="dv">0</span>)), </span>
+<span id="cb449-11"><a href="42-eda-ames-houseprice.html#cb449-11" aria-hidden="true" tabindex="-1"></a>              <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="fl">2.5</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb449-12"><a href="42-eda-ames-houseprice.html#cb449-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># scale_x_continuous(</span></span>
+<span id="cb449-13"><a href="42-eda-ames-houseprice.html#cb449-13" aria-hidden="true" tabindex="-1"></a>      <span class="co"># expand = c(0, 0),</span></span>
+<span id="cb449-14"><a href="42-eda-ames-houseprice.html#cb449-14" aria-hidden="true" tabindex="-1"></a>      <span class="co"># breaks = c(0, 100000, 200000, 300000),</span></span>
+<span id="cb449-15"><a href="42-eda-ames-houseprice.html#cb449-15" aria-hidden="true" tabindex="-1"></a>      <span class="co"># labels = c(0, &quot;1w&quot;, &quot;2w&quot;, &quot;3w&quot;),</span></span>
+<span id="cb449-16"><a href="42-eda-ames-houseprice.html#cb449-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ) +</span></span>
+<span id="cb449-17"><a href="42-eda-ames-houseprice.html#cb449-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(</span>
+<span id="cb449-18"><a href="42-eda-ames-houseprice.html#cb449-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb449-19"><a href="42-eda-ames-houseprice.html#cb449-19" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels =</span> scales<span class="sc">::</span>dollar  <span class="co"># 设定单位</span></span>
+<span id="cb449-20"><a href="42-eda-ames-houseprice.html#cb449-20" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb449-21"><a href="42-eda-ames-houseprice.html#cb449-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_viridis_d</span>(<span class="at">option =</span> <span class="st">&quot;D&quot;</span>) <span class="sc">+</span>  <span class="co"># 设定柱体颜色</span></span>
+<span id="cb449-22"><a href="42-eda-ames-houseprice.html#cb449-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb449-23"><a href="42-eda-ames-houseprice.html#cb449-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="cn">NULL</span>)</span></code></pre></div>
+<p><img src="42-eda-ames-houseprice_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="房屋价格与占地面积" class="section level3 hasAnchor" number="42.5.2">
+<h3><span class="header-section-number">42.5.2</span> 房屋价格与占地面积<a href="42-eda-ames-houseprice.html#房屋价格与占地面积" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb450"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb450-1"><a href="42-eda-ames-houseprice.html#cb450-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb450-2"><a href="42-eda-ames-houseprice.html#cb450-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> log_lot_area, <span class="at">y =</span> log_sale_price)) <span class="sc">+</span></span>
+<span id="cb450-3"><a href="42-eda-ames-houseprice.html#cb450-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb450-4"><a href="42-eda-ames-houseprice.html#cb450-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">formula =</span> <span class="st">&quot;y ~ x&quot;</span>, <span class="at">fullrange =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb450-5"><a href="42-eda-ames-houseprice.html#cb450-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>neighborhood) <span class="sc">+</span></span>
+<span id="cb450-6"><a href="42-eda-ames-houseprice.html#cb450-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">strip.background =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
+<pre><code>## Warning in qt((1 - level)/2, df): 产生了NaNs</code></pre>
+<pre><code>## Warning in max(ids, na.rm = TRUE): max里所有的参数都不存在；回覆-Inf</code></pre>
+<p><img src="42-eda-ames-houseprice_files/figure-html/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="房屋价格与房屋居住面积" class="section level3 hasAnchor" number="42.5.3">
+<h3><span class="header-section-number">42.5.3</span> 房屋价格与房屋居住面积<a href="42-eda-ames-houseprice.html#房屋价格与房屋居住面积" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb453"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb453-1"><a href="42-eda-ames-houseprice.html#cb453-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(log_gr_liv_area, <span class="at">y =</span> log_sale_price)) <span class="sc">+</span></span>
+<span id="cb453-2"><a href="42-eda-ames-houseprice.html#cb453-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> neighborhood)) <span class="sc">+</span></span>
+<span id="cb453-3"><a href="42-eda-ames-houseprice.html#cb453-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm, <span class="at">formula =</span> <span class="st">&quot;y~x&quot;</span>)</span></code></pre></div>
+<p><img src="42-eda-ames-houseprice_files/figure-html/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>房屋的价格随着居住面积的增加，呈现逐渐升高的趋势。</p>
+<div class="sourceCode" id="cb454"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb454-1"><a href="42-eda-ames-houseprice.html#cb454-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> log_gr_liv_area, <span class="at">y =</span> log_sale_price)) <span class="sc">+</span></span>
+<span id="cb454-2"><a href="42-eda-ames-houseprice.html#cb454-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb454-3"><a href="42-eda-ames-houseprice.html#cb454-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">formula =</span> <span class="st">&quot;y ~ x&quot;</span>, <span class="at">fullrange =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb454-4"><a href="42-eda-ames-houseprice.html#cb454-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> neighborhood) <span class="sc">+</span></span>
+<span id="cb454-5"><a href="42-eda-ames-houseprice.html#cb454-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">strip.background =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
+<p><img src="42-eda-ames-houseprice_files/figure-html/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="车库与房屋价格" class="section level3 hasAnchor" number="42.5.4">
+<h3><span class="header-section-number">42.5.4</span> 车库与房屋价格<a href="42-eda-ames-houseprice.html#车库与房屋价格" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>车库大小和容量是否对销售价格有影响？</p>
+<div class="sourceCode" id="cb455"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb455-1"><a href="42-eda-ames-houseprice.html#cb455-1" aria-hidden="true" tabindex="-1"></a>ames <span class="sc">%&gt;%</span> </span>
+<span id="cb455-2"><a href="42-eda-ames-houseprice.html#cb455-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> garage_area, <span class="at">y =</span> sale_price)) <span class="sc">+</span></span>
+<span id="cb455-3"><a href="42-eda-ames-houseprice.html#cb455-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 画出背景，以灰色散点图表示</span></span>
+<span id="cb455-4"><a href="42-eda-ames-houseprice.html#cb455-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(</span>
+<span id="cb455-5"><a href="42-eda-ames-houseprice.html#cb455-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> <span class="fu">select</span>(ames, <span class="sc">-</span>garage_cars),</span>
+<span id="cb455-6"><a href="42-eda-ames-houseprice.html#cb455-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">color =</span> <span class="st">&quot;gray50&quot;</span></span>
+<span id="cb455-7"><a href="42-eda-ames-houseprice.html#cb455-7" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb455-8"><a href="42-eda-ames-houseprice.html#cb455-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 以不同颜色显示车库容车的数量</span></span>
+<span id="cb455-9"><a href="42-eda-ames-houseprice.html#cb455-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="fu">as.factor</span>(garage_cars))) <span class="sc">+</span></span>
+<span id="cb455-10"><a href="42-eda-ames-houseprice.html#cb455-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(garage_cars)) <span class="sc">+</span></span>
+<span id="cb455-11"><a href="42-eda-ames-houseprice.html#cb455-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span></span>
+<span id="cb455-12"><a href="42-eda-ames-houseprice.html#cb455-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">&quot;This is the influence of garage for sale price&quot;</span>)</span></code></pre></div>
+<p><img src="42-eda-ames-houseprice_files/figure-html/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="建模-2" class="section level2 hasAnchor" number="42.6">
+<h2><span class="header-section-number">42.6</span> 建模<a href="42-eda-ames-houseprice.html#建模-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb456"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb456-1"><a href="42-eda-ames-houseprice.html#cb456-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(log_sale_price <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> log_gr_liv_area <span class="sc">+</span> neighborhood, <span class="at">data =</span> df) <span class="sc">%&gt;%</span> </span>
+<span id="cb456-2"><a href="42-eda-ames-houseprice.html#cb456-2" aria-hidden="true" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">tidy</span>()</span></code></pre></div>
+<pre><code>## # A tibble: 26 x 5
+##    term                estimate std.error statistic   p.value
+##    &lt;chr&gt;                  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+##  1 (Intercept)          7.53       0.154    48.7    2.21e-284
+##  2 log_gr_liv_area      0.638      0.0200   31.9    3.76e-161
+##  3 neighborhoodBlueste -0.314      0.149    -2.10   3.55e-  2
+##  4 neighborhoodBrDale  -0.466      0.0724   -6.43   1.80e- 10
+##  5 neighborhoodBrkSide -0.336      0.0597   -5.62   2.44e-  8
+##  6 neighborhoodClearCr -0.103      0.0762   -1.35   1.76e-  1
+##  7 neighborhoodCollgCr  0.00332    0.0556    0.0597 9.52e-  1
+##  8 neighborhoodCrawfor -0.0870     0.0612   -1.42   1.55e-  1
+##  9 neighborhoodEdwards -0.365      0.0567   -6.44   1.79e- 10
+## 10 neighborhoodGilbert -0.0621     0.0599   -1.04   3.00e-  1
+## # ... with 16 more rows</code></pre>
+<div class="sourceCode" id="cb458"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb458-1"><a href="42-eda-ames-houseprice.html#cb458-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4)</span>
+<span id="cb458-2"><a href="42-eda-ames-houseprice.html#cb458-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lmer</span>(log_sale_price <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> log_gr_liv_area <span class="sc">+</span> (log_gr_liv_area <span class="sc">|</span> neighborhood),</span>
+<span id="cb458-3"><a href="42-eda-ames-houseprice.html#cb458-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">data =</span> df) <span class="sc">%&gt;%</span> </span>
+<span id="cb458-4"><a href="42-eda-ames-houseprice.html#cb458-4" aria-hidden="true" tabindex="-1"></a>  broom.mixed<span class="sc">::</span><span class="fu">tidy</span>()</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 6
+##   effect   group        term             estimate std.error statistic
+##   &lt;chr&gt;    &lt;chr&gt;        &lt;chr&gt;               &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+## 1 fixed    &lt;NA&gt;         (Intercept)         6.88     0.334       20.6
+## 2 fixed    &lt;NA&gt;         log_gr_liv_area     0.705    0.0493      14.3
+## 3 ran_pars neighborhood sd__(Intercept)     1.34    NA           NA  
+## 4 ran_pars neighborhood cor__(Intercept~   -0.993   NA           NA  
+## 5 ran_pars neighborhood sd__log_gr_liv_~    0.205   NA           NA  
+## 6 ran_pars Residual     sd__Observation     0.191   NA           NA</code></pre>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="41-eda-career-decision.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="50-R-practise.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": {}
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/XiangyunHuang/masr/edit/master/42-eda-ames-houseprice.Rmd",
+"text": "编辑"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": "https://github.com/XiangyunHuang/masr/blob/master/42-eda-ames-houseprice.Rmd",
+"text": "查看"
+},
+"download": ["elegantbookdown.pdf", "elegantbookdown.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>第 8 章 数据重塑 | 基于tidyverse的R语言学习笔记</title>
+  <meta name="description" content="最初看到 elegantbook 做的书籍样式很漂亮，就想把它引入到 bookdown 中，遂定制了此模版。在此基础上，做了迁移和扩展的工作，融合了 LaTeX (精美)、Pandoc (简洁) 和 R (强大) 的特性。This is a bookdown template based on ElegantBook. The output format for this template is bookdown::gitbook and bookdown::pdf_book." />
+  <meta name="generator" content="bookdown 0.25.6 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="第 8 章 数据重塑 | 基于tidyverse的R语言学习笔记" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="最初看到 elegantbook 做的书籍样式很漂亮，就想把它引入到 bookdown 中，遂定制了此模版。在此基础上，做了迁移和扩展的工作，融合了 LaTeX (精美)、Pandoc (简洁) 和 R (强大) 的特性。This is a bookdown template based on ElegantBook. The output format for this template is bookdown::gitbook and bookdown::pdf_book." />
+  <meta name="github-repo" content="XiangyunHuang/ElegantBookdown" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="第 8 章 数据重塑 | 基于tidyverse的R语言学习笔记" />
+  
+  <meta name="twitter:description" content="最初看到 elegantbook 做的书籍样式很漂亮，就想把它引入到 bookdown 中，遂定制了此模版。在此基础上，做了迁移和扩展的工作，融合了 LaTeX (精美)、Pandoc (简洁) 和 R (强大) 的特性。This is a bookdown template based on ElegantBook. The output format for this template is bookdown::gitbook and bookdown::pdf_book." />
+  
+
+<meta name="author" content="李凯" />
+
+
+<meta name="date" content="2022-04-15" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="37-ggplot2.html"/>
+<link rel="next" href="8-tidyverse-manipulate1.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
+<script src="libs/str_view-binding-1.4.0/str_view.js"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      TeX: {
+        Macros: {
+          bm: ["{\\boldsymbol #1}",1],
+        },
+        extensions: ["cancel.js"]
+      }
+    });
+</script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">基于tidyverse的R语言学习笔记</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>简介</a>
+<ul>
+<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#custom-block"><i class="fa fa-check"></i><b>0.1</b> 自定义 block</a></li>
+<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#sec:example"><i class="fa fa-check"></i><b>0.2</b> 简单实例</a>
+<ul>
+<li class="chapter" data-level="0.2.1" data-path="index.html"><a href="index.html#例0.1-计算并绘制roc曲线"><i class="fa fa-check"></i><b>0.2.1</b> 例0.1 计算并绘制ROC曲线</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>I 基础</b></span></li>
+<li class="chapter" data-level="1" data-path="1-intro.html"><a href="1-intro.html"><i class="fa fa-check"></i><b>1</b> R语言基础语法</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="1-intro.html"><a href="1-intro.html#函数"><i class="fa fa-check"></i><b>1.1</b> 函数</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="1-intro.html"><a href="1-intro.html#向量的函数"><i class="fa fa-check"></i><b>1.1.1</b> 向量的函数</a></li>
+<li class="chapter" data-level="1.1.2" data-path="1-intro.html"><a href="1-intro.html#自定义函数"><i class="fa fa-check"></i><b>1.1.2</b> 自定义函数</a></li>
+<li class="chapter" data-level="1.1.3" data-path="1-intro.html"><a href="1-intro.html#条件语句"><i class="fa fa-check"></i><b>1.1.3</b> 条件语句</a></li>
+<li class="chapter" data-level="1.1.4" data-path="1-intro.html"><a href="1-intro.html#返回多个结果"><i class="fa fa-check"></i><b>1.1.4</b> 返回多个结果</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="1-intro.html"><a href="1-intro.html#增强型数据框"><i class="fa fa-check"></i><b>1.2</b> 增强型数据框</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="2-factor.html"><a href="2-factor.html"><i class="fa fa-check"></i><b>2</b> 因子</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="2-factor.html"><a href="2-factor.html#创建因子"><i class="fa fa-check"></i><b>2.1</b> 创建因子</a></li>
+<li class="chapter" data-level="2.2" data-path="2-factor.html"><a href="2-factor.html#有用函数"><i class="fa fa-check"></i><b>2.2</b> 有用函数</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="3-str-date.html"><a href="3-str-date.html"><i class="fa fa-check"></i><b>3</b> 字符串和时间日期</a></li>
+<li class="chapter" data-level="4" data-path="4-re.html"><a href="4-re.html"><i class="fa fa-check"></i><b>4</b> 正则表达式</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="4-re.html"><a href="4-re.html#使用正则表达式进行模式匹配"><i class="fa fa-check"></i><b>4.1</b> 使用正则表达式进行模式匹配</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="4-re.html"><a href="4-re.html#基础匹配"><i class="fa fa-check"></i><b>4.1.1</b> 基础匹配</a></li>
+<li class="chapter" data-level="4.1.2" data-path="4-re.html"><a href="4-re.html#分组与回溯"><i class="fa fa-check"></i><b>4.1.2</b> 分组与回溯</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="4-re.html"><a href="4-re.html#解决实际问题"><i class="fa fa-check"></i><b>4.2</b> 解决实际问题</a></li>
+<li class="chapter" data-level="4.3" data-path="4-re.html"><a href="4-re.html#案例分析"><i class="fa fa-check"></i><b>4.3</b> 案例分析</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="4-re.html"><a href="4-re.html#案例1"><i class="fa fa-check"></i><b>4.3.1</b> 案例1</a></li>
+<li class="chapter" data-level="4.3.2" data-path="4-re.html"><a href="4-re.html#案例2"><i class="fa fa-check"></i><b>4.3.2</b> 案例2</a></li>
+<li class="chapter" data-level="4.3.3" data-path="4-re.html"><a href="4-re.html#案例三"><i class="fa fa-check"></i><b>4.3.3</b> 案例三</a></li>
+<li class="chapter" data-level="4.3.4" data-path="4-re.html"><a href="4-re.html#案例4"><i class="fa fa-check"></i><b>4.3.4</b> 案例4</a></li>
+<li class="chapter" data-level="4.3.5" data-path="4-re.html"><a href="4-re.html#案例5"><i class="fa fa-check"></i><b>4.3.5</b> 案例5</a></li>
+<li class="chapter" data-level="4.3.6" data-path="4-re.html"><a href="4-re.html#案例6"><i class="fa fa-check"></i><b>4.3.6</b> 案例6</a></li>
+<li class="chapter" data-level="4.3.7" data-path="4-re.html"><a href="4-re.html#案例7"><i class="fa fa-check"></i><b>4.3.7</b> 案例7</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>II 数据操作</b></span></li>
+<li class="chapter" data-level="" data-path="5-tidyverse-readr.html"><a href="5-tidyverse-readr.html"><i class="fa fa-check"></i>tidyverse简介</a></li>
+<li class="chapter" data-level="5" data-path="5-tidyverse-readr.html"><a href="5-tidyverse-readr.html#tidyverse-readr"><i class="fa fa-check"></i><b>5</b> 数据读写</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="5-tidyverse-readr.html"><a href="5-tidyverse-readr.html#数据读入"><i class="fa fa-check"></i><b>5.1</b> 数据读入</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="5-tidyverse-readr.html"><a href="5-tidyverse-readr.html#例1多个文件数据读取后合并"><i class="fa fa-check"></i><b>5.1.1</b> 例1：多个文件数据读取后合并</a></li>
+<li class="chapter" data-level="5.1.2" data-path="5-tidyverse-readr.html"><a href="5-tidyverse-readr.html#例2一个excel中多个sheet表的读取合并"><i class="fa fa-check"></i><b>5.1.2</b> 例2：一个excel中多个sheet表的读取合并</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="5-tidyverse-readr.html"><a href="5-tidyverse-readr.html#数据写出"><i class="fa fa-check"></i><b>5.2</b> 数据写出</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="6-tidyverse-join.html"><a href="6-tidyverse-join.html"><i class="fa fa-check"></i><b>6</b> 数据连接</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="6-tidyverse-join.html"><a href="6-tidyverse-join.html#合并行列"><i class="fa fa-check"></i><b>6.1</b> 合并行/列</a></li>
+<li class="chapter" data-level="6.2" data-path="6-tidyverse-join.html"><a href="6-tidyverse-join.html#多个数据表连接"><i class="fa fa-check"></i><b>6.2</b> 多个数据表连接</a></li>
+<li class="chapter" data-level="6.3" data-path="6-tidyverse-join.html"><a href="6-tidyverse-join.html#集合运算"><i class="fa fa-check"></i><b>6.3</b> 集合运算</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="37-ggplot2.html"><a href="37-ggplot2.html"><i class="fa fa-check"></i><b>7</b> ggplot2</a></li>
+<li class="chapter" data-level="8" data-path="7-tidyverse-reshape.html"><a href="7-tidyverse-reshape.html"><i class="fa fa-check"></i><b>8</b> 数据重塑</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="7-tidyverse-reshape.html"><a href="7-tidyverse-reshape.html#什么是整洁的数据"><i class="fa fa-check"></i><b>8.1</b> 什么是整洁的数据</a></li>
+<li class="chapter" data-level="8.2" data-path="7-tidyverse-reshape.html"><a href="7-tidyverse-reshape.html#综合实例"><i class="fa fa-check"></i><b>8.2</b> 综合实例</a></li>
+<li class="chapter" data-level="8.3" data-path="7-tidyverse-reshape.html"><a href="7-tidyverse-reshape.html#方形化"><i class="fa fa-check"></i><b>8.3</b> 方形化</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="8-tidyverse-manipulate1.html"><a href="8-tidyverse-manipulate1.html"><i class="fa fa-check"></i><b>9</b> 数据操作-part1</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="8-tidyverse-manipulate1.html"><a href="8-tidyverse-manipulate1.html#基本数据操作"><i class="fa fa-check"></i><b>9.1</b> 基本数据操作</a></li>
+<li class="chapter" data-level="9.2" data-path="8-tidyverse-manipulate1.html"><a href="8-tidyverse-manipulate1.html#其它数据操作"><i class="fa fa-check"></i><b>9.2</b> 其它数据操作</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="8-tidyverse-manipulate1.html"><a href="8-tidyverse-manipulate1.html#按行汇总"><i class="fa fa-check"></i><b>9.2.1</b> 按行汇总</a></li>
+<li class="chapter" data-level="9.2.2" data-path="8-tidyverse-manipulate1.html"><a href="8-tidyverse-manipulate1.html#整洁计算"><i class="fa fa-check"></i><b>9.2.2</b> 整洁计算</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="9-tidyverse-manipulate2.html"><a href="9-tidyverse-manipulate2.html"><i class="fa fa-check"></i><b>10</b> 数据操作-part2</a></li>
+<li class="chapter" data-level="11" data-path="10-tidyverse-extra.html"><a href="10-tidyverse-extra.html"><i class="fa fa-check"></i><b>11</b> 其它数据操作</a></li>
+<li class="part"><span><b>III 建模</b></span></li>
+<li class="chapter" data-level="12" data-path="11-tidystats_sampling.html"><a href="11-tidystats_sampling.html"><i class="fa fa-check"></i><b>12</b> 模拟与抽样1</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="11-tidystats_sampling.html"><a href="11-tidystats_sampling.html#模拟"><i class="fa fa-check"></i><b>12.1</b> 模拟</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="11-tidystats_sampling.html"><a href="11-tidystats_sampling.html#生成随机数"><i class="fa fa-check"></i><b>12.1.1</b> 生成随机数</a></li>
+<li class="chapter" data-level="12.1.2" data-path="11-tidystats_sampling.html"><a href="11-tidystats_sampling.html#生成多元正态分布"><i class="fa fa-check"></i><b>12.1.2</b> 生成多元正态分布[^]</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="11-tidystats_sampling.html"><a href="11-tidystats_sampling.html#抽样与样本"><i class="fa fa-check"></i><b>12.2</b> 抽样与样本</a></li>
+<li class="chapter" data-level="12.3" data-path="11-tidystats_sampling.html"><a href="11-tidystats_sampling.html#让统计分析透明-重现infer基于模拟的假设检验"><i class="fa fa-check"></i><b>12.3</b> 让统计分析透明-重现infer基于模拟的假设检验</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="11-tidystats_sampling.html"><a href="11-tidystats_sampling.html#使用tidyverse重复infer的过程"><i class="fa fa-check"></i><b>12.3.1</b> 使用tidyverse重复infer的过程</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html"><i class="fa fa-check"></i><b>13</b> 线性回归</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#从案例开始"><i class="fa fa-check"></i><b>13.1</b> 从案例开始</a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#缺失值检查"><i class="fa fa-check"></i><b>13.1.1</b> 缺失值检查</a></li>
+<li class="chapter" data-level="13.1.2" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#简单变量统计"><i class="fa fa-check"></i><b>13.1.2</b> 简单变量统计</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#线性归回模型"><i class="fa fa-check"></i><b>13.2</b> 线性归回模型</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#长得高挣得多"><i class="fa fa-check"></i><b>13.2.1</b> 长得高挣得多</a></li>
+<li class="chapter" data-level="13.2.2" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#使用lm函数拟合线性回归模型"><i class="fa fa-check"></i><b>13.2.2</b> 使用lm()函数拟合线性回归模型</a></li>
+<li class="chapter" data-level="13.2.3" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#模型的解释"><i class="fa fa-check"></i><b>13.2.3</b> 模型的解释</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#多元线性回归"><i class="fa fa-check"></i><b>13.3</b> 多元线性回归</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="13-tidymodel-broom.html"><a href="13-tidymodel-broom.html"><i class="fa fa-check"></i><b>14</b> 结果整合</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="13-tidymodel-broom.html"><a href="13-tidymodel-broom.html#案例"><i class="fa fa-check"></i><b>14.1</b> 案例</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="13-tidymodel-broom.html"><a href="13-tidymodel-broom.html#可视化探索"><i class="fa fa-check"></i><b>14.1.1</b> 可视化探索</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="14-tidymodel-t-test.html"><a href="14-tidymodel-t-test.html"><i class="fa fa-check"></i><b>15</b> 双样本t检验</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="14-tidymodel-t-test.html"><a href="14-tidymodel-t-test.html#实验设计"><i class="fa fa-check"></i><b>15.1</b> 实验设计</a></li>
+<li class="chapter" data-level="15.2" data-path="14-tidymodel-t-test.html"><a href="14-tidymodel-t-test.html#提问"><i class="fa fa-check"></i><b>15.2</b> 提问</a>
+<ul>
+<li class="chapter" data-level="15.2.1" data-path="14-tidymodel-t-test.html"><a href="14-tidymodel-t-test.html#不同性别企鹅的bill_length_mm嘴峰长度是否相同"><i class="fa fa-check"></i><b>15.2.1</b> 不同性别企鹅的bill_length_mm（嘴峰长度）是否相同？</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="15-tidymodel-avo.html"><a href="15-tidymodel-avo.html"><i class="fa fa-check"></i><b>16</b> avo-方差分析</a></li>
+<li class="chapter" data-level="17" data-path="16-tidymodel-as-linear.html"><a href="16-tidymodel-as-linear.html"><i class="fa fa-check"></i><b>17</b> 统计检验与线性模型</a></li>
+<li class="chapter" data-level="18" data-path="17-tidymodel-lmm.html"><a href="17-tidymodel-lmm.html"><i class="fa fa-check"></i><b>18</b> 多层线性模型</a></li>
+<li class="chapter" data-level="19" data-path="18-tidymodel-poisson-regression.html"><a href="18-tidymodel-poisson-regression.html"><i class="fa fa-check"></i><b>19</b> 广义线性模型</a></li>
+<li class="chapter" data-level="20" data-path="19-tidymodel-logistic-regression.html"><a href="19-tidymodel-logistic-regression.html"><i class="fa fa-check"></i><b>20</b> logistic回归模型</a></li>
+<li class="chapter" data-level="21" data-path="20-tidymodel-ordinal.html"><a href="20-tidymodel-ordinal.html"><i class="fa fa-check"></i><b>21</b> 有序logistic回归</a></li>
+<li class="part"><span><b>IV tidymodels包篇</b></span></li>
+<li class="chapter" data-level="22" data-path="21-meching-leanrning-tidymodels.html"><a href="21-meching-leanrning-tidymodels.html"><i class="fa fa-check"></i><b>22</b> 机器学习</a>
+<ul>
+<li class="chapter" data-level="22.1" data-path="21-meching-leanrning-tidymodels.html"><a href="21-meching-leanrning-tidymodels.html#数据"><i class="fa fa-check"></i><b>22.1</b> 数据</a></li>
+<li class="chapter" data-level="22.2" data-path="21-meching-leanrning-tidymodels.html"><a href="21-meching-leanrning-tidymodels.html#机器学习"><i class="fa fa-check"></i><b>22.2</b> 机器学习</a></li>
+</ul></li>
+<li class="part"><span><b>V bayesian篇</b></span></li>
+<li class="chapter" data-level="23" data-path="22-bayesian-inference.html"><a href="22-bayesian-inference.html"><i class="fa fa-check"></i><b>23</b> 贝叶斯推断</a>
+<ul>
+<li class="chapter" data-level="23.1" data-path="22-bayesian-inference.html"><a href="22-bayesian-inference.html#一个简单的贝叶斯推断实例-学生身高分布"><i class="fa fa-check"></i><b>23.1</b> 一个简单的贝叶斯推断实例-学生身高分布</a></li>
+<li class="chapter" data-level="23.2" data-path="22-bayesian-inference.html"><a href="22-bayesian-inference.html#一个简单的贝叶斯推断实例-推断"><i class="fa fa-check"></i><b>23.2</b> 一个简单的贝叶斯推断实例-推断</a></li>
+</ul></li>
+<li class="chapter" data-level="24" data-path="23-bayesian-intro-stan.html"><a href="23-bayesian-intro-stan.html"><i class="fa fa-check"></i><b>24</b> stan入门</a></li>
+<li class="chapter" data-level="25" data-path="24-bayesian-intro-lm.html"><a href="24-bayesian-intro-lm.html"><i class="fa fa-check"></i><b>25</b> 贝叶斯线性回归</a></li>
+<li class="chapter" data-level="26" data-path="25-bayesian-t-test.html"><a href="25-bayesian-t-test.html"><i class="fa fa-check"></i><b>26</b> 贝叶斯假设检验</a></li>
+<li class="chapter" data-level="27" data-path="26-bayesian-glm.html"><a href="26-bayesian-glm.html"><i class="fa fa-check"></i><b>27</b> 贝叶斯广义线性模型</a></li>
+<li class="chapter" data-level="28" data-path="27-bayesian-hierarchical.html"><a href="27-bayesian-hierarchical.html"><i class="fa fa-check"></i><b>28</b> 贝叶斯层级模型</a></li>
+<li class="chapter" data-level="29" data-path="28-bayesian-mixtures.html"><a href="28-bayesian-mixtures.html"><i class="fa fa-check"></i><b>29</b> 贝叶斯混合模型</a></li>
+<li class="chapter" data-level="30" data-path="29-bayesian-categorical.html"><a href="29-bayesian-categorical.html"><i class="fa fa-check"></i><b>30</b> 贝叶斯分类模型</a></li>
+<li class="chapter" data-level="31" data-path="30-bayesian-workflow.html"><a href="30-bayesian-workflow.html"><i class="fa fa-check"></i><b>31</b> 贝叶斯工作流程</a></li>
+<li class="chapter" data-level="32" data-path="31-bayesian-vaccine-effectiveness.html"><a href="31-bayesian-vaccine-effectiveness.html"><i class="fa fa-check"></i><b>32</b> 贝叶斯分析案例-新冠疫苗有效率的计算</a></li>
+<li class="chapter" data-level="33" data-path="32-bayesian-tokyo-olympics-100m.html"><a href="32-bayesian-tokyo-olympics-100m.html"><i class="fa fa-check"></i><b>33</b> 贝叶斯分析案例-预测奥运会男子100米短跑成绩</a></li>
+<li class="part"><span><b>VI 应用篇</b></span></li>
+<li class="chapter" data-level="34" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html"><i class="fa fa-check"></i><b>34</b> 探索性数据分析-诺奖获得者</a>
+<ul>
+<li class="chapter" data-level="34.1" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#探索性"><i class="fa fa-check"></i><b>34.1</b> 探索性</a></li>
+<li class="chapter" data-level="34.2" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#数据集"><i class="fa fa-check"></i><b>34.2</b> 数据集</a></li>
+<li class="chapter" data-level="34.3" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#导入数据"><i class="fa fa-check"></i><b>34.3</b> 导入数据</a></li>
+<li class="chapter" data-level="34.4" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#数据结构"><i class="fa fa-check"></i><b>34.4</b> 数据结构</a></li>
+<li class="chapter" data-level="34.5" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#确定想探索的问题"><i class="fa fa-check"></i><b>34.5</b> 确定想探索的问题</a>
+<ul>
+<li class="chapter" data-level="34.5.1" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#每个学科获奖次数"><i class="fa fa-check"></i><b>34.5.1</b> 每个学科获奖次数</a></li>
+<li class="chapter" data-level="34.5.2" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#我国科学家获奖情况"><i class="fa fa-check"></i><b>34.5.2</b> 我国科学家获奖情况</a></li>
+<li class="chapter" data-level="34.5.3" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#哪些人多次获奖"><i class="fa fa-check"></i><b>34.5.3</b> 哪些人多次获奖</a></li>
+<li class="chapter" data-level="34.5.4" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#获奖人年龄"><i class="fa fa-check"></i><b>34.5.4</b> 获奖人年龄</a></li>
+<li class="chapter" data-level="34.5.5" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#性别比例"><i class="fa fa-check"></i><b>34.5.5</b> 性别比例</a></li>
+<li class="chapter" data-level="34.5.6" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#获奖人出生年代"><i class="fa fa-check"></i><b>34.5.6</b> 获奖人出生年代</a></li>
+<li class="chapter" data-level="34.5.7" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#最年轻的诺奖获得者"><i class="fa fa-check"></i><b>34.5.7</b> 最年轻的诺奖获得者</a></li>
+<li class="chapter" data-level="34.5.8" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#平均年龄和各领域获奖数量"><i class="fa fa-check"></i><b>34.5.8</b> 平均年龄和各领域获奖数量</a></li>
+</ul></li>
+<li class="chapter" data-level="34.6" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#地图"><i class="fa fa-check"></i><b>34.6</b> 地图</a>
+<ul>
+<li class="chapter" data-level="34.6.1" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#出生地和工作地不一样的占比"><i class="fa fa-check"></i><b>34.6.1</b> 出生地和工作地不一样的占比</a></li>
+<li class="chapter" data-level="34.6.2" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#共同获奖人"><i class="fa fa-check"></i><b>34.6.2</b> 共同获奖人</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="35" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html"><i class="fa fa-check"></i><b>35</b> 探索性数据分析-奥林匹克</a>
+<ul>
+<li class="chapter" data-level="35.1" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#导入数据-1"><i class="fa fa-check"></i><b>35.1</b> 导入数据</a></li>
+<li class="chapter" data-level="35.2" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#可视化"><i class="fa fa-check"></i><b>35.2</b> 可视化</a></li>
+<li class="chapter" data-level="35.3" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#回归分析"><i class="fa fa-check"></i><b>35.3</b> 回归分析</a></li>
+<li class="chapter" data-level="35.4" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#预测"><i class="fa fa-check"></i><b>35.4</b> 预测</a></li>
+<li class="chapter" data-level="35.5" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#再次可视化"><i class="fa fa-check"></i><b>35.5</b> 再次可视化</a></li>
+<li class="chapter" data-level="35.6" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#section"><i class="fa fa-check"></i><b>35.6</b> </a></li>
+</ul></li>
+<li class="chapter" data-level="36" data-path="35-eda-covid2019.html"><a href="35-eda-covid2019.html"><i class="fa fa-check"></i><b>36</b> 探索性数据分析-新冠疫情</a>
+<ul>
+<li class="chapter" data-level="36.1" data-path="35-eda-covid2019.html"><a href="35-eda-covid2019.html#数据来源"><i class="fa fa-check"></i><b>36.1</b> 数据来源</a></li>
+<li class="chapter" data-level="36.2" data-path="35-eda-covid2019.html"><a href="35-eda-covid2019.html#读取数据"><i class="fa fa-check"></i><b>36.2</b> 读取数据</a></li>
+<li class="chapter" data-level="36.3" data-path="35-eda-covid2019.html"><a href="35-eda-covid2019.html#数据清洗规整"><i class="fa fa-check"></i><b>36.3</b> 数据清洗规整</a></li>
+<li class="chapter" data-level="36.4" data-path="35-eda-covid2019.html"><a href="35-eda-covid2019.html#可视化探索-1"><i class="fa fa-check"></i><b>36.4</b> 可视化探索</a></li>
+</ul></li>
+<li class="chapter" data-level="37" data-path="36-eda-anscombe.html"><a href="36-eda-anscombe.html"><i class="fa fa-check"></i><b>37</b> 探索性数据分析-anscombe数据集</a>
+<ul>
+<li class="chapter" data-level="37.1" data-path="36-eda-anscombe.html"><a href="36-eda-anscombe.html#规整数据"><i class="fa fa-check"></i><b>37.1</b> 规整数据</a></li>
+<li class="chapter" data-level="37.2" data-path="36-eda-anscombe.html"><a href="36-eda-anscombe.html#统计"><i class="fa fa-check"></i><b>37.2</b> 统计</a></li>
+<li class="chapter" data-level="37.3" data-path="36-eda-anscombe.html"><a href="36-eda-anscombe.html#建模"><i class="fa fa-check"></i><b>37.3</b> 建模</a></li>
+<li class="chapter" data-level="37.4" data-path="36-eda-anscombe.html"><a href="36-eda-anscombe.html#可视化-1"><i class="fa fa-check"></i><b>37.4</b> 可视化</a></li>
+</ul></li>
+<li class="chapter" data-level="38" data-path="38-eda-height.html"><a href="38-eda-height.html"><i class="fa fa-check"></i><b>38</b> 探索性数据分析-身高体重关系</a>
+<ul>
+<li class="chapter" data-level="38.1" data-path="38-eda-height.html"><a href="38-eda-height.html#可视化-2"><i class="fa fa-check"></i><b>38.1</b> 可视化</a>
+<ul>
+<li class="chapter" data-level="38.1.1" data-path="38-eda-height.html"><a href="38-eda-height.html#不同性别的身高分布-普通方法"><i class="fa fa-check"></i><b>38.1.1</b> 不同性别的身高分布-普通方法</a></li>
+<li class="chapter" data-level="38.1.2" data-path="38-eda-height.html"><a href="38-eda-height.html#不同性别的身高分布-高级方法"><i class="fa fa-check"></i><b>38.1.2</b> 不同性别的身高分布-高级方法</a></li>
+<li class="chapter" data-level="38.1.3" data-path="38-eda-height.html"><a href="38-eda-height.html#不同性别的体重分布"><i class="fa fa-check"></i><b>38.1.3</b> 不同性别的体重分布</a></li>
+</ul></li>
+<li class="chapter" data-level="38.2" data-path="38-eda-height.html"><a href="38-eda-height.html#建模-1"><i class="fa fa-check"></i><b>38.2</b> 建模</a>
+<ul>
+<li class="chapter" data-level="38.2.1" data-path="38-eda-height.html"><a href="38-eda-height.html#身高体重的散点图"><i class="fa fa-check"></i><b>38.2.1</b> 身高体重的散点图</a></li>
+<li class="chapter" data-level="38.2.2" data-path="38-eda-height.html"><a href="38-eda-height.html#建立身高体重线性模型"><i class="fa fa-check"></i><b>38.2.2</b> 建立身高体重线性模型</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="39" data-path="39-eda-caribou.html"><a href="39-eda-caribou.html"><i class="fa fa-check"></i><b>39</b> 探索性数据分析-驯鹿迁移</a>
+<ul>
+<li class="chapter" data-level="39.1" data-path="39-eda-caribou.html"><a href="39-eda-caribou.html#数据录入"><i class="fa fa-check"></i><b>39.1</b> 数据录入</a></li>
+<li class="chapter" data-level="39.2" data-path="39-eda-caribou.html"><a href="39-eda-caribou.html#驯鹿身份信息"><i class="fa fa-check"></i><b>39.2</b> 驯鹿身份信息</a></li>
+</ul></li>
+<li class="chapter" data-level="40" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html"><i class="fa fa-check"></i><b>40</b> 探索性数据分析-企鹅的故事</a>
+<ul>
+<li class="chapter" data-level="40.1" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#数据录入-1"><i class="fa fa-check"></i><b>40.1</b> 数据录入</a>
+<ul>
+<li class="chapter" data-level="40.1.1" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#变量含义"><i class="fa fa-check"></i><b>40.1.1</b> 变量含义</a></li>
+</ul></li>
+<li class="chapter" data-level="40.2" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#数据清洗"><i class="fa fa-check"></i><b>40.2</b> 数据清洗</a></li>
+<li class="chapter" data-level="40.3" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#探索性分析"><i class="fa fa-check"></i><b>40.3</b> 探索性分析</a>
+<ul>
+<li class="chapter" data-level="40.3.1" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#每种类型的企鹅有多少只"><i class="fa fa-check"></i><b>40.3.1</b> 每种类型的企鹅有多少只</a></li>
+<li class="chapter" data-level="40.3.2" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#每种类型企鹅各种属性的均值和分布"><i class="fa fa-check"></i><b>40.3.2</b> 每种类型企鹅各种属性的均值和分布</a></li>
+<li class="chapter" data-level="40.3.3" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#嘴峰长度和深度的关联"><i class="fa fa-check"></i><b>40.3.3</b> 嘴峰长度和深度的关联</a></li>
+<li class="chapter" data-level="40.3.4" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#体重与翅膀长度的关联"><i class="fa fa-check"></i><b>40.3.4</b> 体重与翅膀长度的关联？</a></li>
+<li class="chapter" data-level="40.3.5" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#性别与不同体征信息的关系-建立模型"><i class="fa fa-check"></i><b>40.3.5</b> 性别与不同体征信息的关系-建立模型</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="41" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html"><i class="fa fa-check"></i><b>41</b> 探索性数据分析-大学生职业决策</a>
+<ul>
+<li class="chapter" data-level="41.1" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#预备知识"><i class="fa fa-check"></i><b>41.1</b> 预备知识</a></li>
+<li class="chapter" data-level="41.2" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#正式开始"><i class="fa fa-check"></i><b>41.2</b> 正式开始</a>
+<ul>
+<li class="chapter" data-level="41.2.1" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#检查缺失值"><i class="fa fa-check"></i><b>41.2.1</b> 检查缺失值</a></li>
+<li class="chapter" data-level="41.2.2" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#数据预处理"><i class="fa fa-check"></i><b>41.2.2</b> 数据预处理</a></li>
+<li class="chapter" data-level="41.2.3" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#标准化数据"><i class="fa fa-check"></i><b>41.2.3</b> 标准化数据</a></li>
+</ul></li>
+<li class="chapter" data-level="41.3" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#探索数据"><i class="fa fa-check"></i><b>41.3</b> 探索数据</a>
+<ul>
+<li class="chapter" data-level="41.3.1" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#想探索的问题"><i class="fa fa-check"></i><b>41.3.1</b> 想探索的问题</a></li>
+<li class="chapter" data-level="41.3.2" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#不同性别年纪生源地专业下各指标的分布差异"><i class="fa fa-check"></i><b>41.3.2</b> 不同性别、年纪、生源地、专业下，各指标的分布差异</a></li>
+<li class="chapter" data-level="41.3.3" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#来自不同地方的学生在职业探索上的不同"><i class="fa fa-check"></i><b>41.3.3</b> 来自不同地方的学生在职业探索上的不同</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="42" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html"><i class="fa fa-check"></i><b>42</b> 探索性数据分析-ames房价预测</a>
+<ul>
+<li class="chapter" data-level="42.1" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#探索设想"><i class="fa fa-check"></i><b>42.1</b> 探索设想</a></li>
+<li class="chapter" data-level="42.2" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#变量选取"><i class="fa fa-check"></i><b>42.2</b> 变量选取</a></li>
+<li class="chapter" data-level="42.3" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#缺失值处理"><i class="fa fa-check"></i><b>42.3</b> 缺失值处理</a></li>
+<li class="chapter" data-level="42.4" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#数据预处理-1"><i class="fa fa-check"></i><b>42.4</b> 数据预处理</a>
+<ul>
+<li class="chapter" data-level="42.4.1" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#标准化vs对数化"><i class="fa fa-check"></i><b>42.4.1</b> 标准化vs对数化</a></li>
+</ul></li>
+<li class="chapter" data-level="42.5" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#正式开始探索"><i class="fa fa-check"></i><b>42.5</b> 正式开始探索</a>
+<ul>
+<li class="chapter" data-level="42.5.1" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#各地区房屋价格均值"><i class="fa fa-check"></i><b>42.5.1</b> 各地区房屋价格均值</a></li>
+<li class="chapter" data-level="42.5.2" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#房屋价格与占地面积"><i class="fa fa-check"></i><b>42.5.2</b> 房屋价格与占地面积</a></li>
+<li class="chapter" data-level="42.5.3" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#房屋价格与房屋居住面积"><i class="fa fa-check"></i><b>42.5.3</b> 房屋价格与房屋居住面积</a></li>
+<li class="chapter" data-level="42.5.4" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#车库与房屋价格"><i class="fa fa-check"></i><b>42.5.4</b> 车库与房屋价格</a></li>
+</ul></li>
+<li class="chapter" data-level="42.6" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#建模-2"><i class="fa fa-check"></i><b>42.6</b> 建模</a></li>
+</ul></li>
+<li class="chapter" data-level="43" data-path="50-R-practise.html"><a href="50-R-practise.html"><i class="fa fa-check"></i><b>43</b> 练习</a>
+<ul>
+<li class="chapter" data-level="43.1" data-path="50-R-practise.html"><a href="50-R-practise.html#旋转数据框"><i class="fa fa-check"></i><b>43.1</b> 1-旋转数据框</a></li>
+<li class="chapter" data-level="43.2" data-path="50-R-practise.html"><a href="50-R-practise.html#排序"><i class="fa fa-check"></i><b>43.2</b> 2-排序</a></li>
+<li class="chapter" data-level="43.3" data-path="50-R-practise.html"><a href="50-R-practise.html#统计并筛选"><i class="fa fa-check"></i><b>43.3</b> 3-统计并筛选</a></li>
+<li class="chapter" data-level="43.4" data-path="50-R-practise.html"><a href="50-R-practise.html#按条件分组"><i class="fa fa-check"></i><b>43.4</b> 4-按条件分组</a></li>
+<li class="chapter" data-level="43.5" data-path="50-R-practise.html"><a href="50-R-practise.html#section-1"><i class="fa fa-check"></i><b>43.5</b> </a></li>
+</ul></li>
+<li class="appendix"><span><b>附录</b></span></li>
+<li class="chapter" data-level="A" data-path="999-appendix.html"><a href="999-appendix.html"><i class="fa fa-check"></i><b>A</b> 附录-有趣的“懒人”包</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="999-appendix.html"><a href="999-appendix.html#自动生成正则表达式"><i class="fa fa-check"></i><b>A.1</b> 自动生成正则表达式</a></li>
+<li class="chapter" data-level="A.2" data-path="999-appendix.html"><a href="999-appendix.html#janitor包"><i class="fa fa-check"></i><b>A.2</b> <span>janitor包</span></a>
+<ul>
+<li class="chapter" data-level="A.2.1" data-path="999-appendix.html"><a href="999-appendix.html#整理列名"><i class="fa fa-check"></i><b>A.2.1</b> 整理列名</a></li>
+<li class="chapter" data-level="A.2.2" data-path="999-appendix.html"><a href="999-appendix.html#统计分析"><i class="fa fa-check"></i><b>A.2.2</b> 统计分析</a></li>
+<li class="chapter" data-level="A.2.3" data-path="999-appendix.html"><a href="999-appendix.html#查看指定列有重复的行"><i class="fa fa-check"></i><b>A.2.3</b> 查看指定列有重复的行</a></li>
+</ul></li>
+<li class="chapter" data-level="A.3" data-path="999-appendix.html"><a href="999-appendix.html#自动生成模型公式"><i class="fa fa-check"></i><b>A.3</b> <span>自动生成模型公式</span></a></li>
+<li class="chapter" data-level="A.4" data-path="999-appendix.html"><a href="999-appendix.html#自动生成论文报告"><i class="fa fa-check"></i><b>A.4</b> <span>自动生成论文报告</span></a></li>
+<li class="chapter" data-level="A.5" data-path="999-appendix.html"><a href="999-appendix.html#自动评估模型"><i class="fa fa-check"></i><b>A.5</b> <span>自动评估模型</span></a></li>
+<li class="chapter" data-level="A.6" data-path="999-appendix.html"><a href="999-appendix.html#自动生成统计表格"><i class="fa fa-check"></i><b>A.6</b> <span>自动生成统计表格</span></a></li>
+<li class="chapter" data-level="A.7" data-path="999-appendix.html"><a href="999-appendix.html#把统计结果写在图上"><i class="fa fa-check"></i><b>A.7</b> <span>把统计结果写在图上</span></a></li>
+<li class="chapter" data-level="A.8" data-path="999-appendix.html"><a href="999-appendix.html#画图配色"><i class="fa fa-check"></i><b>A.8</b> 画图配色</a>
+<ul>
+<li class="chapter" data-level="A.8.1" data-path="999-appendix.html"><a href="999-appendix.html#第三方主题-ggthem"><i class="fa fa-check"></i><b>A.8.1</b> 第三方主题-<span>ggthem</span></a></li>
+<li class="chapter" data-level="A.8.2" data-path="999-appendix.html"><a href="999-appendix.html#画图颜色-scales"><i class="fa fa-check"></i><b>A.8.2</b> 画图颜色-<span>scales</span></a></li>
+</ul></li>
+<li class="chapter" data-level="A.9" data-path="999-appendix.html"><a href="999-appendix.html#其它有用的包"><i class="fa fa-check"></i><b>A.9</b> 其它有用的包</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="998-references.html"><a href="998-references.html"><i class="fa fa-check"></i>参考文献</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">基于tidyverse的R语言学习笔记</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="tidyverse-reshape" class="section level1 hasAnchor" number="8">
+<h1><span class="header-section-number">第 8 章</span> 数据重塑<a href="7-tidyverse-reshape.html#tidyverse-reshape" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="什么是整洁的数据" class="section level2 hasAnchor" number="8.1">
+<h2><span class="header-section-number">8.1</span> 什么是整洁的数据<a href="7-tidyverse-reshape.html#什么是整洁的数据" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>根据Hadley的理念，不整洁的数据具有以下特点：</p>
+<ul>
+<li><p>首行（列名）是值，不是变量名</p></li>
+<li><p>多个变量放在一行</p></li>
+<li><p>变量既放在行也放在列</p></li>
+<li><p>多种类型的观测单元在同一单元格</p></li>
+<li><p>一个观测单元放在多个表</p></li>
+</ul>
+<p>对应的，整洁的数据具有如下特点：</p>
+<ul>
+<li><p>每个<strong>变量</strong>构成一列</p></li>
+<li><p>每个<strong>观测</strong>构成一行</p></li>
+<li><p>每个观测的每个变量<strong>值</strong>构成一个单元格</p></li>
+</ul>
+<p>下表是一个不整洁数据的例子，1. observation列中有两个变量数据；2. 列名中的A/B应是分类变量species的两个水平值；3. 测量值列count和dbh应各占一行。</p>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="7-tidyverse-reshape.html#cb112-1" aria-hidden="true" tabindex="-1"></a>dt <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb112-2"><a href="7-tidyverse-reshape.html#cb112-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>observation, <span class="sc">~</span>A_count, <span class="sc">~</span>B_count, <span class="sc">~</span>A_dbh, <span class="sc">~</span>B_dbh,</span>
+<span id="cb112-3"><a href="7-tidyverse-reshape.html#cb112-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Richmond(Sam)&quot;</span>, <span class="dv">7</span>,        <span class="dv">2</span>,       <span class="dv">100</span>,    <span class="dv">110</span> , </span>
+<span id="cb112-4"><a href="7-tidyverse-reshape.html#cb112-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Windsor(Ash)&quot;</span> , <span class="dv">10</span>,       <span class="dv">5</span>,        <span class="dv">80</span>,     <span class="dv">87</span> ,</span>
+<span id="cb112-5"><a href="7-tidyverse-reshape.html#cb112-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Bilpin(Jules)&quot;</span>, <span class="dv">5</span>,        <span class="dv">8</span>,        <span class="dv">95</span>,     <span class="dv">90</span> ,</span>
+<span id="cb112-6"><a href="7-tidyverse-reshape.html#cb112-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb112-7"><a href="7-tidyverse-reshape.html#cb112-7" aria-hidden="true" tabindex="-1"></a>dt</span></code></pre></div>
+<pre><code>## # A tibble: 3 x 5
+##   observation   A_count B_count A_dbh B_dbh
+##   &lt;chr&gt;           &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 Richmond(Sam)       7       2   100   110
+## 2 Windsor(Ash)       10       5    80    87
+## 3 Bilpin(Jules)       5       8    95    90</code></pre>
+<p>如何对其进行整洁化处理呢，我们需要借助<code>dplyr</code>中的两个强大的函数，<code>pivot_longer()</code>和<code>pivot_wider()</code>。</p>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="7-tidyverse-reshape.html#cb114-1" aria-hidden="true" tabindex="-1"></a>tidy_dt <span class="ot">&lt;-</span> dt <span class="sc">%&gt;%</span> </span>
+<span id="cb114-2"><a href="7-tidyverse-reshape.html#cb114-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb114-3"><a href="7-tidyverse-reshape.html#cb114-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="sc">-</span>observation,</span>
+<span id="cb114-4"><a href="7-tidyverse-reshape.html#cb114-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;species&quot;</span>, <span class="st">&quot;.value&quot;</span>),   <span class="co"># .value对应列名中相同的部分。</span></span>
+<span id="cb114-5"><a href="7-tidyverse-reshape.html#cb114-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_sep =</span> <span class="st">&quot;_&quot;</span></span>
+<span id="cb114-6"><a href="7-tidyverse-reshape.html#cb114-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb114-7"><a href="7-tidyverse-reshape.html#cb114-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(observation, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">&quot;site&quot;</span>, <span class="st">&quot;surveyor&quot;</span>))  <span class="co"># 将第一列分开</span></span></code></pre></div>
+<pre><code>## Warning: Expected 2 pieces. Additional pieces discarded in 6 rows [1,
+## 2, 3, 4, 5, 6].</code></pre>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="7-tidyverse-reshape.html#cb116-1" aria-hidden="true" tabindex="-1"></a>tidy_dt</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 5
+##   site     surveyor species count   dbh
+##   &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;
+## 1 Richmond Sam      A           7   100
+## 2 Richmond Sam      B           2   110
+## 3 Windsor  Ash      A          10    80
+## 4 Windsor  Ash      B           5    87
+## 5 Bilpin   Jules    A           5    95
+## 6 Bilpin   Jules    B           8    90</code></pre>
+<div class="rmdnote">
+<p>数据的变换中，最重要的是区分<strong>变量、观测和值</strong></p>
+<ol style="list-style-type: decimal">
+<li>宽表变长表：<code>pivot_longer()</code>：表比较“宽”，本来应该是值的，却出现在变量名中，此时需要将“值”变换到值中，并新起一个列名（新存为一列）。如上例中，A/B应为specis的值。在看一个例子：</li>
+</ol>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="7-tidyverse-reshape.html#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;datas/new/family.rda&quot;</span>)</span>
+<span id="cb118-2"><a href="7-tidyverse-reshape.html#cb118-2" aria-hidden="true" tabindex="-1"></a>family</span></code></pre></div>
+<pre><code>## # A tibble: 5 x 5
+##   family dob_child1 dob_child2 gender_child1 gender_child2
+##    &lt;int&gt; &lt;date&gt;     &lt;date&gt;             &lt;int&gt;         &lt;int&gt;
+## 1      1 1998-11-26 2000-01-29             1             2
+## 2      2 1996-06-22 NA                     2            NA
+## 3      3 2002-07-11 2004-04-05             2             2
+## 4      4 2004-10-10 2009-08-27             1             1
+## 5      5 2000-12-05 2005-02-28             2             1</code></pre>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="7-tidyverse-reshape.html#cb120-1" aria-hidden="true" tabindex="-1"></a>tidy_family <span class="ot">&lt;-</span> family <span class="sc">%&gt;%</span> </span>
+<span id="cb120-2"><a href="7-tidyverse-reshape.html#cb120-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb120-3"><a href="7-tidyverse-reshape.html#cb120-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="sc">-</span>family,</span>
+<span id="cb120-4"><a href="7-tidyverse-reshape.html#cb120-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;.value&quot;</span>, <span class="st">&quot;child&quot;</span>),</span>
+<span id="cb120-5"><a href="7-tidyverse-reshape.html#cb120-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_sep =</span> <span class="st">&quot;_&quot;</span>,</span>
+<span id="cb120-6"><a href="7-tidyverse-reshape.html#cb120-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_drop_na =</span> <span class="cn">TRUE</span></span>
+<span id="cb120-7"><a href="7-tidyverse-reshape.html#cb120-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb120-8"><a href="7-tidyverse-reshape.html#cb120-8" aria-hidden="true" tabindex="-1"></a>tidy_family</span></code></pre></div>
+<pre><code>## # A tibble: 9 x 4
+##   family child  dob        gender
+##    &lt;int&gt; &lt;chr&gt;  &lt;date&gt;      &lt;int&gt;
+## 1      1 child1 1998-11-26      1
+## 2      1 child2 2000-01-29      2
+## 3      2 child1 1996-06-22      2
+## 4      3 child1 2002-07-11      2
+## 5      3 child2 2004-04-05      2
+## 6      4 child1 2004-10-10      1
+## 7      4 child2 2009-08-27      1
+## 8      5 child1 2000-12-05      2
+## 9      5 child2 2005-02-28      1</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>长表变宽表：有时候需要将分类变量的若干水平值，变成变量名（列名）。看一个例子：</li>
+</ol>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="7-tidyverse-reshape.html#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 例1</span></span>
+<span id="cb122-2"><a href="7-tidyverse-reshape.html#cb122-2" aria-hidden="true" tabindex="-1"></a>us_rent_income <span class="sc">%&gt;%</span> </span>
+<span id="cb122-3"><a href="7-tidyverse-reshape.html#cb122-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb122-4"><a href="7-tidyverse-reshape.html#cb122-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> variable, </span>
+<span id="cb122-5"><a href="7-tidyverse-reshape.html#cb122-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> <span class="fu">c</span>(estimate, moe)</span>
+<span id="cb122-6"><a href="7-tidyverse-reshape.html#cb122-6" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div>
+<pre><code>## # A tibble: 52 x 6
+##    GEOID NAME       estimate_income estimate_rent moe_income moe_rent
+##    &lt;chr&gt; &lt;chr&gt;                &lt;dbl&gt;         &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt;
+##  1 01    Alabama              24476           747        136        3
+##  2 02    Alaska               32940          1200        508       13
+##  3 04    Arizona              27517           972        148        4
+##  4 05    Arkansas             23789           709        165        5
+##  5 06    California           29454          1358        109        3
+##  6 08    Colorado             32401          1125        109        5
+##  7 09    Connectic~           35326          1123        195        5
+##  8 10    Delaware             31560          1076        247       10
+##  9 11    District ~           43198          1424        681       17
+## 10 12    Florida              25952          1077         70        3
+## # ... with 42 more rows</code></pre>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="7-tidyverse-reshape.html#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 例2</span></span>
+<span id="cb124-2"><a href="7-tidyverse-reshape.html#cb124-2" aria-hidden="true" tabindex="-1"></a>contacts <span class="ot">&lt;-</span> <span class="fu">tribble</span>( <span class="sc">~</span>field, <span class="sc">~</span>value,</span>
+<span id="cb124-3"><a href="7-tidyverse-reshape.html#cb124-3" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&quot; 姓名&quot;</span>, <span class="st">&quot; 张三&quot;</span>,</span>
+<span id="cb124-4"><a href="7-tidyverse-reshape.html#cb124-4" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&quot; 公司&quot;</span>, <span class="st">&quot; 百度&quot;</span>,</span>
+<span id="cb124-5"><a href="7-tidyverse-reshape.html#cb124-5" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&quot; 姓名&quot;</span>, <span class="st">&quot; 李四&quot;</span>,</span>
+<span id="cb124-6"><a href="7-tidyverse-reshape.html#cb124-6" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&quot; 公司&quot;</span>, <span class="st">&quot; 腾讯&quot;</span>,</span>
+<span id="cb124-7"><a href="7-tidyverse-reshape.html#cb124-7" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&quot;Email&quot;</span>, <span class="st">&quot;Lisi@163.com&quot;</span>,</span>
+<span id="cb124-8"><a href="7-tidyverse-reshape.html#cb124-8" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&quot; 姓名&quot;</span>, <span class="st">&quot; 王五&quot;</span>)</span>
+<span id="cb124-9"><a href="7-tidyverse-reshape.html#cb124-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-10"><a href="7-tidyverse-reshape.html#cb124-10" aria-hidden="true" tabindex="-1"></a>contacts <span class="ot">&lt;-</span> contacts <span class="sc">%&gt;%</span> </span>
+<span id="cb124-11"><a href="7-tidyverse-reshape.html#cb124-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ID =</span> <span class="fu">cumsum</span>(field <span class="sc">==</span> <span class="st">&quot; 姓名&quot;</span>))</span>
+<span id="cb124-12"><a href="7-tidyverse-reshape.html#cb124-12" aria-hidden="true" tabindex="-1"></a>contacts</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 3
+##   field   value             ID
+##   &lt;chr&gt;   &lt;chr&gt;          &lt;int&gt;
+## 1 &quot; 姓名&quot; &quot; 张三&quot;            1
+## 2 &quot; 公司&quot; &quot; 百度&quot;            1
+## 3 &quot; 姓名&quot; &quot; 李四&quot;            2
+## 4 &quot; 公司&quot; &quot; 腾讯&quot;            2
+## 5 &quot;Email&quot; &quot;Lisi@163.com&quot;     2
+## 6 &quot; 姓名&quot; &quot; 王五&quot;            3</code></pre>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="7-tidyverse-reshape.html#cb126-1" aria-hidden="true" tabindex="-1"></a>contacts_wider <span class="ot">&lt;-</span> contacts <span class="sc">%&gt;%</span> </span>
+<span id="cb126-2"><a href="7-tidyverse-reshape.html#cb126-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb126-3"><a href="7-tidyverse-reshape.html#cb126-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> field,</span>
+<span id="cb126-4"><a href="7-tidyverse-reshape.html#cb126-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> value</span>
+<span id="cb126-5"><a href="7-tidyverse-reshape.html#cb126-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb126-6"><a href="7-tidyverse-reshape.html#cb126-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>ID)</span>
+<span id="cb126-7"><a href="7-tidyverse-reshape.html#cb126-7" aria-hidden="true" tabindex="-1"></a>contacts_wider</span></code></pre></div>
+<pre><code>## # A tibble: 3 x 3
+##   ` 姓名` ` 公司` Email       
+##   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;       
+## 1 &quot; 张三&quot; &quot; 百度&quot; &lt;NA&gt;        
+## 2 &quot; 李四&quot; &quot; 腾讯&quot; Lisi@163.com
+## 3 &quot; 王五&quot;  &lt;NA&gt;   &lt;NA&gt;</code></pre>
+</div>
+</div>
+<div id="综合实例" class="section level2 hasAnchor" number="8.2">
+<h2><span class="header-section-number">8.2</span> 综合实例<a href="7-tidyverse-reshape.html#综合实例" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="7-tidyverse-reshape.html#cb128-1" aria-hidden="true" tabindex="-1"></a>world_bank_pop</span></code></pre></div>
+<pre><code>## # A tibble: 1,056 x 20
+##    country indicator      `2000` `2001` `2002` `2003`  `2004`  `2005`
+##    &lt;chr&gt;   &lt;chr&gt;           &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1 ABW     SP.URB.TOTL    4.24e4 4.30e4 4.37e4 4.42e4 4.47e+4 4.49e+4
+##  2 ABW     SP.URB.GROW    1.18e0 1.41e0 1.43e0 1.31e0 9.51e-1 4.91e-1
+##  3 ABW     SP.POP.TOTL    9.09e4 9.29e4 9.50e4 9.70e4 9.87e+4 1.00e+5
+##  4 ABW     SP.POP.GROW    2.06e0 2.23e0 2.23e0 2.11e0 1.76e+0 1.30e+0
+##  5 AFG     SP.URB.TOTL    4.44e6 4.65e6 4.89e6 5.16e6 5.43e+6 5.69e+6
+##  6 AFG     SP.URB.GROW    3.91e0 4.66e0 5.13e0 5.23e0 5.12e+0 4.77e+0
+##  7 AFG     SP.POP.TOTL    2.01e7 2.10e7 2.20e7 2.31e7 2.41e+7 2.51e+7
+##  8 AFG     SP.POP.GROW    3.49e0 4.25e0 4.72e0 4.82e0 4.47e+0 3.87e+0
+##  9 AGO     SP.URB.TOTL    8.23e6 8.71e6 9.22e6 9.77e6 1.03e+7 1.09e+7
+## 10 AGO     SP.URB.GROW    5.44e0 5.59e0 5.70e0 5.76e0 5.75e+0 5.69e+0
+## # ... with 1,046 more rows, and 12 more variables: `2006` &lt;dbl&gt;,
+## #   `2007` &lt;dbl&gt;, `2008` &lt;dbl&gt;, `2009` &lt;dbl&gt;, `2010` &lt;dbl&gt;,
+## #   `2011` &lt;dbl&gt;, `2012` &lt;dbl&gt;, `2013` &lt;dbl&gt;, `2014` &lt;dbl&gt;,
+## #   `2015` &lt;dbl&gt;, `2016` &lt;dbl&gt;, `2017` &lt;dbl&gt;</code></pre>
+<p>观察world_bank_pop数据可以发现：</p>
+<ul>
+<li><p>年份跨越多个列，其应该是”值“。</p></li>
+<li><p>indicator列中:</p>
+<ul>
+<li>SP.POP.GROW为人口增长，SP.POP.TOTL为总人口。</li>
+<li>SP.URB.GROW为城市人口增长，SP.URB.TOTL为城市总人口。</li>
+<li>这一列应为两个变量：地区（POP和URB）及变量（GROW和TOTL）。</li>
+</ul></li>
+<li><p>根据以上思路对数据进行规整。</p></li>
+</ul>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="7-tidyverse-reshape.html#cb130-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 将年份放入值中作为新的一列</span></span>
+<span id="cb130-2"><a href="7-tidyverse-reshape.html#cb130-2" aria-hidden="true" tabindex="-1"></a>tidy_world_bank_pop <span class="ot">&lt;-</span> world_bank_pop <span class="sc">%&gt;%</span> </span>
+<span id="cb130-3"><a href="7-tidyverse-reshape.html#cb130-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb130-4"><a href="7-tidyverse-reshape.html#cb130-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="sc">-</span><span class="fu">c</span>(country, indicator),</span>
+<span id="cb130-5"><a href="7-tidyverse-reshape.html#cb130-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;year&quot;</span>,</span>
+<span id="cb130-6"><a href="7-tidyverse-reshape.html#cb130-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span></span>
+<span id="cb130-7"><a href="7-tidyverse-reshape.html#cb130-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb130-8"><a href="7-tidyverse-reshape.html#cb130-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb130-9"><a href="7-tidyverse-reshape.html#cb130-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 对indicator列进行处理-SP字符是共用的，可以省去</span></span>
+<span id="cb130-10"><a href="7-tidyverse-reshape.html#cb130-10" aria-hidden="true" tabindex="-1"></a>tidy_world_bank_pop <span class="ot">&lt;-</span> tidy_world_bank_pop <span class="sc">%&gt;%</span> </span>
+<span id="cb130-11"><a href="7-tidyverse-reshape.html#cb130-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(indicator, </span>
+<span id="cb130-12"><a href="7-tidyverse-reshape.html#cb130-12" aria-hidden="true" tabindex="-1"></a>           <span class="at">into =</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="st">&quot;area&quot;</span>, <span class="st">&quot;variable&quot;</span>))</span>
+<span id="cb130-13"><a href="7-tidyverse-reshape.html#cb130-13" aria-hidden="true" tabindex="-1"></a><span class="co"># variable列包含两个分类变量，</span></span>
+<span id="cb130-14"><a href="7-tidyverse-reshape.html#cb130-14" aria-hidden="true" tabindex="-1"></a><span class="co"># 需要将分类变量variable的水平值变为列名，并将value列的值对应上去</span></span>
+<span id="cb130-15"><a href="7-tidyverse-reshape.html#cb130-15" aria-hidden="true" tabindex="-1"></a>tidy_world_bank_pop <span class="ot">&lt;-</span> tidy_world_bank_pop <span class="sc">%&gt;%</span> </span>
+<span id="cb130-16"><a href="7-tidyverse-reshape.html#cb130-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb130-17"><a href="7-tidyverse-reshape.html#cb130-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> variable,</span>
+<span id="cb130-18"><a href="7-tidyverse-reshape.html#cb130-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> value</span>
+<span id="cb130-19"><a href="7-tidyverse-reshape.html#cb130-19" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb130-20"><a href="7-tidyverse-reshape.html#cb130-20" aria-hidden="true" tabindex="-1"></a>tidy_world_bank_pop</span></code></pre></div>
+<pre><code>## # A tibble: 9,504 x 5
+##    country area  year   TOTL    GROW
+##    &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt;   &lt;dbl&gt;
+##  1 ABW     URB   2000  42444  1.18  
+##  2 ABW     URB   2001  43048  1.41  
+##  3 ABW     URB   2002  43670  1.43  
+##  4 ABW     URB   2003  44246  1.31  
+##  5 ABW     URB   2004  44669  0.951 
+##  6 ABW     URB   2005  44889  0.491 
+##  7 ABW     URB   2006  44881 -0.0178
+##  8 ABW     URB   2007  44686 -0.435 
+##  9 ABW     URB   2008  44375 -0.698 
+## 10 ABW     URB   2009  44052 -0.731 
+## # ... with 9,494 more rows</code></pre>
+<p>最终完成规整后的数据：</p>
+<ul>
+<li><p>每一列代表一个变量。</p></li>
+<li><p>每一行为一个观测。</p></li>
+<li><p>每一个值构成一个单元格。</p></li>
+</ul>
+</div>
+<div id="方形化" class="section level2 hasAnchor" number="8.3">
+<h2><span class="header-section-number">8.3</span> 方形化<a href="7-tidyverse-reshape.html#方形化" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><span class="todo">将一个深度嵌套的列表（通常来自JSON和XML）规整为一个整齐的行列数据集。目前暂时不会接触此类型的数据，所以暂不学习。</span></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="37-ggplot2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="8-tidyverse-manipulate1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": {}
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/XiangyunHuang/masr/edit/master/7-tidyverse-reshape.Rmd",
+"text": "编辑"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": "https://github.com/XiangyunHuang/masr/blob/master/7-tidyverse-reshape.Rmd",
+"text": "查看"
+},
+"download": ["elegantbookdown.pdf", "elegantbookdown.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

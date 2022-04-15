@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>第 41 章 探索性数据分析-大学生职业决策 | 基于tidyverse的R语言学习笔记</title>
+  <meta name="description" content="最初看到 elegantbook 做的书籍样式很漂亮，就想把它引入到 bookdown 中，遂定制了此模版。在此基础上，做了迁移和扩展的工作，融合了 LaTeX (精美)、Pandoc (简洁) 和 R (强大) 的特性。This is a bookdown template based on ElegantBook. The output format for this template is bookdown::gitbook and bookdown::pdf_book." />
+  <meta name="generator" content="bookdown 0.25.6 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="第 41 章 探索性数据分析-大学生职业决策 | 基于tidyverse的R语言学习笔记" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="最初看到 elegantbook 做的书籍样式很漂亮，就想把它引入到 bookdown 中，遂定制了此模版。在此基础上，做了迁移和扩展的工作，融合了 LaTeX (精美)、Pandoc (简洁) 和 R (强大) 的特性。This is a bookdown template based on ElegantBook. The output format for this template is bookdown::gitbook and bookdown::pdf_book." />
+  <meta name="github-repo" content="XiangyunHuang/ElegantBookdown" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="第 41 章 探索性数据分析-大学生职业决策 | 基于tidyverse的R语言学习笔记" />
+  
+  <meta name="twitter:description" content="最初看到 elegantbook 做的书籍样式很漂亮，就想把它引入到 bookdown 中，遂定制了此模版。在此基础上，做了迁移和扩展的工作，融合了 LaTeX (精美)、Pandoc (简洁) 和 R (强大) 的特性。This is a bookdown template based on ElegantBook. The output format for this template is bookdown::gitbook and bookdown::pdf_book." />
+  
+
+<meta name="author" content="李凯" />
+
+
+<meta name="date" content="2022-04-15" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="40-eda-penguins.html"/>
+<link rel="next" href="42-eda-ames-houseprice.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
+<script src="libs/str_view-binding-1.4.0/str_view.js"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      TeX: {
+        Macros: {
+          bm: ["{\\boldsymbol #1}",1],
+        },
+        extensions: ["cancel.js"]
+      }
+    });
+</script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">基于tidyverse的R语言学习笔记</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>简介</a>
+<ul>
+<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#custom-block"><i class="fa fa-check"></i><b>0.1</b> 自定义 block</a></li>
+<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#sec:example"><i class="fa fa-check"></i><b>0.2</b> 简单实例</a>
+<ul>
+<li class="chapter" data-level="0.2.1" data-path="index.html"><a href="index.html#例0.1-计算并绘制roc曲线"><i class="fa fa-check"></i><b>0.2.1</b> 例0.1 计算并绘制ROC曲线</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>I 基础</b></span></li>
+<li class="chapter" data-level="1" data-path="1-intro.html"><a href="1-intro.html"><i class="fa fa-check"></i><b>1</b> R语言基础语法</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="1-intro.html"><a href="1-intro.html#函数"><i class="fa fa-check"></i><b>1.1</b> 函数</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="1-intro.html"><a href="1-intro.html#向量的函数"><i class="fa fa-check"></i><b>1.1.1</b> 向量的函数</a></li>
+<li class="chapter" data-level="1.1.2" data-path="1-intro.html"><a href="1-intro.html#自定义函数"><i class="fa fa-check"></i><b>1.1.2</b> 自定义函数</a></li>
+<li class="chapter" data-level="1.1.3" data-path="1-intro.html"><a href="1-intro.html#条件语句"><i class="fa fa-check"></i><b>1.1.3</b> 条件语句</a></li>
+<li class="chapter" data-level="1.1.4" data-path="1-intro.html"><a href="1-intro.html#返回多个结果"><i class="fa fa-check"></i><b>1.1.4</b> 返回多个结果</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="1-intro.html"><a href="1-intro.html#增强型数据框"><i class="fa fa-check"></i><b>1.2</b> 增强型数据框</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="2-factor.html"><a href="2-factor.html"><i class="fa fa-check"></i><b>2</b> 因子</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="2-factor.html"><a href="2-factor.html#创建因子"><i class="fa fa-check"></i><b>2.1</b> 创建因子</a></li>
+<li class="chapter" data-level="2.2" data-path="2-factor.html"><a href="2-factor.html#有用函数"><i class="fa fa-check"></i><b>2.2</b> 有用函数</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="3-str-date.html"><a href="3-str-date.html"><i class="fa fa-check"></i><b>3</b> 字符串和时间日期</a></li>
+<li class="chapter" data-level="4" data-path="4-re.html"><a href="4-re.html"><i class="fa fa-check"></i><b>4</b> 正则表达式</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="4-re.html"><a href="4-re.html#使用正则表达式进行模式匹配"><i class="fa fa-check"></i><b>4.1</b> 使用正则表达式进行模式匹配</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="4-re.html"><a href="4-re.html#基础匹配"><i class="fa fa-check"></i><b>4.1.1</b> 基础匹配</a></li>
+<li class="chapter" data-level="4.1.2" data-path="4-re.html"><a href="4-re.html#分组与回溯"><i class="fa fa-check"></i><b>4.1.2</b> 分组与回溯</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="4-re.html"><a href="4-re.html#解决实际问题"><i class="fa fa-check"></i><b>4.2</b> 解决实际问题</a></li>
+<li class="chapter" data-level="4.3" data-path="4-re.html"><a href="4-re.html#案例分析"><i class="fa fa-check"></i><b>4.3</b> 案例分析</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="4-re.html"><a href="4-re.html#案例1"><i class="fa fa-check"></i><b>4.3.1</b> 案例1</a></li>
+<li class="chapter" data-level="4.3.2" data-path="4-re.html"><a href="4-re.html#案例2"><i class="fa fa-check"></i><b>4.3.2</b> 案例2</a></li>
+<li class="chapter" data-level="4.3.3" data-path="4-re.html"><a href="4-re.html#案例三"><i class="fa fa-check"></i><b>4.3.3</b> 案例三</a></li>
+<li class="chapter" data-level="4.3.4" data-path="4-re.html"><a href="4-re.html#案例4"><i class="fa fa-check"></i><b>4.3.4</b> 案例4</a></li>
+<li class="chapter" data-level="4.3.5" data-path="4-re.html"><a href="4-re.html#案例5"><i class="fa fa-check"></i><b>4.3.5</b> 案例5</a></li>
+<li class="chapter" data-level="4.3.6" data-path="4-re.html"><a href="4-re.html#案例6"><i class="fa fa-check"></i><b>4.3.6</b> 案例6</a></li>
+<li class="chapter" data-level="4.3.7" data-path="4-re.html"><a href="4-re.html#案例7"><i class="fa fa-check"></i><b>4.3.7</b> 案例7</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>II 数据操作</b></span></li>
+<li class="chapter" data-level="" data-path="5-tidyverse-readr.html"><a href="5-tidyverse-readr.html"><i class="fa fa-check"></i>tidyverse简介</a></li>
+<li class="chapter" data-level="5" data-path="5-tidyverse-readr.html"><a href="5-tidyverse-readr.html#tidyverse-readr"><i class="fa fa-check"></i><b>5</b> 数据读写</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="5-tidyverse-readr.html"><a href="5-tidyverse-readr.html#数据读入"><i class="fa fa-check"></i><b>5.1</b> 数据读入</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="5-tidyverse-readr.html"><a href="5-tidyverse-readr.html#例1多个文件数据读取后合并"><i class="fa fa-check"></i><b>5.1.1</b> 例1：多个文件数据读取后合并</a></li>
+<li class="chapter" data-level="5.1.2" data-path="5-tidyverse-readr.html"><a href="5-tidyverse-readr.html#例2一个excel中多个sheet表的读取合并"><i class="fa fa-check"></i><b>5.1.2</b> 例2：一个excel中多个sheet表的读取合并</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="5-tidyverse-readr.html"><a href="5-tidyverse-readr.html#数据写出"><i class="fa fa-check"></i><b>5.2</b> 数据写出</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="6-tidyverse-join.html"><a href="6-tidyverse-join.html"><i class="fa fa-check"></i><b>6</b> 数据连接</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="6-tidyverse-join.html"><a href="6-tidyverse-join.html#合并行列"><i class="fa fa-check"></i><b>6.1</b> 合并行/列</a></li>
+<li class="chapter" data-level="6.2" data-path="6-tidyverse-join.html"><a href="6-tidyverse-join.html#多个数据表连接"><i class="fa fa-check"></i><b>6.2</b> 多个数据表连接</a></li>
+<li class="chapter" data-level="6.3" data-path="6-tidyverse-join.html"><a href="6-tidyverse-join.html#集合运算"><i class="fa fa-check"></i><b>6.3</b> 集合运算</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="37-ggplot2.html"><a href="37-ggplot2.html"><i class="fa fa-check"></i><b>7</b> ggplot2</a></li>
+<li class="chapter" data-level="8" data-path="7-tidyverse-reshape.html"><a href="7-tidyverse-reshape.html"><i class="fa fa-check"></i><b>8</b> 数据重塑</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="7-tidyverse-reshape.html"><a href="7-tidyverse-reshape.html#什么是整洁的数据"><i class="fa fa-check"></i><b>8.1</b> 什么是整洁的数据</a></li>
+<li class="chapter" data-level="8.2" data-path="7-tidyverse-reshape.html"><a href="7-tidyverse-reshape.html#综合实例"><i class="fa fa-check"></i><b>8.2</b> 综合实例</a></li>
+<li class="chapter" data-level="8.3" data-path="7-tidyverse-reshape.html"><a href="7-tidyverse-reshape.html#方形化"><i class="fa fa-check"></i><b>8.3</b> 方形化</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="8-tidyverse-manipulate1.html"><a href="8-tidyverse-manipulate1.html"><i class="fa fa-check"></i><b>9</b> 数据操作-part1</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="8-tidyverse-manipulate1.html"><a href="8-tidyverse-manipulate1.html#基本数据操作"><i class="fa fa-check"></i><b>9.1</b> 基本数据操作</a></li>
+<li class="chapter" data-level="9.2" data-path="8-tidyverse-manipulate1.html"><a href="8-tidyverse-manipulate1.html#其它数据操作"><i class="fa fa-check"></i><b>9.2</b> 其它数据操作</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="8-tidyverse-manipulate1.html"><a href="8-tidyverse-manipulate1.html#按行汇总"><i class="fa fa-check"></i><b>9.2.1</b> 按行汇总</a></li>
+<li class="chapter" data-level="9.2.2" data-path="8-tidyverse-manipulate1.html"><a href="8-tidyverse-manipulate1.html#整洁计算"><i class="fa fa-check"></i><b>9.2.2</b> 整洁计算</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="9-tidyverse-manipulate2.html"><a href="9-tidyverse-manipulate2.html"><i class="fa fa-check"></i><b>10</b> 数据操作-part2</a></li>
+<li class="chapter" data-level="11" data-path="10-tidyverse-extra.html"><a href="10-tidyverse-extra.html"><i class="fa fa-check"></i><b>11</b> 其它数据操作</a></li>
+<li class="part"><span><b>III 建模</b></span></li>
+<li class="chapter" data-level="12" data-path="11-tidystats_sampling.html"><a href="11-tidystats_sampling.html"><i class="fa fa-check"></i><b>12</b> 模拟与抽样1</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="11-tidystats_sampling.html"><a href="11-tidystats_sampling.html#模拟"><i class="fa fa-check"></i><b>12.1</b> 模拟</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="11-tidystats_sampling.html"><a href="11-tidystats_sampling.html#生成随机数"><i class="fa fa-check"></i><b>12.1.1</b> 生成随机数</a></li>
+<li class="chapter" data-level="12.1.2" data-path="11-tidystats_sampling.html"><a href="11-tidystats_sampling.html#生成多元正态分布"><i class="fa fa-check"></i><b>12.1.2</b> 生成多元正态分布[^]</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="11-tidystats_sampling.html"><a href="11-tidystats_sampling.html#抽样与样本"><i class="fa fa-check"></i><b>12.2</b> 抽样与样本</a></li>
+<li class="chapter" data-level="12.3" data-path="11-tidystats_sampling.html"><a href="11-tidystats_sampling.html#让统计分析透明-重现infer基于模拟的假设检验"><i class="fa fa-check"></i><b>12.3</b> 让统计分析透明-重现infer基于模拟的假设检验</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="11-tidystats_sampling.html"><a href="11-tidystats_sampling.html#使用tidyverse重复infer的过程"><i class="fa fa-check"></i><b>12.3.1</b> 使用tidyverse重复infer的过程</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html"><i class="fa fa-check"></i><b>13</b> 线性回归</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#从案例开始"><i class="fa fa-check"></i><b>13.1</b> 从案例开始</a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#缺失值检查"><i class="fa fa-check"></i><b>13.1.1</b> 缺失值检查</a></li>
+<li class="chapter" data-level="13.1.2" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#简单变量统计"><i class="fa fa-check"></i><b>13.1.2</b> 简单变量统计</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#线性归回模型"><i class="fa fa-check"></i><b>13.2</b> 线性归回模型</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#长得高挣得多"><i class="fa fa-check"></i><b>13.2.1</b> 长得高挣得多</a></li>
+<li class="chapter" data-level="13.2.2" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#使用lm函数拟合线性回归模型"><i class="fa fa-check"></i><b>13.2.2</b> 使用lm()函数拟合线性回归模型</a></li>
+<li class="chapter" data-level="13.2.3" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#模型的解释"><i class="fa fa-check"></i><b>13.2.3</b> 模型的解释</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#多元线性回归"><i class="fa fa-check"></i><b>13.3</b> 多元线性回归</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="13-tidymodel-broom.html"><a href="13-tidymodel-broom.html"><i class="fa fa-check"></i><b>14</b> 结果整合</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="13-tidymodel-broom.html"><a href="13-tidymodel-broom.html#案例"><i class="fa fa-check"></i><b>14.1</b> 案例</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="13-tidymodel-broom.html"><a href="13-tidymodel-broom.html#可视化探索"><i class="fa fa-check"></i><b>14.1.1</b> 可视化探索</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="14-tidymodel-t-test.html"><a href="14-tidymodel-t-test.html"><i class="fa fa-check"></i><b>15</b> 双样本t检验</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="14-tidymodel-t-test.html"><a href="14-tidymodel-t-test.html#实验设计"><i class="fa fa-check"></i><b>15.1</b> 实验设计</a></li>
+<li class="chapter" data-level="15.2" data-path="14-tidymodel-t-test.html"><a href="14-tidymodel-t-test.html#提问"><i class="fa fa-check"></i><b>15.2</b> 提问</a>
+<ul>
+<li class="chapter" data-level="15.2.1" data-path="14-tidymodel-t-test.html"><a href="14-tidymodel-t-test.html#不同性别企鹅的bill_length_mm嘴峰长度是否相同"><i class="fa fa-check"></i><b>15.2.1</b> 不同性别企鹅的bill_length_mm（嘴峰长度）是否相同？</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="15-tidymodel-avo.html"><a href="15-tidymodel-avo.html"><i class="fa fa-check"></i><b>16</b> avo-方差分析</a></li>
+<li class="chapter" data-level="17" data-path="16-tidymodel-as-linear.html"><a href="16-tidymodel-as-linear.html"><i class="fa fa-check"></i><b>17</b> 统计检验与线性模型</a></li>
+<li class="chapter" data-level="18" data-path="17-tidymodel-lmm.html"><a href="17-tidymodel-lmm.html"><i class="fa fa-check"></i><b>18</b> 多层线性模型</a></li>
+<li class="chapter" data-level="19" data-path="18-tidymodel-poisson-regression.html"><a href="18-tidymodel-poisson-regression.html"><i class="fa fa-check"></i><b>19</b> 广义线性模型</a></li>
+<li class="chapter" data-level="20" data-path="19-tidymodel-logistic-regression.html"><a href="19-tidymodel-logistic-regression.html"><i class="fa fa-check"></i><b>20</b> logistic回归模型</a></li>
+<li class="chapter" data-level="21" data-path="20-tidymodel-ordinal.html"><a href="20-tidymodel-ordinal.html"><i class="fa fa-check"></i><b>21</b> 有序logistic回归</a></li>
+<li class="part"><span><b>IV tidymodels包篇</b></span></li>
+<li class="chapter" data-level="22" data-path="21-meching-leanrning-tidymodels.html"><a href="21-meching-leanrning-tidymodels.html"><i class="fa fa-check"></i><b>22</b> 机器学习</a>
+<ul>
+<li class="chapter" data-level="22.1" data-path="21-meching-leanrning-tidymodels.html"><a href="21-meching-leanrning-tidymodels.html#数据"><i class="fa fa-check"></i><b>22.1</b> 数据</a></li>
+<li class="chapter" data-level="22.2" data-path="21-meching-leanrning-tidymodels.html"><a href="21-meching-leanrning-tidymodels.html#机器学习"><i class="fa fa-check"></i><b>22.2</b> 机器学习</a></li>
+</ul></li>
+<li class="part"><span><b>V bayesian篇</b></span></li>
+<li class="chapter" data-level="23" data-path="22-bayesian-inference.html"><a href="22-bayesian-inference.html"><i class="fa fa-check"></i><b>23</b> 贝叶斯推断</a>
+<ul>
+<li class="chapter" data-level="23.1" data-path="22-bayesian-inference.html"><a href="22-bayesian-inference.html#一个简单的贝叶斯推断实例-学生身高分布"><i class="fa fa-check"></i><b>23.1</b> 一个简单的贝叶斯推断实例-学生身高分布</a></li>
+<li class="chapter" data-level="23.2" data-path="22-bayesian-inference.html"><a href="22-bayesian-inference.html#一个简单的贝叶斯推断实例-推断"><i class="fa fa-check"></i><b>23.2</b> 一个简单的贝叶斯推断实例-推断</a></li>
+</ul></li>
+<li class="chapter" data-level="24" data-path="23-bayesian-intro-stan.html"><a href="23-bayesian-intro-stan.html"><i class="fa fa-check"></i><b>24</b> stan入门</a></li>
+<li class="chapter" data-level="25" data-path="24-bayesian-intro-lm.html"><a href="24-bayesian-intro-lm.html"><i class="fa fa-check"></i><b>25</b> 贝叶斯线性回归</a></li>
+<li class="chapter" data-level="26" data-path="25-bayesian-t-test.html"><a href="25-bayesian-t-test.html"><i class="fa fa-check"></i><b>26</b> 贝叶斯假设检验</a></li>
+<li class="chapter" data-level="27" data-path="26-bayesian-glm.html"><a href="26-bayesian-glm.html"><i class="fa fa-check"></i><b>27</b> 贝叶斯广义线性模型</a></li>
+<li class="chapter" data-level="28" data-path="27-bayesian-hierarchical.html"><a href="27-bayesian-hierarchical.html"><i class="fa fa-check"></i><b>28</b> 贝叶斯层级模型</a></li>
+<li class="chapter" data-level="29" data-path="28-bayesian-mixtures.html"><a href="28-bayesian-mixtures.html"><i class="fa fa-check"></i><b>29</b> 贝叶斯混合模型</a></li>
+<li class="chapter" data-level="30" data-path="29-bayesian-categorical.html"><a href="29-bayesian-categorical.html"><i class="fa fa-check"></i><b>30</b> 贝叶斯分类模型</a></li>
+<li class="chapter" data-level="31" data-path="30-bayesian-workflow.html"><a href="30-bayesian-workflow.html"><i class="fa fa-check"></i><b>31</b> 贝叶斯工作流程</a></li>
+<li class="chapter" data-level="32" data-path="31-bayesian-vaccine-effectiveness.html"><a href="31-bayesian-vaccine-effectiveness.html"><i class="fa fa-check"></i><b>32</b> 贝叶斯分析案例-新冠疫苗有效率的计算</a></li>
+<li class="chapter" data-level="33" data-path="32-bayesian-tokyo-olympics-100m.html"><a href="32-bayesian-tokyo-olympics-100m.html"><i class="fa fa-check"></i><b>33</b> 贝叶斯分析案例-预测奥运会男子100米短跑成绩</a></li>
+<li class="part"><span><b>VI 应用篇</b></span></li>
+<li class="chapter" data-level="34" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html"><i class="fa fa-check"></i><b>34</b> 探索性数据分析-诺奖获得者</a>
+<ul>
+<li class="chapter" data-level="34.1" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#探索性"><i class="fa fa-check"></i><b>34.1</b> 探索性</a></li>
+<li class="chapter" data-level="34.2" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#数据集"><i class="fa fa-check"></i><b>34.2</b> 数据集</a></li>
+<li class="chapter" data-level="34.3" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#导入数据"><i class="fa fa-check"></i><b>34.3</b> 导入数据</a></li>
+<li class="chapter" data-level="34.4" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#数据结构"><i class="fa fa-check"></i><b>34.4</b> 数据结构</a></li>
+<li class="chapter" data-level="34.5" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#确定想探索的问题"><i class="fa fa-check"></i><b>34.5</b> 确定想探索的问题</a>
+<ul>
+<li class="chapter" data-level="34.5.1" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#每个学科获奖次数"><i class="fa fa-check"></i><b>34.5.1</b> 每个学科获奖次数</a></li>
+<li class="chapter" data-level="34.5.2" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#我国科学家获奖情况"><i class="fa fa-check"></i><b>34.5.2</b> 我国科学家获奖情况</a></li>
+<li class="chapter" data-level="34.5.3" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#哪些人多次获奖"><i class="fa fa-check"></i><b>34.5.3</b> 哪些人多次获奖</a></li>
+<li class="chapter" data-level="34.5.4" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#获奖人年龄"><i class="fa fa-check"></i><b>34.5.4</b> 获奖人年龄</a></li>
+<li class="chapter" data-level="34.5.5" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#性别比例"><i class="fa fa-check"></i><b>34.5.5</b> 性别比例</a></li>
+<li class="chapter" data-level="34.5.6" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#获奖人出生年代"><i class="fa fa-check"></i><b>34.5.6</b> 获奖人出生年代</a></li>
+<li class="chapter" data-level="34.5.7" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#最年轻的诺奖获得者"><i class="fa fa-check"></i><b>34.5.7</b> 最年轻的诺奖获得者</a></li>
+<li class="chapter" data-level="34.5.8" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#平均年龄和各领域获奖数量"><i class="fa fa-check"></i><b>34.5.8</b> 平均年龄和各领域获奖数量</a></li>
+</ul></li>
+<li class="chapter" data-level="34.6" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#地图"><i class="fa fa-check"></i><b>34.6</b> 地图</a>
+<ul>
+<li class="chapter" data-level="34.6.1" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#出生地和工作地不一样的占比"><i class="fa fa-check"></i><b>34.6.1</b> 出生地和工作地不一样的占比</a></li>
+<li class="chapter" data-level="34.6.2" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#共同获奖人"><i class="fa fa-check"></i><b>34.6.2</b> 共同获奖人</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="35" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html"><i class="fa fa-check"></i><b>35</b> 探索性数据分析-奥林匹克</a>
+<ul>
+<li class="chapter" data-level="35.1" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#导入数据-1"><i class="fa fa-check"></i><b>35.1</b> 导入数据</a></li>
+<li class="chapter" data-level="35.2" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#可视化"><i class="fa fa-check"></i><b>35.2</b> 可视化</a></li>
+<li class="chapter" data-level="35.3" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#回归分析"><i class="fa fa-check"></i><b>35.3</b> 回归分析</a></li>
+<li class="chapter" data-level="35.4" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#预测"><i class="fa fa-check"></i><b>35.4</b> 预测</a></li>
+<li class="chapter" data-level="35.5" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#再次可视化"><i class="fa fa-check"></i><b>35.5</b> 再次可视化</a></li>
+<li class="chapter" data-level="35.6" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#section"><i class="fa fa-check"></i><b>35.6</b> </a></li>
+</ul></li>
+<li class="chapter" data-level="36" data-path="35-eda-covid2019.html"><a href="35-eda-covid2019.html"><i class="fa fa-check"></i><b>36</b> 探索性数据分析-新冠疫情</a>
+<ul>
+<li class="chapter" data-level="36.1" data-path="35-eda-covid2019.html"><a href="35-eda-covid2019.html#数据来源"><i class="fa fa-check"></i><b>36.1</b> 数据来源</a></li>
+<li class="chapter" data-level="36.2" data-path="35-eda-covid2019.html"><a href="35-eda-covid2019.html#读取数据"><i class="fa fa-check"></i><b>36.2</b> 读取数据</a></li>
+<li class="chapter" data-level="36.3" data-path="35-eda-covid2019.html"><a href="35-eda-covid2019.html#数据清洗规整"><i class="fa fa-check"></i><b>36.3</b> 数据清洗规整</a></li>
+<li class="chapter" data-level="36.4" data-path="35-eda-covid2019.html"><a href="35-eda-covid2019.html#可视化探索-1"><i class="fa fa-check"></i><b>36.4</b> 可视化探索</a></li>
+</ul></li>
+<li class="chapter" data-level="37" data-path="36-eda-anscombe.html"><a href="36-eda-anscombe.html"><i class="fa fa-check"></i><b>37</b> 探索性数据分析-anscombe数据集</a>
+<ul>
+<li class="chapter" data-level="37.1" data-path="36-eda-anscombe.html"><a href="36-eda-anscombe.html#规整数据"><i class="fa fa-check"></i><b>37.1</b> 规整数据</a></li>
+<li class="chapter" data-level="37.2" data-path="36-eda-anscombe.html"><a href="36-eda-anscombe.html#统计"><i class="fa fa-check"></i><b>37.2</b> 统计</a></li>
+<li class="chapter" data-level="37.3" data-path="36-eda-anscombe.html"><a href="36-eda-anscombe.html#建模"><i class="fa fa-check"></i><b>37.3</b> 建模</a></li>
+<li class="chapter" data-level="37.4" data-path="36-eda-anscombe.html"><a href="36-eda-anscombe.html#可视化-1"><i class="fa fa-check"></i><b>37.4</b> 可视化</a></li>
+</ul></li>
+<li class="chapter" data-level="38" data-path="38-eda-height.html"><a href="38-eda-height.html"><i class="fa fa-check"></i><b>38</b> 探索性数据分析-身高体重关系</a>
+<ul>
+<li class="chapter" data-level="38.1" data-path="38-eda-height.html"><a href="38-eda-height.html#可视化-2"><i class="fa fa-check"></i><b>38.1</b> 可视化</a>
+<ul>
+<li class="chapter" data-level="38.1.1" data-path="38-eda-height.html"><a href="38-eda-height.html#不同性别的身高分布-普通方法"><i class="fa fa-check"></i><b>38.1.1</b> 不同性别的身高分布-普通方法</a></li>
+<li class="chapter" data-level="38.1.2" data-path="38-eda-height.html"><a href="38-eda-height.html#不同性别的身高分布-高级方法"><i class="fa fa-check"></i><b>38.1.2</b> 不同性别的身高分布-高级方法</a></li>
+<li class="chapter" data-level="38.1.3" data-path="38-eda-height.html"><a href="38-eda-height.html#不同性别的体重分布"><i class="fa fa-check"></i><b>38.1.3</b> 不同性别的体重分布</a></li>
+</ul></li>
+<li class="chapter" data-level="38.2" data-path="38-eda-height.html"><a href="38-eda-height.html#建模-1"><i class="fa fa-check"></i><b>38.2</b> 建模</a>
+<ul>
+<li class="chapter" data-level="38.2.1" data-path="38-eda-height.html"><a href="38-eda-height.html#身高体重的散点图"><i class="fa fa-check"></i><b>38.2.1</b> 身高体重的散点图</a></li>
+<li class="chapter" data-level="38.2.2" data-path="38-eda-height.html"><a href="38-eda-height.html#建立身高体重线性模型"><i class="fa fa-check"></i><b>38.2.2</b> 建立身高体重线性模型</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="39" data-path="39-eda-caribou.html"><a href="39-eda-caribou.html"><i class="fa fa-check"></i><b>39</b> 探索性数据分析-驯鹿迁移</a>
+<ul>
+<li class="chapter" data-level="39.1" data-path="39-eda-caribou.html"><a href="39-eda-caribou.html#数据录入"><i class="fa fa-check"></i><b>39.1</b> 数据录入</a></li>
+<li class="chapter" data-level="39.2" data-path="39-eda-caribou.html"><a href="39-eda-caribou.html#驯鹿身份信息"><i class="fa fa-check"></i><b>39.2</b> 驯鹿身份信息</a></li>
+</ul></li>
+<li class="chapter" data-level="40" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html"><i class="fa fa-check"></i><b>40</b> 探索性数据分析-企鹅的故事</a>
+<ul>
+<li class="chapter" data-level="40.1" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#数据录入-1"><i class="fa fa-check"></i><b>40.1</b> 数据录入</a>
+<ul>
+<li class="chapter" data-level="40.1.1" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#变量含义"><i class="fa fa-check"></i><b>40.1.1</b> 变量含义</a></li>
+</ul></li>
+<li class="chapter" data-level="40.2" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#数据清洗"><i class="fa fa-check"></i><b>40.2</b> 数据清洗</a></li>
+<li class="chapter" data-level="40.3" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#探索性分析"><i class="fa fa-check"></i><b>40.3</b> 探索性分析</a>
+<ul>
+<li class="chapter" data-level="40.3.1" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#每种类型的企鹅有多少只"><i class="fa fa-check"></i><b>40.3.1</b> 每种类型的企鹅有多少只</a></li>
+<li class="chapter" data-level="40.3.2" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#每种类型企鹅各种属性的均值和分布"><i class="fa fa-check"></i><b>40.3.2</b> 每种类型企鹅各种属性的均值和分布</a></li>
+<li class="chapter" data-level="40.3.3" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#嘴峰长度和深度的关联"><i class="fa fa-check"></i><b>40.3.3</b> 嘴峰长度和深度的关联</a></li>
+<li class="chapter" data-level="40.3.4" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#体重与翅膀长度的关联"><i class="fa fa-check"></i><b>40.3.4</b> 体重与翅膀长度的关联？</a></li>
+<li class="chapter" data-level="40.3.5" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#性别与不同体征信息的关系-建立模型"><i class="fa fa-check"></i><b>40.3.5</b> 性别与不同体征信息的关系-建立模型</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="41" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html"><i class="fa fa-check"></i><b>41</b> 探索性数据分析-大学生职业决策</a>
+<ul>
+<li class="chapter" data-level="41.1" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#预备知识"><i class="fa fa-check"></i><b>41.1</b> 预备知识</a></li>
+<li class="chapter" data-level="41.2" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#正式开始"><i class="fa fa-check"></i><b>41.2</b> 正式开始</a>
+<ul>
+<li class="chapter" data-level="41.2.1" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#检查缺失值"><i class="fa fa-check"></i><b>41.2.1</b> 检查缺失值</a></li>
+<li class="chapter" data-level="41.2.2" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#数据预处理"><i class="fa fa-check"></i><b>41.2.2</b> 数据预处理</a></li>
+<li class="chapter" data-level="41.2.3" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#标准化数据"><i class="fa fa-check"></i><b>41.2.3</b> 标准化数据</a></li>
+</ul></li>
+<li class="chapter" data-level="41.3" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#探索数据"><i class="fa fa-check"></i><b>41.3</b> 探索数据</a>
+<ul>
+<li class="chapter" data-level="41.3.1" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#想探索的问题"><i class="fa fa-check"></i><b>41.3.1</b> 想探索的问题</a></li>
+<li class="chapter" data-level="41.3.2" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#不同性别年纪生源地专业下各指标的分布差异"><i class="fa fa-check"></i><b>41.3.2</b> 不同性别、年纪、生源地、专业下，各指标的分布差异</a></li>
+<li class="chapter" data-level="41.3.3" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#来自不同地方的学生在职业探索上的不同"><i class="fa fa-check"></i><b>41.3.3</b> 来自不同地方的学生在职业探索上的不同</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="42" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html"><i class="fa fa-check"></i><b>42</b> 探索性数据分析-ames房价预测</a>
+<ul>
+<li class="chapter" data-level="42.1" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#探索设想"><i class="fa fa-check"></i><b>42.1</b> 探索设想</a></li>
+<li class="chapter" data-level="42.2" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#变量选取"><i class="fa fa-check"></i><b>42.2</b> 变量选取</a></li>
+<li class="chapter" data-level="42.3" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#缺失值处理"><i class="fa fa-check"></i><b>42.3</b> 缺失值处理</a></li>
+<li class="chapter" data-level="42.4" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#数据预处理-1"><i class="fa fa-check"></i><b>42.4</b> 数据预处理</a>
+<ul>
+<li class="chapter" data-level="42.4.1" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#标准化vs对数化"><i class="fa fa-check"></i><b>42.4.1</b> 标准化vs对数化</a></li>
+</ul></li>
+<li class="chapter" data-level="42.5" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#正式开始探索"><i class="fa fa-check"></i><b>42.5</b> 正式开始探索</a>
+<ul>
+<li class="chapter" data-level="42.5.1" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#各地区房屋价格均值"><i class="fa fa-check"></i><b>42.5.1</b> 各地区房屋价格均值</a></li>
+<li class="chapter" data-level="42.5.2" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#房屋价格与占地面积"><i class="fa fa-check"></i><b>42.5.2</b> 房屋价格与占地面积</a></li>
+<li class="chapter" data-level="42.5.3" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#房屋价格与房屋居住面积"><i class="fa fa-check"></i><b>42.5.3</b> 房屋价格与房屋居住面积</a></li>
+<li class="chapter" data-level="42.5.4" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#车库与房屋价格"><i class="fa fa-check"></i><b>42.5.4</b> 车库与房屋价格</a></li>
+</ul></li>
+<li class="chapter" data-level="42.6" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#建模-2"><i class="fa fa-check"></i><b>42.6</b> 建模</a></li>
+</ul></li>
+<li class="chapter" data-level="43" data-path="50-R-practise.html"><a href="50-R-practise.html"><i class="fa fa-check"></i><b>43</b> 练习</a>
+<ul>
+<li class="chapter" data-level="43.1" data-path="50-R-practise.html"><a href="50-R-practise.html#旋转数据框"><i class="fa fa-check"></i><b>43.1</b> 1-旋转数据框</a></li>
+<li class="chapter" data-level="43.2" data-path="50-R-practise.html"><a href="50-R-practise.html#排序"><i class="fa fa-check"></i><b>43.2</b> 2-排序</a></li>
+<li class="chapter" data-level="43.3" data-path="50-R-practise.html"><a href="50-R-practise.html#统计并筛选"><i class="fa fa-check"></i><b>43.3</b> 3-统计并筛选</a></li>
+<li class="chapter" data-level="43.4" data-path="50-R-practise.html"><a href="50-R-practise.html#按条件分组"><i class="fa fa-check"></i><b>43.4</b> 4-按条件分组</a></li>
+<li class="chapter" data-level="43.5" data-path="50-R-practise.html"><a href="50-R-practise.html#section-1"><i class="fa fa-check"></i><b>43.5</b> </a></li>
+</ul></li>
+<li class="appendix"><span><b>附录</b></span></li>
+<li class="chapter" data-level="A" data-path="999-appendix.html"><a href="999-appendix.html"><i class="fa fa-check"></i><b>A</b> 附录-有趣的“懒人”包</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="999-appendix.html"><a href="999-appendix.html#自动生成正则表达式"><i class="fa fa-check"></i><b>A.1</b> 自动生成正则表达式</a></li>
+<li class="chapter" data-level="A.2" data-path="999-appendix.html"><a href="999-appendix.html#janitor包"><i class="fa fa-check"></i><b>A.2</b> <span>janitor包</span></a>
+<ul>
+<li class="chapter" data-level="A.2.1" data-path="999-appendix.html"><a href="999-appendix.html#整理列名"><i class="fa fa-check"></i><b>A.2.1</b> 整理列名</a></li>
+<li class="chapter" data-level="A.2.2" data-path="999-appendix.html"><a href="999-appendix.html#统计分析"><i class="fa fa-check"></i><b>A.2.2</b> 统计分析</a></li>
+<li class="chapter" data-level="A.2.3" data-path="999-appendix.html"><a href="999-appendix.html#查看指定列有重复的行"><i class="fa fa-check"></i><b>A.2.3</b> 查看指定列有重复的行</a></li>
+</ul></li>
+<li class="chapter" data-level="A.3" data-path="999-appendix.html"><a href="999-appendix.html#自动生成模型公式"><i class="fa fa-check"></i><b>A.3</b> <span>自动生成模型公式</span></a></li>
+<li class="chapter" data-level="A.4" data-path="999-appendix.html"><a href="999-appendix.html#自动生成论文报告"><i class="fa fa-check"></i><b>A.4</b> <span>自动生成论文报告</span></a></li>
+<li class="chapter" data-level="A.5" data-path="999-appendix.html"><a href="999-appendix.html#自动评估模型"><i class="fa fa-check"></i><b>A.5</b> <span>自动评估模型</span></a></li>
+<li class="chapter" data-level="A.6" data-path="999-appendix.html"><a href="999-appendix.html#自动生成统计表格"><i class="fa fa-check"></i><b>A.6</b> <span>自动生成统计表格</span></a></li>
+<li class="chapter" data-level="A.7" data-path="999-appendix.html"><a href="999-appendix.html#把统计结果写在图上"><i class="fa fa-check"></i><b>A.7</b> <span>把统计结果写在图上</span></a></li>
+<li class="chapter" data-level="A.8" data-path="999-appendix.html"><a href="999-appendix.html#画图配色"><i class="fa fa-check"></i><b>A.8</b> 画图配色</a>
+<ul>
+<li class="chapter" data-level="A.8.1" data-path="999-appendix.html"><a href="999-appendix.html#第三方主题-ggthem"><i class="fa fa-check"></i><b>A.8.1</b> 第三方主题-<span>ggthem</span></a></li>
+<li class="chapter" data-level="A.8.2" data-path="999-appendix.html"><a href="999-appendix.html#画图颜色-scales"><i class="fa fa-check"></i><b>A.8.2</b> 画图颜色-<span>scales</span></a></li>
+</ul></li>
+<li class="chapter" data-level="A.9" data-path="999-appendix.html"><a href="999-appendix.html#其它有用的包"><i class="fa fa-check"></i><b>A.9</b> 其它有用的包</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="998-references.html"><a href="998-references.html"><i class="fa fa-check"></i>参考文献</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">基于tidyverse的R语言学习笔记</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="eda-career-decision" class="section level1 hasAnchor" number="41">
+<h1><span class="header-section-number">第 41 章</span> 探索性数据分析-大学生职业决策<a href="41-eda-career-decision.html#eda-career-decision" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="预备知识" class="section level2 hasAnchor" number="41.1">
+<h2><span class="header-section-number">41.1</span> 预备知识<a href="41-eda-career-decision.html#预备知识" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb378"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb378-1"><a href="41-eda-career-decision.html#cb378-1" aria-hidden="true" tabindex="-1"></a>example <span class="ot">&lt;-</span></span>
+<span id="cb378-2"><a href="41-eda-career-decision.html#cb378-2" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
+<span id="cb378-3"><a href="41-eda-career-decision.html#cb378-3" aria-hidden="true" tabindex="-1"></a>    <span class="sc">~</span>name, <span class="sc">~</span>english, <span class="sc">~</span>chinese, <span class="sc">~</span>math, <span class="sc">~</span>sport, <span class="sc">~</span>psy, <span class="sc">~</span>edu,</span>
+<span id="cb378-4"><a href="41-eda-career-decision.html#cb378-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;A&quot;</span>, <span class="dv">133</span>, <span class="dv">100</span>, <span class="dv">102</span>, <span class="dv">56</span>, <span class="dv">89</span>, <span class="dv">89</span>,</span>
+<span id="cb378-5"><a href="41-eda-career-decision.html#cb378-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;B&quot;</span>, <span class="dv">120</span>, <span class="dv">120</span>, <span class="dv">86</span>, <span class="dv">88</span>, <span class="dv">45</span>, <span class="dv">75</span>,</span>
+<span id="cb378-6"><a href="41-eda-career-decision.html#cb378-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;C&quot;</span>, <span class="dv">98</span>, <span class="dv">109</span>, <span class="dv">114</span>, <span class="dv">87</span>, <span class="cn">NA</span>, <span class="dv">84</span>,</span>
+<span id="cb378-7"><a href="41-eda-career-decision.html#cb378-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;D&quot;</span>, <span class="dv">120</span>, <span class="dv">78</span>, <span class="dv">106</span>, <span class="dv">68</span>, <span class="dv">86</span>, <span class="dv">69</span>,</span>
+<span id="cb378-8"><a href="41-eda-career-decision.html#cb378-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;E&quot;</span>, <span class="dv">110</span>, <span class="dv">99</span>, <span class="dv">134</span>, <span class="dv">98</span>, <span class="dv">75</span>, <span class="dv">70</span>,</span>
+<span id="cb378-9"><a href="41-eda-career-decision.html#cb378-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;F&quot;</span>, <span class="cn">NA</span>, <span class="dv">132</span>, <span class="dv">130</span>, <span class="cn">NA</span>, <span class="dv">68</span>, <span class="dv">88</span></span>
+<span id="cb378-10"><a href="41-eda-career-decision.html#cb378-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb378-11"><a href="41-eda-career-decision.html#cb378-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb378-12"><a href="41-eda-career-decision.html#cb378-12" aria-hidden="true" tabindex="-1"></a>example</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 7
+##   name  english chinese  math sport   psy   edu
+##   &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 A         133     100   102    56    89    89
+## 2 B         120     120    86    88    45    75
+## 3 C          98     109   114    87    NA    84
+## 4 D         120      78   106    68    86    69
+## 5 E         110      99   134    98    75    70
+## 6 F          NA     132   130    NA    68    88</code></pre>
+<div class="sourceCode" id="cb380"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb380-1"><a href="41-eda-career-decision.html#cb380-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 检查缺失值情况</span></span>
+<span id="cb380-2"><a href="41-eda-career-decision.html#cb380-2" aria-hidden="true" tabindex="-1"></a>example <span class="sc">%&gt;%</span></span>
+<span id="cb380-3"><a href="41-eda-career-decision.html#cb380-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), <span class="sc">~</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(.x)))) <span class="sc">%&gt;%</span></span>
+<span id="cb380-4"><a href="41-eda-career-decision.html#cb380-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb380-5"><a href="41-eda-career-decision.html#cb380-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">everything</span>(),</span>
+<span id="cb380-6"><a href="41-eda-career-decision.html#cb380-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;subject&quot;</span>,</span>
+<span id="cb380-7"><a href="41-eda-career-decision.html#cb380-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;NA&quot;</span></span>
+<span id="cb380-8"><a href="41-eda-career-decision.html#cb380-8" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<pre><code>## # A tibble: 7 x 2
+##   subject  `NA`
+##   &lt;chr&gt;   &lt;int&gt;
+## 1 name        0
+## 2 english     1
+## 3 chinese     0
+## 4 math        0
+## 5 sport       1
+## 6 psy         1
+## 7 edu         0</code></pre>
+<div class="sourceCode" id="cb382"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb382-1"><a href="41-eda-career-decision.html#cb382-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 预处理-丢弃缺失值</span></span>
+<span id="cb382-2"><a href="41-eda-career-decision.html#cb382-2" aria-hidden="true" tabindex="-1"></a>example <span class="sc">%&gt;%</span></span>
+<span id="cb382-3"><a href="41-eda-career-decision.html#cb382-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>()</span></code></pre></div>
+<pre><code>## # A tibble: 4 x 7
+##   name  english chinese  math sport   psy   edu
+##   &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 A         133     100   102    56    89    89
+## 2 B         120     120    86    88    45    75
+## 3 D         120      78   106    68    86    69
+## 4 E         110      99   134    98    75    70</code></pre>
+<div class="sourceCode" id="cb384"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb384-1"><a href="41-eda-career-decision.html#cb384-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 预处理-使用均值代替缺失值</span></span>
+<span id="cb384-2"><a href="41-eda-career-decision.html#cb384-2" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> example <span class="sc">%&gt;%</span></span>
+<span id="cb384-3"><a href="41-eda-career-decision.html#cb384-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb384-4"><a href="41-eda-career-decision.html#cb384-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(</span>
+<span id="cb384-5"><a href="41-eda-career-decision.html#cb384-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">where</span>(is.numeric),</span>
+<span id="cb384-6"><a href="41-eda-career-decision.html#cb384-6" aria-hidden="true" tabindex="-1"></a>      <span class="sc">~</span> <span class="fu">if_else</span>(<span class="fu">is.na</span>(.),</span>
+<span id="cb384-7"><a href="41-eda-career-decision.html#cb384-7" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mean</span>(., <span class="at">na.rm =</span> T),</span>
+<span id="cb384-8"><a href="41-eda-career-decision.html#cb384-8" aria-hidden="true" tabindex="-1"></a>        .</span>
+<span id="cb384-9"><a href="41-eda-career-decision.html#cb384-9" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb384-10"><a href="41-eda-career-decision.html#cb384-10" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb384-11"><a href="41-eda-career-decision.html#cb384-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb384-12"><a href="41-eda-career-decision.html#cb384-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 预处理-计算总分和均分</span></span>
+<span id="cb384-13"><a href="41-eda-career-decision.html#cb384-13" aria-hidden="true" tabindex="-1"></a>d <span class="sc">%&gt;%</span></span>
+<span id="cb384-14"><a href="41-eda-career-decision.html#cb384-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb384-15"><a href="41-eda-career-decision.html#cb384-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb384-16"><a href="41-eda-career-decision.html#cb384-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">total =</span> <span class="fu">sum</span>(<span class="fu">c_across</span>(<span class="sc">-</span>name)),</span>
+<span id="cb384-17"><a href="41-eda-career-decision.html#cb384-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean =</span> <span class="fu">mean</span>(<span class="fu">c_across</span>(<span class="sc">-</span>name))</span>
+<span id="cb384-18"><a href="41-eda-career-decision.html#cb384-18" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb384-19"><a href="41-eda-career-decision.html#cb384-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(name, total, mean)</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 3
+## # Rowwise: 
+##   name  total  mean
+##   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 A      569   163.
+## 2 B      534   153.
+## 3 C      565.  161.
+## 4 D      527   151.
+## 5 E      586   167.
+## 6 F      614.  175.</code></pre>
+<div class="sourceCode" id="cb386"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb386-1"><a href="41-eda-career-decision.html#cb386-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 预处理-数据标准化</span></span>
+<span id="cb386-2"><a href="41-eda-career-decision.html#cb386-2" aria-hidden="true" tabindex="-1"></a>standard <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb386-3"><a href="41-eda-career-decision.html#cb386-3" aria-hidden="true" tabindex="-1"></a>  (x <span class="sc">-</span> <span class="fu">mean</span>(x)) <span class="sc">/</span> <span class="fu">sd</span>(x)</span>
+<span id="cb386-4"><a href="41-eda-career-decision.html#cb386-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb386-5"><a href="41-eda-career-decision.html#cb386-5" aria-hidden="true" tabindex="-1"></a>d <span class="sc">%&gt;%</span></span>
+<span id="cb386-6"><a href="41-eda-career-decision.html#cb386-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb386-7"><a href="41-eda-career-decision.html#cb386-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(<span class="fu">where</span>(is.numeric), standard)</span>
+<span id="cb386-8"><a href="41-eda-career-decision.html#cb386-8" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 7
+##   name  english chinese   math  sport    psy    edu
+##   &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+## 1 A       1.44   -0.339 -0.555 -1.54   1.04   1.10 
+## 2 B       0.326   0.731 -1.44   0.566 -1.75  -0.464
+## 3 C      -1.56    0.143  0.111  0.500  0      0.538
+## 4 D       0.326  -1.51  -0.333 -0.750  0.852 -1.13 
+## 5 E      -0.531  -0.392  1.22   1.22   0.153 -1.02 
+## 6 F       0       1.37   0.999  0     -0.292  0.984</code></pre>
+</div>
+<div id="正式开始" class="section level2 hasAnchor" number="41.2">
+<h2><span class="header-section-number">41.2</span> 正式开始<a href="41-eda-career-decision.html#正式开始" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>我们观察数据发现有一些需要注意的地方。</p>
+<table>
+<colgroup>
+<col width="11%" />
+<col width="32%" />
+<col width="55%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>事项</th>
+<th>问题</th>
+<th>解决办法</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>文件名</td>
+<td>excel的文件名是中文</td>
+<td>用英文，比如 <code>data.xlsx</code></td>
+</tr>
+<tr class="even">
+<td>列名</td>
+<td>列名中有-号，大小写不统一</td>
+<td>规范列名，或用<code>janitor::clean_names()</code>偷懒</td>
+</tr>
+<tr class="odd">
+<td>预处理</td>
+<td>直接在原始数据中新增</td>
+<td>不要在原始数据上改动，统计工作可以在R里实现</td>
+</tr>
+<tr class="even">
+<td>文件管理</td>
+<td>没有层级</td>
+<td>新建<code>data</code>文件夹装数据，与<code>code.Rmd</code>并列</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb388"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb388-1"><a href="41-eda-career-decision.html#cb388-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">&quot;datas/career-decision.xlsx&quot;</span>,</span>
+<span id="cb388-2"><a href="41-eda-career-decision.html#cb388-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">skip =</span> <span class="dv">1</span></span>
+<span id="cb388-3"><a href="41-eda-career-decision.html#cb388-3" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span> <span class="co"># 跳过第一行</span></span>
+<span id="cb388-4"><a href="41-eda-career-decision.html#cb388-4" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb388-5"><a href="41-eda-career-decision.html#cb388-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">61</span>)</span></code></pre></div>
+<pre><code>## Warning in FUN(X[[i]], ...): strings not representable in native
+## encoding will be translated to UTF-8</code></pre>
+<pre><code>## Warning in FUN(X[[i]], ...): unable to translate &#39;&lt;U+00C4&gt;&#39; to native
+## encoding</code></pre>
+<pre><code>## Warning in FUN(X[[i]], ...): unable to translate &#39;&lt;U+00D6&gt;&#39; to native
+## encoding</code></pre>
+<pre><code>## Warning in FUN(X[[i]], ...): unable to translate &#39;&lt;U+00E4&gt;&#39; to native
+## encoding</code></pre>
+<pre><code>## Warning in FUN(X[[i]], ...): unable to translate &#39;&lt;U+00F6&gt;&#39; to native
+## encoding</code></pre>
+<pre><code>## Warning in FUN(X[[i]], ...): unable to translate &#39;&lt;U+00DF&gt;&#39; to native
+## encoding</code></pre>
+<pre><code>## Warning in FUN(X[[i]], ...): unable to translate &#39;&lt;U+00C6&gt;&#39; to native
+## encoding</code></pre>
+<pre><code>## Warning in FUN(X[[i]], ...): unable to translate &#39;&lt;U+00E6&gt;&#39; to native
+## encoding</code></pre>
+<pre><code>## Warning in FUN(X[[i]], ...): unable to translate &#39;&lt;U+00D8&gt;&#39; to native
+## encoding</code></pre>
+<pre><code>## Warning in FUN(X[[i]], ...): unable to translate &#39;&lt;U+00F8&gt;&#39; to native
+## encoding</code></pre>
+<pre><code>## Warning in FUN(X[[i]], ...): unable to translate &#39;&lt;U+00C5&gt;&#39; to native
+## encoding</code></pre>
+<pre><code>## Warning in FUN(X[[i]], ...): unable to translate &#39;&lt;U+00E5&gt;&#39; to native
+## encoding</code></pre>
+<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="41-eda-career-decision.html#cb401-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(data)</span></code></pre></div>
+<pre><code>## Rows: 304
+## Columns: 61
+## $ sex   &lt;dbl&gt; 1, 1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1,~
+## $ majoy &lt;dbl&gt; 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 4, 1, 4, 2, 4, 4, 4,~
+## $ grade &lt;dbl&gt; 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,~
+## $ from  &lt;dbl&gt; 2, 1, 2, 1, 1, 3, 3, 1, 3, 2, 3, 1, 1, 1, 2, 3, 2, 1,~
+## $ z1    &lt;dbl&gt; 3, 2, 5, 3, 3, 3, 3, 3, 2, 3, 3, 2, 4, 1, 4, 4, 4, 4,~
+## $ z2    &lt;dbl&gt; 2, 2, 3, 1, 2, 3, 1, 3, 2, 4, 3, 2, 2, 1, 4, 3, 2, 3,~
+## $ z3    &lt;dbl&gt; 2, 2, 3, 1, 3, 3, 2, 2, 3, 4, 4, 2, 4, 2, 3, 4, 2, 3,~
+## $ z4    &lt;dbl&gt; 2, 2, 3, 3, 2, 3, 1, 4, 4, 4, 3, 3, 4, 2, 4, 4, 3, 4,~
+## $ z5    &lt;dbl&gt; 2, 2, 4, 2, 4, 3, 1, 4, 4, 4, 4, 3, 4, 2, 4, 4, 3, 4,~
+## $ z6    &lt;dbl&gt; 3, 4, 4, 4, 4, 4, 4, 4, 5, 4, 4, 4, 4, 3, 4, 4, 4, 5,~
+## $ z7    &lt;dbl&gt; 2, 2, 3, 1, 2, 4, 1, 2, 2, 4, 2, 3, 4, 1, 3, 3, 3, 3,~
+## $ z8    &lt;dbl&gt; 3, 3, 4, 3, 3, 5, 4, 4, 4, 4, 4, 4, 4, 3, 4, 4, 4, 5,~
+## $ z9    &lt;dbl&gt; 3, 4, 4, 4, 2, 5, 4, 2, 4, 3, 4, 4, 4, 3, 4, 4, 4, 5,~
+## $ z10   &lt;dbl&gt; 3, 3, 4, 4, 3, 4, 4, 3, 4, 4, 4, 4, 4, 2, 4, 4, 4, 5,~
+## $ z11   &lt;dbl&gt; 3, 2, 4, 3, 3, 4, 3, 3, 3, 4, 4, 4, 4, 1, 3, 3, 4, 4,~
+## $ z12   &lt;dbl&gt; 2, 1, 3, 2, 2, 3, 1, 4, 1, 3, 2, 4, 4, 3, 4, 3, 3, 2,~
+## $ z13   &lt;dbl&gt; 2, 2, 3, 3, 4, 3, 2, 3, 1, 4, 2, 4, 4, 1, 4, 3, 3, 2,~
+## $ z14   &lt;dbl&gt; 1, 2, 3, 3, 3, 3, 1, 4, 1, 4, 2, 4, 4, 1, 4, 3, 3, 4,~
+## $ z15   &lt;dbl&gt; 2, 2, 4, 1, 3, 3, 1, 4, 4, 3, 3, 3, 4, 2, 4, 4, 3, 4,~
+## $ z16   &lt;dbl&gt; 2, 1, 3, 1, 2, 3, 1, 3, 2, 4, 2, 4, 3, 1, 3, 3, 2, 4,~
+## $ z17   &lt;dbl&gt; 3, 2, 3, 3, 3, 3, 1, 3, 3, 4, 3, 3, 4, 2, 3, 4, 2, 4,~
+## $ z18   &lt;dbl&gt; 2, 2, 3, 3, 2, 3, 1, 2, 2, 3, 2, 2, 4, 2, 3, 4, 3, 2,~
+## $ j1    &lt;dbl&gt; 3, 2, 3, 3, 3, 3, 2, 3, 3, 3, 2, 3, 4, 2, 4, 5, 4, 4,~
+## $ j2    &lt;dbl&gt; 2, 2, 4, 3, 3, 3, 2, 3, 3, 3, 3, 4, 4, 2, 3, 4, 4, 4,~
+## $ j3    &lt;dbl&gt; 2, 2, 4, 2, 2, 3, 3, 3, 3, 4, 3, 3, 4, 2, 3, 4, 3, 2,~
+## $ j4    &lt;dbl&gt; 3, 2, 4, 2, 3, 3, 2, 3, 2, 3, 4, 3, 4, 2, 2, 3, 2, 2,~
+## $ j5    &lt;dbl&gt; 3, 2, 4, 2, 4, 3, 2, 3, 4, 4, 5, 4, 4, 2, 3, 3, 2, 2,~
+## $ j6    &lt;dbl&gt; 3, 2, 3, 4, 4, 3, 2, 3, 3, 3, 3, 4, 4, 2, 2, 4, 4, 2,~
+## $ j7    &lt;dbl&gt; 2, 2, 3, 2, 3, 3, 1, 2, 3, 4, 4, 3, 3, 3, 4, 2, 4, 2,~
+## $ j8    &lt;dbl&gt; 3, 2, 4, 3, 4, 3, 2, 3, 4, 4, 4, 3, 4, 2, 3, 4, 4, 2,~
+## $ j9    &lt;dbl&gt; 2, 2, 4, 2, 3, 3, 2, 3, 3, 3, 4, 4, 4, 2, 3, 4, 4, 2,~
+## $ j10   &lt;dbl&gt; 3, 2, 3, 4, 3, 4, 1, 3, 3, 4, 4, 4, 4, 2, 3, 4, 4, 3,~
+## $ j11   &lt;dbl&gt; 3, 2, 4, 2, 2, 3, 2, 3, 3, 4, 4, 4, 3, 2, 3, 4, 4, 3,~
+## $ j12   &lt;dbl&gt; 2, 2, 4, 4, 3, 4, 2, 3, 3, 4, 4, 4, 4, 2, 2, 3, 3, 2,~
+## $ j13   &lt;dbl&gt; 2, 2, 4, 3, 3, 3, 1, 4, 2, 3, 4, 4, 4, 2, 2, 4, 3, 3,~
+## $ j14   &lt;dbl&gt; 2, 2, 3, 3, 2, 2, 4, 2, 2, 4, 2, 3, 4, 3, 2, 4, 3, 3,~
+## $ j15   &lt;dbl&gt; 2, 2, 3, 2, 2, 3, 2, 4, 3, 5, 4, 3, 3, 2, 3, 3, 3, 3,~
+## $ j16   &lt;dbl&gt; 2, 2, 3, 2, 3, 2, 2, 3, 3, 5, 4, 3, 4, 2, 3, 4, 4, 3,~
+## $ j17   &lt;dbl&gt; 3, 1, 3, 3, 2, 3, 3, 2, 4, 4, 2, 3, 4, 3, 4, 4, 4, 4,~
+## $ j18   &lt;dbl&gt; 3, 2, 3, 4, 4, 4, 3, 4, 4, 4, 4, 4, 4, 3, 4, 4, 4, 4,~
+## $ j19   &lt;dbl&gt; 3, 2, 4, 3, 3, 3, 2, 3, 3, 3, 4, 3, 4, 2, 3, 4, 4, 4,~
+## $ j20   &lt;dbl&gt; 2, 3, 3, 4, 3, 4, 5, 4, 4, 4, 4, 4, 3, 3, 4, 4, 3, 4,~
+## $ j21   &lt;dbl&gt; 3, 2, 4, 3, 4, 4, 2, 3, 4, 4, 4, 4, 4, 2, 3, 4, 4, 4,~
+## $ j22   &lt;dbl&gt; 3, 2, 3, 3, 2, 2, 2, 3, 3, 2, 2, 3, 3, 2, 4, 3, 4, 3,~
+## $ j23   &lt;dbl&gt; 4, 3, 4, 2, 3, 2, 1, 3, 3, 2, 2, 4, 2, 2, 3, 3, 3, 3,~
+## $ j24   &lt;dbl&gt; 4, 3, 4, 4, 2, 3, 2, 3, 2, 4, 4, 4, 4, 3, 3, 3, 4, 3,~
+## $ j25   &lt;dbl&gt; 2, 2, 3, 3, 3, 2, 3, 3, 2, 3, 4, 4, 3, 3, 3, 4, 4, 4,~
+## $ j26   &lt;dbl&gt; 2, 2, 4, 4, 3, 3, 3, 4, 3, 4, 4, 4, 4, 2, 2, 4, 4, 4,~
+## $ j27   &lt;dbl&gt; 3, 3, 3, 3, 2, 3, 4, 2, 5, 4, 2, 4, 4, 3, 3, 4, 4, 3,~
+## $ j28   &lt;dbl&gt; 2, 2, 4, 3, 3, 4, 4, 3, 3, 4, 4, 4, 4, 2, 4, 3, 4, 4,~
+## $ j29   &lt;dbl&gt; 2, 2, 4, 4, 3, 3, 2, 3, 3, 3, 4, 4, 4, 2, 3, 4, 4, 2,~
+## $ j30   &lt;dbl&gt; 3, 2, 4, 3, 4, 4, 3, 3, 5, 3, 4, 4, 4, 2, 4, 4, 3, 3,~
+## $ j31   &lt;dbl&gt; 3, 2, 2, 4, 3, 3, 3, 2, 4, 2, 3, 4, 4, 2, 3, 4, 4, 2,~
+## $ j32   &lt;dbl&gt; 3, 2, 4, 2, 3, 3, 3, 2, 3, 2, 4, 3, 4, 2, 3, 4, 4, 2,~
+## $ j33   &lt;dbl&gt; 2, 2, 4, 3, 3, 3, 2, 4, 3, 4, 4, 4, 4, 2, 3, 3, 4, 4,~
+## $ j34   &lt;dbl&gt; 2, 2, 4, 2, 2, 3, 3, 3, 4, 4, 2, 4, 4, 2, 3, 4, 4, 3,~
+## $ j35   &lt;dbl&gt; 3, 3, 2, 3, 3, 3, 3, 2, 2, 4, 4, 5, 4, 3, 4, 4, 5, 3,~
+## $ j36   &lt;dbl&gt; 3, 3, 4, 3, 3, 4, 4, 3, 5, 4, 4, 4, 4, 4, 3, 4, 4, 4,~
+## $ j37   &lt;dbl&gt; 2, 2, 3, 2, 4, 4, 2, 2, 3, 3, 4, 2, 4, 2, 4, 4, 4, 3,~
+## $ j38   &lt;dbl&gt; 3, 2, 4, 3, 3, 4, 3, 3, 4, 3, 3, 2, 4, 2, 2, 4, 4, 2,~
+## $ j39   &lt;dbl&gt; 2, 2, 4, 2, 3, 3, 2, 3, 3, 3, 4, 3, 3, 2, 2, 4, 3, 2,~</code></pre>
+<div id="检查缺失值" class="section level3 hasAnchor" number="41.2.1">
+<h3><span class="header-section-number">41.2.1</span> 检查缺失值<a href="41-eda-career-decision.html#检查缺失值" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="41-eda-career-decision.html#cb403-1" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
+<span id="cb403-2"><a href="41-eda-career-decision.html#cb403-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb403-3"><a href="41-eda-career-decision.html#cb403-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(<span class="fu">everything</span>(), <span class="sc">~</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(.)))</span>
+<span id="cb403-4"><a href="41-eda-career-decision.html#cb403-4" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb403-5"><a href="41-eda-career-decision.html#cb403-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb403-6"><a href="41-eda-career-decision.html#cb403-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">everything</span>(),</span>
+<span id="cb403-7"><a href="41-eda-career-decision.html#cb403-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;subject&quot;</span>,</span>
+<span id="cb403-8"><a href="41-eda-career-decision.html#cb403-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;NAs&quot;</span></span>
+<span id="cb403-9"><a href="41-eda-career-decision.html#cb403-9" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<pre><code>## # A tibble: 61 x 2
+##    subject   NAs
+##    &lt;chr&gt;   &lt;int&gt;
+##  1 sex         0
+##  2 majoy       0
+##  3 grade       0
+##  4 from        0
+##  5 z1          0
+##  6 z2          0
+##  7 z3          0
+##  8 z4          0
+##  9 z5          0
+## 10 z6          0
+## # ... with 51 more rows</code></pre>
+<p>发现没有缺失值，我们继续下一步。</p>
+</div>
+<div id="数据预处理" class="section level3 hasAnchor" number="41.2.2">
+<h3><span class="header-section-number">41.2.2</span> 数据预处理<a href="41-eda-career-decision.html#数据预处理" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>采用<a href="https://baike.baidu.com/item/%E6%9D%8E%E5%85%8B%E7%89%B9%E9%87%8F%E8%A1%A8/2282414?fr=aladdin#2">李克特式5点计分</a></p>
+<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="41-eda-career-decision.html#cb405-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb405-2"><a href="41-eda-career-decision.html#cb405-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb405-3"><a href="41-eda-career-decision.html#cb405-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb405-4"><a href="41-eda-career-decision.html#cb405-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">environment_exploration =</span> <span class="fu">sum</span>(<span class="fu">c_across</span>(z1<span class="sc">:</span>z5)),</span>
+<span id="cb405-5"><a href="41-eda-career-decision.html#cb405-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">self_exploration =</span> <span class="fu">sum</span>(<span class="fu">c_across</span>(z6<span class="sc">:</span>z9)),</span>
+<span id="cb405-6"><a href="41-eda-career-decision.html#cb405-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">objective_system_exploration =</span> <span class="fu">sum</span>(<span class="fu">c_across</span>(z10<span class="sc">:</span>z15)),</span>
+<span id="cb405-7"><a href="41-eda-career-decision.html#cb405-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">info_quantity_exploration =</span> <span class="fu">sum</span>(<span class="fu">c_across</span>(z16<span class="sc">:</span>z18)),</span>
+<span id="cb405-8"><a href="41-eda-career-decision.html#cb405-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">self_evaluation =</span> <span class="fu">sum</span>(<span class="fu">c_across</span>(j1<span class="sc">:</span>j6)),</span>
+<span id="cb405-9"><a href="41-eda-career-decision.html#cb405-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">information_collection =</span> <span class="fu">sum</span>(<span class="fu">c_across</span>(j7<span class="sc">:</span>j15)),</span>
+<span id="cb405-10"><a href="41-eda-career-decision.html#cb405-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">target_select =</span> <span class="fu">sum</span>(<span class="fu">c_across</span>(j16<span class="sc">:</span>j24)),</span>
+<span id="cb405-11"><a href="41-eda-career-decision.html#cb405-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">formulate =</span> <span class="fu">sum</span>(<span class="fu">c_across</span>(j25<span class="sc">:</span>j32)),</span>
+<span id="cb405-12"><a href="41-eda-career-decision.html#cb405-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">problem_solving =</span> <span class="fu">sum</span>(<span class="fu">c_across</span>(j33<span class="sc">:</span>j39)),</span>
+<span id="cb405-13"><a href="41-eda-career-decision.html#cb405-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">career_exploration =</span> <span class="fu">sum</span>(<span class="fu">c_across</span>(z1<span class="sc">:</span>z18)),</span>
+<span id="cb405-14"><a href="41-eda-career-decision.html#cb405-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">career_decision_making =</span> <span class="fu">sum</span>(<span class="fu">c_across</span>(j1<span class="sc">:</span>j39))</span>
+<span id="cb405-15"><a href="41-eda-career-decision.html#cb405-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb405-16"><a href="41-eda-career-decision.html#cb405-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">starts_with</span>(<span class="st">&quot;z&quot;</span>), <span class="sc">-</span><span class="fu">starts_with</span>(<span class="st">&quot;j&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb405-17"><a href="41-eda-career-decision.html#cb405-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb405-18"><a href="41-eda-career-decision.html#cb405-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pid =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>(), <span class="at">.before =</span> sex) <span class="sc">%&gt;%</span> </span>
+<span id="cb405-19"><a href="41-eda-career-decision.html#cb405-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb405-20"><a href="41-eda-career-decision.html#cb405-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(<span class="fu">c</span>(pid, sex, majoy, grade, from), as_factor)</span>
+<span id="cb405-21"><a href="41-eda-career-decision.html#cb405-21" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb405-22"><a href="41-eda-career-decision.html#cb405-22" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(d)</span></code></pre></div>
+<pre><code>## Rows: 304
+## Columns: 16
+## $ pid                          &lt;fct&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,~
+## $ sex                          &lt;fct&gt; 1, 1, 2, 2, 2, 1, 1, 1, 1, 1, ~
+## $ majoy                        &lt;fct&gt; 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, ~
+## $ grade                        &lt;fct&gt; 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, ~
+## $ from                         &lt;fct&gt; 2, 1, 2, 1, 1, 3, 3, 1, 3, 2, ~
+## $ environment_exploration      &lt;dbl&gt; 11, 10, 18, 10, 14, 15, 8, 16,~
+## $ self_exploration             &lt;dbl&gt; 11, 13, 15, 12, 11, 18, 13, 12~
+## $ objective_system_exploration &lt;dbl&gt; 13, 12, 21, 16, 18, 20, 12, 21~
+## $ info_quantity_exploration    &lt;dbl&gt; 7, 5, 9, 7, 7, 9, 3, 8, 7, 11,~
+## $ self_evaluation              &lt;dbl&gt; 16, 12, 22, 16, 19, 18, 13, 18~
+## $ information_collection       &lt;dbl&gt; 21, 18, 32, 25, 25, 28, 17, 27~
+## $ target_select                &lt;dbl&gt; 27, 20, 31, 28, 26, 27, 22, 28~
+## $ formulate                    &lt;dbl&gt; 20, 17, 28, 26, 24, 25, 25, 22~
+## $ problem_solving              &lt;dbl&gt; 17, 16, 25, 18, 21, 24, 19, 20~
+## $ career_exploration           &lt;dbl&gt; 42, 40, 63, 45, 50, 62, 36, 57~
+## $ career_decision_making       &lt;dbl&gt; 101, 83, 138, 113, 115, 122, 9~</code></pre>
+</div>
+<div id="标准化数据" class="section level3 hasAnchor" number="41.2.3">
+<h3><span class="header-section-number">41.2.3</span> 标准化数据<a href="41-eda-career-decision.html#标准化数据" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb407"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb407-1"><a href="41-eda-career-decision.html#cb407-1" aria-hidden="true" tabindex="-1"></a>standard <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb407-2"><a href="41-eda-career-decision.html#cb407-2" aria-hidden="true" tabindex="-1"></a>  (x <span class="sc">-</span> <span class="fu">mean</span>(x)) <span class="sc">/</span> <span class="fu">sd</span>(x)</span>
+<span id="cb407-3"><a href="41-eda-career-decision.html#cb407-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb407-4"><a href="41-eda-career-decision.html#cb407-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb407-5"><a href="41-eda-career-decision.html#cb407-5" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> d <span class="sc">%&gt;%</span> </span>
+<span id="cb407-6"><a href="41-eda-career-decision.html#cb407-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb407-7"><a href="41-eda-career-decision.html#cb407-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(<span class="fu">where</span>(is.numeric), standard)</span>
+<span id="cb407-8"><a href="41-eda-career-decision.html#cb407-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb407-9"><a href="41-eda-career-decision.html#cb407-9" aria-hidden="true" tabindex="-1"></a>d</span></code></pre></div>
+<pre><code>## # A tibble: 304 x 16
+##    pid   sex   majoy grade from  environment_explor~ self_exploration
+##    &lt;fct&gt; &lt;fct&gt; &lt;fct&gt; &lt;fct&gt; &lt;fct&gt;               &lt;dbl&gt;            &lt;dbl&gt;
+##  1 1     1     4     4     2                 -1.63             -1.58 
+##  2 2     1     4     4     1                 -1.87             -0.723
+##  3 3     2     4     4     2                  0.0802            0.132
+##  4 4     2     4     4     1                 -1.87             -1.15 
+##  5 5     2     4     4     1                 -0.895            -1.58 
+##  6 6     1     1     4     3                 -0.651             1.41 
+##  7 7     1     4     4     3                 -2.36             -0.723
+##  8 8     1     4     4     1                 -0.407            -1.15 
+##  9 9     1     4     4     3                 -0.651             0.132
+## 10 10    1     4     4     2                  0.324             0.132
+## # ... with 294 more rows, and 9 more variables:
+## #   objective_system_exploration &lt;dbl&gt;,
+## #   info_quantity_exploration &lt;dbl&gt;, self_evaluation &lt;dbl&gt;,
+## #   information_collection &lt;dbl&gt;, target_select &lt;dbl&gt;,
+## #   formulate &lt;dbl&gt;, problem_solving &lt;dbl&gt;,
+## #   career_exploration &lt;dbl&gt;, career_decision_making &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<div id="探索数据" class="section level2 hasAnchor" number="41.3">
+<h2><span class="header-section-number">41.3</span> 探索数据<a href="41-eda-career-decision.html#探索数据" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="想探索的问题" class="section level3 hasAnchor" number="41.3.1">
+<h3><span class="header-section-number">41.3.1</span> 想探索的问题<a href="41-eda-career-decision.html#想探索的问题" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: decimal">
+<li><p>不同性别（或者年级，生源地，专业）下，各指标分值的差异性</p></li>
+<li><p>两个变量的相关分析和回归分析</p></li>
+</ol>
+</div>
+<div id="不同性别年纪生源地专业下各指标的分布差异" class="section level3 hasAnchor" number="41.3.2">
+<h3><span class="header-section-number">41.3.2</span> 不同性别、年纪、生源地、专业下，各指标的分布差异<a href="41-eda-career-decision.html#不同性别年纪生源地专业下各指标的分布差异" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: decimal">
+<li>性别：因为性别变量是男女，仅仅2组，所以检查男女在各自指标上的均值差异，可以用T检验。</li>
+</ol>
+<div class="sourceCode" id="cb409"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb409-1"><a href="41-eda-career-decision.html#cb409-1" aria-hidden="true" tabindex="-1"></a>d <span class="sc">%&gt;%</span> </span>
+<span id="cb409-2"><a href="41-eda-career-decision.html#cb409-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sex) <span class="sc">%&gt;%</span> </span>
+<span id="cb409-3"><a href="41-eda-career-decision.html#cb409-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb409-4"><a href="41-eda-career-decision.html#cb409-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(<span class="fu">where</span>(is.numeric), mean)</span>
+<span id="cb409-5"><a href="41-eda-career-decision.html#cb409-5" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<pre><code>## # A tibble: 2 x 12
+##   sex   environment_exploration self_exploration objective_system_ex~
+##   &lt;fct&gt;                   &lt;dbl&gt;            &lt;dbl&gt;                &lt;dbl&gt;
+## 1 1                      -0.147          -0.0829               -0.180
+## 2 2                       0.165           0.0933                0.202
+## # ... with 8 more variables: info_quantity_exploration &lt;dbl&gt;,
+## #   self_evaluation &lt;dbl&gt;, information_collection &lt;dbl&gt;,
+## #   target_select &lt;dbl&gt;, formulate &lt;dbl&gt;, problem_solving &lt;dbl&gt;,
+## #   career_exploration &lt;dbl&gt;, career_decision_making &lt;dbl&gt;</code></pre>
+<div class="sourceCode" id="cb411"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb411-1"><a href="41-eda-career-decision.html#cb411-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 山脊图是可视化图形的一种，</span></span>
+<span id="cb411-2"><a href="41-eda-career-decision.html#cb411-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 可以展示不同类别数据在同一因素的不同水平下的分布差异。</span></span>
+<span id="cb411-3"><a href="41-eda-career-decision.html#cb411-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggridges)</span>
+<span id="cb411-4"><a href="41-eda-career-decision.html#cb411-4" aria-hidden="true" tabindex="-1"></a>d <span class="sc">%&gt;%</span> </span>
+<span id="cb411-5"><a href="41-eda-career-decision.html#cb411-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> career_exploration, <span class="at">y =</span> sex, <span class="at">fill =</span> sex)) <span class="sc">+</span></span>
+<span id="cb411-6"><a href="41-eda-career-decision.html#cb411-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density_ridges</span>()</span></code></pre></div>
+<p><img src="41-eda-career-decision_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb412"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb412-1"><a href="41-eda-career-decision.html#cb412-1" aria-hidden="true" tabindex="-1"></a><span class="co"># t检验</span></span>
+<span id="cb412-2"><a href="41-eda-career-decision.html#cb412-2" aria-hidden="true" tabindex="-1"></a>t_test_eq <span class="ot">&lt;-</span> <span class="fu">t.test</span>(career_exploration <span class="sc">~</span> sex,</span>
+<span id="cb412-3"><a href="41-eda-career-decision.html#cb412-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> d,</span>
+<span id="cb412-4"><a href="41-eda-career-decision.html#cb412-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb412-5"><a href="41-eda-career-decision.html#cb412-5" aria-hidden="true" tabindex="-1"></a>t_test_eq</span></code></pre></div>
+<pre><code>## 
+##  Two Sample t-test
+## 
+## data:  career_exploration by sex
+## t = -3, df = 302, p-value = 0.001
+## alternative hypothesis: true difference in means between group 1 and group 2 is not equal to 0
+## 95 percent confidence interval:
+##  -0.589 -0.144
+## sample estimates:
+## mean in group 1 mean in group 2 
+##          -0.173           0.194</code></pre>
+<div class="sourceCode" id="cb414"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb414-1"><a href="41-eda-career-decision.html#cb414-1" aria-hidden="true" tabindex="-1"></a><span class="fu">report</span>(t_test_eq)</span></code></pre></div>
+<pre><code>## Warning in effectsize.htest(x, type = type, verbose = verbose, ...):
+## Unable to retrieve data from htest object. Using t_to_d()
+## approximation.</code></pre>
+<pre><code>## 
+## 
+## The Two Sample t-test testing the difference of career_exploration by sex (mean in group 1 = -0.17, mean in group 2 = 0.19) suggests that the effect is negative, statistically significant, and small (difference = -0.37, 95% CI [-0.59, -0.14], t(302) = -3.24, p = 0.001; Cohen&#39;s d = -0.37, 95% CI [-0.60, -0.15])</code></pre>
+<div class="sourceCode" id="cb417"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb417-1"><a href="41-eda-career-decision.html#cb417-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> d <span class="sc">%&gt;%</span> </span>
+<span id="cb417-2"><a href="41-eda-career-decision.html#cb417-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb417-3"><a href="41-eda-career-decision.html#cb417-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="sc">-</span><span class="fu">c</span>(pid, sex, majoy, grade, from),</span>
+<span id="cb417-4"><a href="41-eda-career-decision.html#cb417-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;index&quot;</span>,</span>
+<span id="cb417-5"><a href="41-eda-career-decision.html#cb417-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span></span>
+<span id="cb417-6"><a href="41-eda-career-decision.html#cb417-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb417-7"><a href="41-eda-career-decision.html#cb417-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(index) <span class="sc">%&gt;%</span> </span>
+<span id="cb417-8"><a href="41-eda-career-decision.html#cb417-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb417-9"><a href="41-eda-career-decision.html#cb417-9" aria-hidden="true" tabindex="-1"></a>    broom<span class="sc">::</span><span class="fu">tidy</span>(<span class="fu">t.test</span>(value <span class="sc">~</span> sex, <span class="at">data =</span> <span class="fu">cur_data</span>())</span>
+<span id="cb417-10"><a href="41-eda-career-decision.html#cb417-10" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span> </span>
+<span id="cb417-11"><a href="41-eda-career-decision.html#cb417-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(index, estimate, statistic, p.value) <span class="sc">%&gt;%</span> </span>
+<span id="cb417-12"><a href="41-eda-career-decision.html#cb417-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(p.value)</span>
+<span id="cb417-13"><a href="41-eda-career-decision.html#cb417-13" aria-hidden="true" tabindex="-1"></a><span class="fu">report</span>(model)</span></code></pre></div>
+<pre><code>## The data contains 11 observations of the following 4 variables:
+## 
+##   - index: 11 entries, such as career_decision_making (n = 1); career_exploration (n = 1); environment_exploration (n = 1) and 8 others (0 missing)
+##   - estimate: n = 11, Mean = -0.38, SD = 0.09, Median = -0.40, MAD = 0.07, range: [-0.49, -0.18], Skewness = 1.02, Kurtosis = 0.96, 0 missing
+##   - statistic: n = 11, Mean = -3.39, SD = 0.87, Median = -3.65, MAD = 0.63, range: [-4.53, -1.54], Skewness = 0.93, Kurtosis = 0.72, 0 missing
+##   - p.value: n = 11, Mean = 0.01, SD = 0.04, Median = 3.15e-04, MAD = 4.54e-04, range: [8.62e-06, 0.13], Skewness = 3.22, Kurtosis = 10.50, 0 missing</code></pre>
+</div>
+<div id="来自不同地方的学生在职业探索上的不同" class="section level3 hasAnchor" number="41.3.3">
+<h3><span class="header-section-number">41.3.3</span> 来自不同地方的学生在职业探索上的不同<a href="41-eda-career-decision.html#来自不同地方的学生在职业探索上的不同" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb419"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb419-1"><a href="41-eda-career-decision.html#cb419-1" aria-hidden="true" tabindex="-1"></a>d <span class="sc">%&gt;%</span> <span class="fu">pivot_longer</span>(</span>
+<span id="cb419-2"><a href="41-eda-career-decision.html#cb419-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">cols =</span> <span class="sc">-</span><span class="fu">c</span>(pid, sex, majoy, grade, from),</span>
+<span id="cb419-3"><a href="41-eda-career-decision.html#cb419-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">names_to =</span> <span class="st">&quot;index&quot;</span>,</span>
+<span id="cb419-4"><a href="41-eda-career-decision.html#cb419-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span></span>
+<span id="cb419-5"><a href="41-eda-career-decision.html#cb419-5" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span> </span>
+<span id="cb419-6"><a href="41-eda-career-decision.html#cb419-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(index) <span class="sc">%&gt;%</span> </span>
+<span id="cb419-7"><a href="41-eda-career-decision.html#cb419-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb419-8"><a href="41-eda-career-decision.html#cb419-8" aria-hidden="true" tabindex="-1"></a>    broom<span class="sc">::</span><span class="fu">tidy</span>(<span class="fu">aov</span>(value <span class="sc">~</span> from), <span class="at">data =</span> <span class="fu">cur_data</span>())</span>
+<span id="cb419-9"><a href="41-eda-career-decision.html#cb419-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb419-10"><a href="41-eda-career-decision.html#cb419-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(index, term, statistic, p.value) <span class="sc">%&gt;%</span> </span>
+<span id="cb419-11"><a href="41-eda-career-decision.html#cb419-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(term <span class="sc">!=</span> <span class="st">&quot;Residuals&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb419-12"><a href="41-eda-career-decision.html#cb419-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(p.value)</span></code></pre></div>
+<pre><code>## # A tibble: 11 x 4
+## # Groups:   index [11]
+##    index                        term  statistic     p.value
+##    &lt;chr&gt;                        &lt;chr&gt;     &lt;dbl&gt;       &lt;dbl&gt;
+##  1 problem_solving              from     14.6   0.000000918
+##  2 career_decision_making       from     14.2   0.00000126 
+##  3 formulate                    from     12.2   0.00000781 
+##  4 information_collection       from     10.2   0.0000527  
+##  5 self_evaluation              from      8.91  0.000174   
+##  6 target_select                from      8.45  0.000270   
+##  7 info_quantity_exploration    from      5.78  0.00344    
+##  8 career_exploration           from      4.48  0.0121     
+##  9 objective_system_exploration from      4.06  0.0181     
+## 10 environment_exploration      from      3.69  0.0260     
+## 11 self_exploration             from      0.699 0.498</code></pre>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="40-eda-penguins.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="42-eda-ames-houseprice.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": {}
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/XiangyunHuang/masr/edit/master/41-eda-career-decision.Rmd",
+"text": "编辑"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": "https://github.com/XiangyunHuang/masr/blob/master/41-eda-career-decision.Rmd",
+"text": "查看"
+},
+"download": ["elegantbookdown.pdf", "elegantbookdown.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
