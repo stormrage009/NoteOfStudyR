@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>第 36 章 探索性数据分析-新冠疫情 | 基于tidyverse的R语言学习笔记</title>
+  <title>第 37 章 探索性数据分析-新冠疫情 | 基于tidyverse的R语言学习笔记</title>
   <meta name="description" content="最初看到 elegantbook 做的书籍样式很漂亮，就想把它引入到 bookdown 中，遂定制了此模版。在此基础上，做了迁移和扩展的工作，融合了 LaTeX (精美)、Pandoc (简洁) 和 R (强大) 的特性。This is a bookdown template based on ElegantBook. The output format for this template is bookdown::gitbook and bookdown::pdf_book." />
-  <meta name="generator" content="bookdown 0.25.6 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="第 36 章 探索性数据分析-新冠疫情 | 基于tidyverse的R语言学习笔记" />
+  <meta property="og:title" content="第 37 章 探索性数据分析-新冠疫情 | 基于tidyverse的R语言学习笔记" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="最初看到 elegantbook 做的书籍样式很漂亮，就想把它引入到 bookdown 中，遂定制了此模版。在此基础上，做了迁移和扩展的工作，融合了 LaTeX (精美)、Pandoc (简洁) 和 R (强大) 的特性。This is a bookdown template based on ElegantBook. The output format for this template is bookdown::gitbook and bookdown::pdf_book." />
   <meta name="github-repo" content="XiangyunHuang/ElegantBookdown" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="第 36 章 探索性数据分析-新冠疫情 | 基于tidyverse的R语言学习笔记" />
+  <meta name="twitter:title" content="第 37 章 探索性数据分析-新冠疫情 | 基于tidyverse的R语言学习笔记" />
   
   <meta name="twitter:description" content="最初看到 elegantbook 做的书籍样式很漂亮，就想把它引入到 bookdown 中，遂定制了此模版。在此基础上，做了迁移和扩展的工作，融合了 LaTeX (精美)、Pandoc (简洁) 和 R (强大) 的特性。This is a bookdown template based on ElegantBook. The output format for this template is bookdown::gitbook and bookdown::pdf_book." />
   
@@ -23,7 +23,7 @@
 <meta name="author" content="李凯" />
 
 
-<meta name="date" content="2022-04-15" />
+<meta name="date" content="2022-04-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -195,6 +195,7 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="2.1" data-path="2-factor.html"><a href="2-factor.html#创建因子"><i class="fa fa-check"></i><b>2.1</b> 创建因子</a></li>
 <li class="chapter" data-level="2.2" data-path="2-factor.html"><a href="2-factor.html#有用函数"><i class="fa fa-check"></i><b>2.2</b> 有用函数</a></li>
+<li class="chapter" data-level="2.3" data-path="2-factor.html"><a href="2-factor.html#练习"><i class="fa fa-check"></i><b>2.3</b> 练习</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="3-str-date.html"><a href="3-str-date.html"><i class="fa fa-check"></i><b>3</b> 字符串和时间日期</a></li>
 <li class="chapter" data-level="4" data-path="4-re.html"><a href="4-re.html"><i class="fa fa-check"></i><b>4</b> 正则表达式</a>
@@ -233,7 +234,13 @@ div.csl-indent {
 <li class="chapter" data-level="6.2" data-path="6-tidyverse-join.html"><a href="6-tidyverse-join.html#多个数据表连接"><i class="fa fa-check"></i><b>6.2</b> 多个数据表连接</a></li>
 <li class="chapter" data-level="6.3" data-path="6-tidyverse-join.html"><a href="6-tidyverse-join.html#集合运算"><i class="fa fa-check"></i><b>6.3</b> 集合运算</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="37-ggplot2.html"><a href="37-ggplot2.html"><i class="fa fa-check"></i><b>7</b> ggplot2</a></li>
+<li class="chapter" data-level="7" data-path="37-ggplot2.html"><a href="37-ggplot2.html"><i class="fa fa-check"></i><b>7</b> ggplot2</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="37-ggplot2.html"><a href="37-ggplot2.html#几何形状"><i class="fa fa-check"></i><b>7.1</b> 几何形状</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="37-ggplot2.html"><a href="37-ggplot2.html#图形部件"><i class="fa fa-check"></i><b>7.1.1</b> 图形部件</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="8" data-path="7-tidyverse-reshape.html"><a href="7-tidyverse-reshape.html"><i class="fa fa-check"></i><b>8</b> 数据重塑</a>
 <ul>
 <li class="chapter" data-level="8.1" data-path="7-tidyverse-reshape.html"><a href="7-tidyverse-reshape.html#什么是整洁的数据"><i class="fa fa-check"></i><b>8.1</b> 什么是整洁的数据</a></li>
@@ -265,187 +272,195 @@ div.csl-indent {
 <li class="chapter" data-level="12.3.1" data-path="11-tidystats_sampling.html"><a href="11-tidystats_sampling.html#使用tidyverse重复infer的过程"><i class="fa fa-check"></i><b>12.3.1</b> 使用tidyverse重复infer的过程</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html"><i class="fa fa-check"></i><b>13</b> 线性回归</a>
+<li class="chapter" data-level="13" data-path="tidyverse-purrr.html"><a href="tidyverse-purrr.html"><i class="fa fa-check"></i><b>13</b> 函数式编程</a>
 <ul>
-<li class="chapter" data-level="13.1" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#从案例开始"><i class="fa fa-check"></i><b>13.1</b> 从案例开始</a>
+<li class="chapter" data-level="13.1" data-path="tidyverse-purrr.html"><a href="tidyverse-purrr.html#purrr"><i class="fa fa-check"></i><b>13.1</b> `purrr</a>
 <ul>
-<li class="chapter" data-level="13.1.1" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#缺失值检查"><i class="fa fa-check"></i><b>13.1.1</b> 缺失值检查</a></li>
-<li class="chapter" data-level="13.1.2" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#简单变量统计"><i class="fa fa-check"></i><b>13.1.2</b> 简单变量统计</a></li>
-</ul></li>
-<li class="chapter" data-level="13.2" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#线性归回模型"><i class="fa fa-check"></i><b>13.2</b> 线性归回模型</a>
-<ul>
-<li class="chapter" data-level="13.2.1" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#长得高挣得多"><i class="fa fa-check"></i><b>13.2.1</b> 长得高挣得多</a></li>
-<li class="chapter" data-level="13.2.2" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#使用lm函数拟合线性回归模型"><i class="fa fa-check"></i><b>13.2.2</b> 使用lm()函数拟合线性回归模型</a></li>
-<li class="chapter" data-level="13.2.3" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#模型的解释"><i class="fa fa-check"></i><b>13.2.3</b> 模型的解释</a></li>
-</ul></li>
-<li class="chapter" data-level="13.3" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#多元线性回归"><i class="fa fa-check"></i><b>13.3</b> 多元线性回归</a></li>
-</ul></li>
-<li class="chapter" data-level="14" data-path="13-tidymodel-broom.html"><a href="13-tidymodel-broom.html"><i class="fa fa-check"></i><b>14</b> 结果整合</a>
-<ul>
-<li class="chapter" data-level="14.1" data-path="13-tidymodel-broom.html"><a href="13-tidymodel-broom.html#案例"><i class="fa fa-check"></i><b>14.1</b> 案例</a>
-<ul>
-<li class="chapter" data-level="14.1.1" data-path="13-tidymodel-broom.html"><a href="13-tidymodel-broom.html#可视化探索"><i class="fa fa-check"></i><b>14.1.1</b> 可视化探索</a></li>
+<li class="chapter" data-level="13.1.1" data-path="tidyverse-purrr.html"><a href="tidyverse-purrr.html#map系列函数"><i class="fa fa-check"></i><b>13.1.1</b> map()系列函数</a></li>
+<li class="chapter" data-level="13.1.2" data-path="tidyverse-purrr.html"><a href="tidyverse-purrr.html#匿名函数"><i class="fa fa-check"></i><b>13.1.2</b> 匿名函数</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="15" data-path="14-tidymodel-t-test.html"><a href="14-tidymodel-t-test.html"><i class="fa fa-check"></i><b>15</b> 双样本t检验</a>
+<li class="chapter" data-level="14" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html"><i class="fa fa-check"></i><b>14</b> 线性回归</a>
 <ul>
-<li class="chapter" data-level="15.1" data-path="14-tidymodel-t-test.html"><a href="14-tidymodel-t-test.html#实验设计"><i class="fa fa-check"></i><b>15.1</b> 实验设计</a></li>
-<li class="chapter" data-level="15.2" data-path="14-tidymodel-t-test.html"><a href="14-tidymodel-t-test.html#提问"><i class="fa fa-check"></i><b>15.2</b> 提问</a>
+<li class="chapter" data-level="14.1" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#从案例开始"><i class="fa fa-check"></i><b>14.1</b> 从案例开始</a>
 <ul>
-<li class="chapter" data-level="15.2.1" data-path="14-tidymodel-t-test.html"><a href="14-tidymodel-t-test.html#不同性别企鹅的bill_length_mm嘴峰长度是否相同"><i class="fa fa-check"></i><b>15.2.1</b> 不同性别企鹅的bill_length_mm（嘴峰长度）是否相同？</a></li>
+<li class="chapter" data-level="14.1.1" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#缺失值检查"><i class="fa fa-check"></i><b>14.1.1</b> 缺失值检查</a></li>
+<li class="chapter" data-level="14.1.2" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#简单变量统计"><i class="fa fa-check"></i><b>14.1.2</b> 简单变量统计</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#线性归回模型"><i class="fa fa-check"></i><b>14.2</b> 线性归回模型</a>
+<ul>
+<li class="chapter" data-level="14.2.1" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#长得高挣得多"><i class="fa fa-check"></i><b>14.2.1</b> 长得高挣得多</a></li>
+<li class="chapter" data-level="14.2.2" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#使用lm函数拟合线性回归模型"><i class="fa fa-check"></i><b>14.2.2</b> 使用lm()函数拟合线性回归模型</a></li>
+<li class="chapter" data-level="14.2.3" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#模型的解释"><i class="fa fa-check"></i><b>14.2.3</b> 模型的解释</a></li>
+</ul></li>
+<li class="chapter" data-level="14.3" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#多元线性回归"><i class="fa fa-check"></i><b>14.3</b> 多元线性回归</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="13-tidymodel-broom.html"><a href="13-tidymodel-broom.html"><i class="fa fa-check"></i><b>15</b> 结果整合</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="13-tidymodel-broom.html"><a href="13-tidymodel-broom.html#案例"><i class="fa fa-check"></i><b>15.1</b> 案例</a>
+<ul>
+<li class="chapter" data-level="15.1.1" data-path="13-tidymodel-broom.html"><a href="13-tidymodel-broom.html#可视化探索"><i class="fa fa-check"></i><b>15.1.1</b> 可视化探索</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="16" data-path="15-tidymodel-avo.html"><a href="15-tidymodel-avo.html"><i class="fa fa-check"></i><b>16</b> avo-方差分析</a></li>
-<li class="chapter" data-level="17" data-path="16-tidymodel-as-linear.html"><a href="16-tidymodel-as-linear.html"><i class="fa fa-check"></i><b>17</b> 统计检验与线性模型</a></li>
-<li class="chapter" data-level="18" data-path="17-tidymodel-lmm.html"><a href="17-tidymodel-lmm.html"><i class="fa fa-check"></i><b>18</b> 多层线性模型</a></li>
-<li class="chapter" data-level="19" data-path="18-tidymodel-poisson-regression.html"><a href="18-tidymodel-poisson-regression.html"><i class="fa fa-check"></i><b>19</b> 广义线性模型</a></li>
-<li class="chapter" data-level="20" data-path="19-tidymodel-logistic-regression.html"><a href="19-tidymodel-logistic-regression.html"><i class="fa fa-check"></i><b>20</b> logistic回归模型</a></li>
-<li class="chapter" data-level="21" data-path="20-tidymodel-ordinal.html"><a href="20-tidymodel-ordinal.html"><i class="fa fa-check"></i><b>21</b> 有序logistic回归</a></li>
+<li class="chapter" data-level="16" data-path="14-tidymodel-t-test.html"><a href="14-tidymodel-t-test.html"><i class="fa fa-check"></i><b>16</b> 双样本t检验</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="14-tidymodel-t-test.html"><a href="14-tidymodel-t-test.html#实验设计"><i class="fa fa-check"></i><b>16.1</b> 实验设计</a></li>
+<li class="chapter" data-level="16.2" data-path="14-tidymodel-t-test.html"><a href="14-tidymodel-t-test.html#提问"><i class="fa fa-check"></i><b>16.2</b> 提问</a>
+<ul>
+<li class="chapter" data-level="16.2.1" data-path="14-tidymodel-t-test.html"><a href="14-tidymodel-t-test.html#不同性别企鹅的bill_length_mm嘴峰长度是否相同"><i class="fa fa-check"></i><b>16.2.1</b> 不同性别企鹅的bill_length_mm（嘴峰长度）是否相同？</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="15-tidymodel-avo.html"><a href="15-tidymodel-avo.html"><i class="fa fa-check"></i><b>17</b> avo-方差分析</a></li>
+<li class="chapter" data-level="18" data-path="16-tidymodel-as-linear.html"><a href="16-tidymodel-as-linear.html"><i class="fa fa-check"></i><b>18</b> 统计检验与线性模型</a></li>
+<li class="chapter" data-level="19" data-path="17-tidymodel-lmm.html"><a href="17-tidymodel-lmm.html"><i class="fa fa-check"></i><b>19</b> 多层线性模型</a></li>
+<li class="chapter" data-level="20" data-path="18-tidymodel-poisson-regression.html"><a href="18-tidymodel-poisson-regression.html"><i class="fa fa-check"></i><b>20</b> 广义线性模型</a></li>
+<li class="chapter" data-level="21" data-path="19-tidymodel-logistic-regression.html"><a href="19-tidymodel-logistic-regression.html"><i class="fa fa-check"></i><b>21</b> logistic回归模型</a></li>
+<li class="chapter" data-level="22" data-path="20-tidymodel-ordinal.html"><a href="20-tidymodel-ordinal.html"><i class="fa fa-check"></i><b>22</b> 有序logistic回归</a></li>
 <li class="part"><span><b>IV tidymodels包篇</b></span></li>
-<li class="chapter" data-level="22" data-path="21-meching-leanrning-tidymodels.html"><a href="21-meching-leanrning-tidymodels.html"><i class="fa fa-check"></i><b>22</b> 机器学习</a>
+<li class="chapter" data-level="23" data-path="21-meching-leanrning-tidymodels.html"><a href="21-meching-leanrning-tidymodels.html"><i class="fa fa-check"></i><b>23</b> 机器学习</a>
 <ul>
-<li class="chapter" data-level="22.1" data-path="21-meching-leanrning-tidymodels.html"><a href="21-meching-leanrning-tidymodels.html#数据"><i class="fa fa-check"></i><b>22.1</b> 数据</a></li>
-<li class="chapter" data-level="22.2" data-path="21-meching-leanrning-tidymodels.html"><a href="21-meching-leanrning-tidymodels.html#机器学习"><i class="fa fa-check"></i><b>22.2</b> 机器学习</a></li>
+<li class="chapter" data-level="23.1" data-path="21-meching-leanrning-tidymodels.html"><a href="21-meching-leanrning-tidymodels.html#数据"><i class="fa fa-check"></i><b>23.1</b> 数据</a></li>
+<li class="chapter" data-level="23.2" data-path="21-meching-leanrning-tidymodels.html"><a href="21-meching-leanrning-tidymodels.html#机器学习"><i class="fa fa-check"></i><b>23.2</b> 机器学习</a></li>
 </ul></li>
 <li class="part"><span><b>V bayesian篇</b></span></li>
-<li class="chapter" data-level="23" data-path="22-bayesian-inference.html"><a href="22-bayesian-inference.html"><i class="fa fa-check"></i><b>23</b> 贝叶斯推断</a>
+<li class="chapter" data-level="24" data-path="22-bayesian-inference.html"><a href="22-bayesian-inference.html"><i class="fa fa-check"></i><b>24</b> 贝叶斯推断</a>
 <ul>
-<li class="chapter" data-level="23.1" data-path="22-bayesian-inference.html"><a href="22-bayesian-inference.html#一个简单的贝叶斯推断实例-学生身高分布"><i class="fa fa-check"></i><b>23.1</b> 一个简单的贝叶斯推断实例-学生身高分布</a></li>
-<li class="chapter" data-level="23.2" data-path="22-bayesian-inference.html"><a href="22-bayesian-inference.html#一个简单的贝叶斯推断实例-推断"><i class="fa fa-check"></i><b>23.2</b> 一个简单的贝叶斯推断实例-推断</a></li>
+<li class="chapter" data-level="24.1" data-path="22-bayesian-inference.html"><a href="22-bayesian-inference.html#一个简单的贝叶斯推断实例-学生身高分布"><i class="fa fa-check"></i><b>24.1</b> 一个简单的贝叶斯推断实例-学生身高分布</a></li>
+<li class="chapter" data-level="24.2" data-path="22-bayesian-inference.html"><a href="22-bayesian-inference.html#一个简单的贝叶斯推断实例-推断"><i class="fa fa-check"></i><b>24.2</b> 一个简单的贝叶斯推断实例-推断</a></li>
 </ul></li>
-<li class="chapter" data-level="24" data-path="23-bayesian-intro-stan.html"><a href="23-bayesian-intro-stan.html"><i class="fa fa-check"></i><b>24</b> stan入门</a></li>
-<li class="chapter" data-level="25" data-path="24-bayesian-intro-lm.html"><a href="24-bayesian-intro-lm.html"><i class="fa fa-check"></i><b>25</b> 贝叶斯线性回归</a></li>
-<li class="chapter" data-level="26" data-path="25-bayesian-t-test.html"><a href="25-bayesian-t-test.html"><i class="fa fa-check"></i><b>26</b> 贝叶斯假设检验</a></li>
-<li class="chapter" data-level="27" data-path="26-bayesian-glm.html"><a href="26-bayesian-glm.html"><i class="fa fa-check"></i><b>27</b> 贝叶斯广义线性模型</a></li>
-<li class="chapter" data-level="28" data-path="27-bayesian-hierarchical.html"><a href="27-bayesian-hierarchical.html"><i class="fa fa-check"></i><b>28</b> 贝叶斯层级模型</a></li>
-<li class="chapter" data-level="29" data-path="28-bayesian-mixtures.html"><a href="28-bayesian-mixtures.html"><i class="fa fa-check"></i><b>29</b> 贝叶斯混合模型</a></li>
-<li class="chapter" data-level="30" data-path="29-bayesian-categorical.html"><a href="29-bayesian-categorical.html"><i class="fa fa-check"></i><b>30</b> 贝叶斯分类模型</a></li>
-<li class="chapter" data-level="31" data-path="30-bayesian-workflow.html"><a href="30-bayesian-workflow.html"><i class="fa fa-check"></i><b>31</b> 贝叶斯工作流程</a></li>
-<li class="chapter" data-level="32" data-path="31-bayesian-vaccine-effectiveness.html"><a href="31-bayesian-vaccine-effectiveness.html"><i class="fa fa-check"></i><b>32</b> 贝叶斯分析案例-新冠疫苗有效率的计算</a></li>
-<li class="chapter" data-level="33" data-path="32-bayesian-tokyo-olympics-100m.html"><a href="32-bayesian-tokyo-olympics-100m.html"><i class="fa fa-check"></i><b>33</b> 贝叶斯分析案例-预测奥运会男子100米短跑成绩</a></li>
+<li class="chapter" data-level="25" data-path="23-bayesian-intro-stan.html"><a href="23-bayesian-intro-stan.html"><i class="fa fa-check"></i><b>25</b> stan入门</a></li>
+<li class="chapter" data-level="26" data-path="24-bayesian-intro-lm.html"><a href="24-bayesian-intro-lm.html"><i class="fa fa-check"></i><b>26</b> 贝叶斯线性回归</a></li>
+<li class="chapter" data-level="27" data-path="25-bayesian-t-test.html"><a href="25-bayesian-t-test.html"><i class="fa fa-check"></i><b>27</b> 贝叶斯假设检验</a></li>
+<li class="chapter" data-level="28" data-path="26-bayesian-glm.html"><a href="26-bayesian-glm.html"><i class="fa fa-check"></i><b>28</b> 贝叶斯广义线性模型</a></li>
+<li class="chapter" data-level="29" data-path="27-bayesian-hierarchical.html"><a href="27-bayesian-hierarchical.html"><i class="fa fa-check"></i><b>29</b> 贝叶斯层级模型</a></li>
+<li class="chapter" data-level="30" data-path="28-bayesian-mixtures.html"><a href="28-bayesian-mixtures.html"><i class="fa fa-check"></i><b>30</b> 贝叶斯混合模型</a></li>
+<li class="chapter" data-level="31" data-path="29-bayesian-categorical.html"><a href="29-bayesian-categorical.html"><i class="fa fa-check"></i><b>31</b> 贝叶斯分类模型</a></li>
+<li class="chapter" data-level="32" data-path="30-bayesian-workflow.html"><a href="30-bayesian-workflow.html"><i class="fa fa-check"></i><b>32</b> 贝叶斯工作流程</a></li>
+<li class="chapter" data-level="33" data-path="31-bayesian-vaccine-effectiveness.html"><a href="31-bayesian-vaccine-effectiveness.html"><i class="fa fa-check"></i><b>33</b> 贝叶斯分析案例-新冠疫苗有效率的计算</a></li>
+<li class="chapter" data-level="34" data-path="32-bayesian-tokyo-olympics-100m.html"><a href="32-bayesian-tokyo-olympics-100m.html"><i class="fa fa-check"></i><b>34</b> 贝叶斯分析案例-预测奥运会男子100米短跑成绩</a></li>
 <li class="part"><span><b>VI 应用篇</b></span></li>
-<li class="chapter" data-level="34" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html"><i class="fa fa-check"></i><b>34</b> 探索性数据分析-诺奖获得者</a>
+<li class="chapter" data-level="35" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html"><i class="fa fa-check"></i><b>35</b> 探索性数据分析-诺奖获得者</a>
 <ul>
-<li class="chapter" data-level="34.1" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#探索性"><i class="fa fa-check"></i><b>34.1</b> 探索性</a></li>
-<li class="chapter" data-level="34.2" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#数据集"><i class="fa fa-check"></i><b>34.2</b> 数据集</a></li>
-<li class="chapter" data-level="34.3" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#导入数据"><i class="fa fa-check"></i><b>34.3</b> 导入数据</a></li>
-<li class="chapter" data-level="34.4" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#数据结构"><i class="fa fa-check"></i><b>34.4</b> 数据结构</a></li>
-<li class="chapter" data-level="34.5" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#确定想探索的问题"><i class="fa fa-check"></i><b>34.5</b> 确定想探索的问题</a>
+<li class="chapter" data-level="35.1" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#探索性"><i class="fa fa-check"></i><b>35.1</b> 探索性</a></li>
+<li class="chapter" data-level="35.2" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#数据集"><i class="fa fa-check"></i><b>35.2</b> 数据集</a></li>
+<li class="chapter" data-level="35.3" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#导入数据"><i class="fa fa-check"></i><b>35.3</b> 导入数据</a></li>
+<li class="chapter" data-level="35.4" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#数据结构"><i class="fa fa-check"></i><b>35.4</b> 数据结构</a></li>
+<li class="chapter" data-level="35.5" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#确定想探索的问题"><i class="fa fa-check"></i><b>35.5</b> 确定想探索的问题</a>
 <ul>
-<li class="chapter" data-level="34.5.1" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#每个学科获奖次数"><i class="fa fa-check"></i><b>34.5.1</b> 每个学科获奖次数</a></li>
-<li class="chapter" data-level="34.5.2" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#我国科学家获奖情况"><i class="fa fa-check"></i><b>34.5.2</b> 我国科学家获奖情况</a></li>
-<li class="chapter" data-level="34.5.3" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#哪些人多次获奖"><i class="fa fa-check"></i><b>34.5.3</b> 哪些人多次获奖</a></li>
-<li class="chapter" data-level="34.5.4" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#获奖人年龄"><i class="fa fa-check"></i><b>34.5.4</b> 获奖人年龄</a></li>
-<li class="chapter" data-level="34.5.5" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#性别比例"><i class="fa fa-check"></i><b>34.5.5</b> 性别比例</a></li>
-<li class="chapter" data-level="34.5.6" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#获奖人出生年代"><i class="fa fa-check"></i><b>34.5.6</b> 获奖人出生年代</a></li>
-<li class="chapter" data-level="34.5.7" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#最年轻的诺奖获得者"><i class="fa fa-check"></i><b>34.5.7</b> 最年轻的诺奖获得者</a></li>
-<li class="chapter" data-level="34.5.8" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#平均年龄和各领域获奖数量"><i class="fa fa-check"></i><b>34.5.8</b> 平均年龄和各领域获奖数量</a></li>
+<li class="chapter" data-level="35.5.1" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#每个学科获奖次数"><i class="fa fa-check"></i><b>35.5.1</b> 每个学科获奖次数</a></li>
+<li class="chapter" data-level="35.5.2" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#我国科学家获奖情况"><i class="fa fa-check"></i><b>35.5.2</b> 我国科学家获奖情况</a></li>
+<li class="chapter" data-level="35.5.3" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#哪些人多次获奖"><i class="fa fa-check"></i><b>35.5.3</b> 哪些人多次获奖</a></li>
+<li class="chapter" data-level="35.5.4" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#获奖人年龄"><i class="fa fa-check"></i><b>35.5.4</b> 获奖人年龄</a></li>
+<li class="chapter" data-level="35.5.5" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#性别比例"><i class="fa fa-check"></i><b>35.5.5</b> 性别比例</a></li>
+<li class="chapter" data-level="35.5.6" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#获奖人出生年代"><i class="fa fa-check"></i><b>35.5.6</b> 获奖人出生年代</a></li>
+<li class="chapter" data-level="35.5.7" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#最年轻的诺奖获得者"><i class="fa fa-check"></i><b>35.5.7</b> 最年轻的诺奖获得者</a></li>
+<li class="chapter" data-level="35.5.8" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#平均年龄和各领域获奖数量"><i class="fa fa-check"></i><b>35.5.8</b> 平均年龄和各领域获奖数量</a></li>
 </ul></li>
-<li class="chapter" data-level="34.6" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#地图"><i class="fa fa-check"></i><b>34.6</b> 地图</a>
+<li class="chapter" data-level="35.6" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#地图"><i class="fa fa-check"></i><b>35.6</b> 地图</a>
 <ul>
-<li class="chapter" data-level="34.6.1" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#出生地和工作地不一样的占比"><i class="fa fa-check"></i><b>34.6.1</b> 出生地和工作地不一样的占比</a></li>
-<li class="chapter" data-level="34.6.2" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#共同获奖人"><i class="fa fa-check"></i><b>34.6.2</b> 共同获奖人</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="35" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html"><i class="fa fa-check"></i><b>35</b> 探索性数据分析-奥林匹克</a>
-<ul>
-<li class="chapter" data-level="35.1" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#导入数据-1"><i class="fa fa-check"></i><b>35.1</b> 导入数据</a></li>
-<li class="chapter" data-level="35.2" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#可视化"><i class="fa fa-check"></i><b>35.2</b> 可视化</a></li>
-<li class="chapter" data-level="35.3" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#回归分析"><i class="fa fa-check"></i><b>35.3</b> 回归分析</a></li>
-<li class="chapter" data-level="35.4" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#预测"><i class="fa fa-check"></i><b>35.4</b> 预测</a></li>
-<li class="chapter" data-level="35.5" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#再次可视化"><i class="fa fa-check"></i><b>35.5</b> 再次可视化</a></li>
-<li class="chapter" data-level="35.6" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#section"><i class="fa fa-check"></i><b>35.6</b> </a></li>
-</ul></li>
-<li class="chapter" data-level="36" data-path="35-eda-covid2019.html"><a href="35-eda-covid2019.html"><i class="fa fa-check"></i><b>36</b> 探索性数据分析-新冠疫情</a>
-<ul>
-<li class="chapter" data-level="36.1" data-path="35-eda-covid2019.html"><a href="35-eda-covid2019.html#数据来源"><i class="fa fa-check"></i><b>36.1</b> 数据来源</a></li>
-<li class="chapter" data-level="36.2" data-path="35-eda-covid2019.html"><a href="35-eda-covid2019.html#读取数据"><i class="fa fa-check"></i><b>36.2</b> 读取数据</a></li>
-<li class="chapter" data-level="36.3" data-path="35-eda-covid2019.html"><a href="35-eda-covid2019.html#数据清洗规整"><i class="fa fa-check"></i><b>36.3</b> 数据清洗规整</a></li>
-<li class="chapter" data-level="36.4" data-path="35-eda-covid2019.html"><a href="35-eda-covid2019.html#可视化探索-1"><i class="fa fa-check"></i><b>36.4</b> 可视化探索</a></li>
-</ul></li>
-<li class="chapter" data-level="37" data-path="36-eda-anscombe.html"><a href="36-eda-anscombe.html"><i class="fa fa-check"></i><b>37</b> 探索性数据分析-anscombe数据集</a>
-<ul>
-<li class="chapter" data-level="37.1" data-path="36-eda-anscombe.html"><a href="36-eda-anscombe.html#规整数据"><i class="fa fa-check"></i><b>37.1</b> 规整数据</a></li>
-<li class="chapter" data-level="37.2" data-path="36-eda-anscombe.html"><a href="36-eda-anscombe.html#统计"><i class="fa fa-check"></i><b>37.2</b> 统计</a></li>
-<li class="chapter" data-level="37.3" data-path="36-eda-anscombe.html"><a href="36-eda-anscombe.html#建模"><i class="fa fa-check"></i><b>37.3</b> 建模</a></li>
-<li class="chapter" data-level="37.4" data-path="36-eda-anscombe.html"><a href="36-eda-anscombe.html#可视化-1"><i class="fa fa-check"></i><b>37.4</b> 可视化</a></li>
-</ul></li>
-<li class="chapter" data-level="38" data-path="38-eda-height.html"><a href="38-eda-height.html"><i class="fa fa-check"></i><b>38</b> 探索性数据分析-身高体重关系</a>
-<ul>
-<li class="chapter" data-level="38.1" data-path="38-eda-height.html"><a href="38-eda-height.html#可视化-2"><i class="fa fa-check"></i><b>38.1</b> 可视化</a>
-<ul>
-<li class="chapter" data-level="38.1.1" data-path="38-eda-height.html"><a href="38-eda-height.html#不同性别的身高分布-普通方法"><i class="fa fa-check"></i><b>38.1.1</b> 不同性别的身高分布-普通方法</a></li>
-<li class="chapter" data-level="38.1.2" data-path="38-eda-height.html"><a href="38-eda-height.html#不同性别的身高分布-高级方法"><i class="fa fa-check"></i><b>38.1.2</b> 不同性别的身高分布-高级方法</a></li>
-<li class="chapter" data-level="38.1.3" data-path="38-eda-height.html"><a href="38-eda-height.html#不同性别的体重分布"><i class="fa fa-check"></i><b>38.1.3</b> 不同性别的体重分布</a></li>
-</ul></li>
-<li class="chapter" data-level="38.2" data-path="38-eda-height.html"><a href="38-eda-height.html#建模-1"><i class="fa fa-check"></i><b>38.2</b> 建模</a>
-<ul>
-<li class="chapter" data-level="38.2.1" data-path="38-eda-height.html"><a href="38-eda-height.html#身高体重的散点图"><i class="fa fa-check"></i><b>38.2.1</b> 身高体重的散点图</a></li>
-<li class="chapter" data-level="38.2.2" data-path="38-eda-height.html"><a href="38-eda-height.html#建立身高体重线性模型"><i class="fa fa-check"></i><b>38.2.2</b> 建立身高体重线性模型</a></li>
+<li class="chapter" data-level="35.6.1" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#出生地和工作地不一样的占比"><i class="fa fa-check"></i><b>35.6.1</b> 出生地和工作地不一样的占比</a></li>
+<li class="chapter" data-level="35.6.2" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#共同获奖人"><i class="fa fa-check"></i><b>35.6.2</b> 共同获奖人</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="39" data-path="39-eda-caribou.html"><a href="39-eda-caribou.html"><i class="fa fa-check"></i><b>39</b> 探索性数据分析-驯鹿迁移</a>
+<li class="chapter" data-level="36" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html"><i class="fa fa-check"></i><b>36</b> 探索性数据分析-奥林匹克</a>
 <ul>
-<li class="chapter" data-level="39.1" data-path="39-eda-caribou.html"><a href="39-eda-caribou.html#数据录入"><i class="fa fa-check"></i><b>39.1</b> 数据录入</a></li>
-<li class="chapter" data-level="39.2" data-path="39-eda-caribou.html"><a href="39-eda-caribou.html#驯鹿身份信息"><i class="fa fa-check"></i><b>39.2</b> 驯鹿身份信息</a></li>
+<li class="chapter" data-level="36.1" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#导入数据-1"><i class="fa fa-check"></i><b>36.1</b> 导入数据</a></li>
+<li class="chapter" data-level="36.2" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#可视化"><i class="fa fa-check"></i><b>36.2</b> 可视化</a></li>
+<li class="chapter" data-level="36.3" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#回归分析"><i class="fa fa-check"></i><b>36.3</b> 回归分析</a></li>
+<li class="chapter" data-level="36.4" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#预测"><i class="fa fa-check"></i><b>36.4</b> 预测</a></li>
+<li class="chapter" data-level="36.5" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#再次可视化"><i class="fa fa-check"></i><b>36.5</b> 再次可视化</a></li>
+<li class="chapter" data-level="36.6" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#section"><i class="fa fa-check"></i><b>36.6</b> </a></li>
 </ul></li>
-<li class="chapter" data-level="40" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html"><i class="fa fa-check"></i><b>40</b> 探索性数据分析-企鹅的故事</a>
+<li class="chapter" data-level="37" data-path="35-eda-covid2019.html"><a href="35-eda-covid2019.html"><i class="fa fa-check"></i><b>37</b> 探索性数据分析-新冠疫情</a>
 <ul>
-<li class="chapter" data-level="40.1" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#数据录入-1"><i class="fa fa-check"></i><b>40.1</b> 数据录入</a>
-<ul>
-<li class="chapter" data-level="40.1.1" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#变量含义"><i class="fa fa-check"></i><b>40.1.1</b> 变量含义</a></li>
+<li class="chapter" data-level="37.1" data-path="35-eda-covid2019.html"><a href="35-eda-covid2019.html#数据来源"><i class="fa fa-check"></i><b>37.1</b> 数据来源</a></li>
+<li class="chapter" data-level="37.2" data-path="35-eda-covid2019.html"><a href="35-eda-covid2019.html#读取数据"><i class="fa fa-check"></i><b>37.2</b> 读取数据</a></li>
+<li class="chapter" data-level="37.3" data-path="35-eda-covid2019.html"><a href="35-eda-covid2019.html#数据清洗规整"><i class="fa fa-check"></i><b>37.3</b> 数据清洗规整</a></li>
+<li class="chapter" data-level="37.4" data-path="35-eda-covid2019.html"><a href="35-eda-covid2019.html#可视化探索-1"><i class="fa fa-check"></i><b>37.4</b> 可视化探索</a></li>
 </ul></li>
-<li class="chapter" data-level="40.2" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#数据清洗"><i class="fa fa-check"></i><b>40.2</b> 数据清洗</a></li>
-<li class="chapter" data-level="40.3" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#探索性分析"><i class="fa fa-check"></i><b>40.3</b> 探索性分析</a>
+<li class="chapter" data-level="38" data-path="36-eda-anscombe.html"><a href="36-eda-anscombe.html"><i class="fa fa-check"></i><b>38</b> 探索性数据分析-anscombe数据集</a>
 <ul>
-<li class="chapter" data-level="40.3.1" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#每种类型的企鹅有多少只"><i class="fa fa-check"></i><b>40.3.1</b> 每种类型的企鹅有多少只</a></li>
-<li class="chapter" data-level="40.3.2" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#每种类型企鹅各种属性的均值和分布"><i class="fa fa-check"></i><b>40.3.2</b> 每种类型企鹅各种属性的均值和分布</a></li>
-<li class="chapter" data-level="40.3.3" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#嘴峰长度和深度的关联"><i class="fa fa-check"></i><b>40.3.3</b> 嘴峰长度和深度的关联</a></li>
-<li class="chapter" data-level="40.3.4" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#体重与翅膀长度的关联"><i class="fa fa-check"></i><b>40.3.4</b> 体重与翅膀长度的关联？</a></li>
-<li class="chapter" data-level="40.3.5" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#性别与不同体征信息的关系-建立模型"><i class="fa fa-check"></i><b>40.3.5</b> 性别与不同体征信息的关系-建立模型</a></li>
+<li class="chapter" data-level="38.1" data-path="36-eda-anscombe.html"><a href="36-eda-anscombe.html#规整数据"><i class="fa fa-check"></i><b>38.1</b> 规整数据</a></li>
+<li class="chapter" data-level="38.2" data-path="36-eda-anscombe.html"><a href="36-eda-anscombe.html#统计"><i class="fa fa-check"></i><b>38.2</b> 统计</a></li>
+<li class="chapter" data-level="38.3" data-path="36-eda-anscombe.html"><a href="36-eda-anscombe.html#建模"><i class="fa fa-check"></i><b>38.3</b> 建模</a></li>
+<li class="chapter" data-level="38.4" data-path="36-eda-anscombe.html"><a href="36-eda-anscombe.html#可视化-1"><i class="fa fa-check"></i><b>38.4</b> 可视化</a></li>
 </ul></li>
+<li class="chapter" data-level="39" data-path="38-eda-height.html"><a href="38-eda-height.html"><i class="fa fa-check"></i><b>39</b> 探索性数据分析-身高体重关系</a>
+<ul>
+<li class="chapter" data-level="39.1" data-path="38-eda-height.html"><a href="38-eda-height.html#可视化-2"><i class="fa fa-check"></i><b>39.1</b> 可视化</a>
+<ul>
+<li class="chapter" data-level="39.1.1" data-path="38-eda-height.html"><a href="38-eda-height.html#不同性别的身高分布-普通方法"><i class="fa fa-check"></i><b>39.1.1</b> 不同性别的身高分布-普通方法</a></li>
+<li class="chapter" data-level="39.1.2" data-path="38-eda-height.html"><a href="38-eda-height.html#不同性别的身高分布-高级方法"><i class="fa fa-check"></i><b>39.1.2</b> 不同性别的身高分布-高级方法</a></li>
+<li class="chapter" data-level="39.1.3" data-path="38-eda-height.html"><a href="38-eda-height.html#不同性别的体重分布"><i class="fa fa-check"></i><b>39.1.3</b> 不同性别的体重分布</a></li>
 </ul></li>
-<li class="chapter" data-level="41" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html"><i class="fa fa-check"></i><b>41</b> 探索性数据分析-大学生职业决策</a>
+<li class="chapter" data-level="39.2" data-path="38-eda-height.html"><a href="38-eda-height.html#建模-1"><i class="fa fa-check"></i><b>39.2</b> 建模</a>
 <ul>
-<li class="chapter" data-level="41.1" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#预备知识"><i class="fa fa-check"></i><b>41.1</b> 预备知识</a></li>
-<li class="chapter" data-level="41.2" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#正式开始"><i class="fa fa-check"></i><b>41.2</b> 正式开始</a>
-<ul>
-<li class="chapter" data-level="41.2.1" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#检查缺失值"><i class="fa fa-check"></i><b>41.2.1</b> 检查缺失值</a></li>
-<li class="chapter" data-level="41.2.2" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#数据预处理"><i class="fa fa-check"></i><b>41.2.2</b> 数据预处理</a></li>
-<li class="chapter" data-level="41.2.3" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#标准化数据"><i class="fa fa-check"></i><b>41.2.3</b> 标准化数据</a></li>
-</ul></li>
-<li class="chapter" data-level="41.3" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#探索数据"><i class="fa fa-check"></i><b>41.3</b> 探索数据</a>
-<ul>
-<li class="chapter" data-level="41.3.1" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#想探索的问题"><i class="fa fa-check"></i><b>41.3.1</b> 想探索的问题</a></li>
-<li class="chapter" data-level="41.3.2" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#不同性别年纪生源地专业下各指标的分布差异"><i class="fa fa-check"></i><b>41.3.2</b> 不同性别、年纪、生源地、专业下，各指标的分布差异</a></li>
-<li class="chapter" data-level="41.3.3" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#来自不同地方的学生在职业探索上的不同"><i class="fa fa-check"></i><b>41.3.3</b> 来自不同地方的学生在职业探索上的不同</a></li>
+<li class="chapter" data-level="39.2.1" data-path="38-eda-height.html"><a href="38-eda-height.html#身高体重的散点图"><i class="fa fa-check"></i><b>39.2.1</b> 身高体重的散点图</a></li>
+<li class="chapter" data-level="39.2.2" data-path="38-eda-height.html"><a href="38-eda-height.html#建立身高体重线性模型"><i class="fa fa-check"></i><b>39.2.2</b> 建立身高体重线性模型</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="42" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html"><i class="fa fa-check"></i><b>42</b> 探索性数据分析-ames房价预测</a>
+<li class="chapter" data-level="40" data-path="39-eda-caribou.html"><a href="39-eda-caribou.html"><i class="fa fa-check"></i><b>40</b> 探索性数据分析-驯鹿迁移</a>
 <ul>
-<li class="chapter" data-level="42.1" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#探索设想"><i class="fa fa-check"></i><b>42.1</b> 探索设想</a></li>
-<li class="chapter" data-level="42.2" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#变量选取"><i class="fa fa-check"></i><b>42.2</b> 变量选取</a></li>
-<li class="chapter" data-level="42.3" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#缺失值处理"><i class="fa fa-check"></i><b>42.3</b> 缺失值处理</a></li>
-<li class="chapter" data-level="42.4" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#数据预处理-1"><i class="fa fa-check"></i><b>42.4</b> 数据预处理</a>
-<ul>
-<li class="chapter" data-level="42.4.1" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#标准化vs对数化"><i class="fa fa-check"></i><b>42.4.1</b> 标准化vs对数化</a></li>
+<li class="chapter" data-level="40.1" data-path="39-eda-caribou.html"><a href="39-eda-caribou.html#数据录入"><i class="fa fa-check"></i><b>40.1</b> 数据录入</a></li>
+<li class="chapter" data-level="40.2" data-path="39-eda-caribou.html"><a href="39-eda-caribou.html#驯鹿身份信息"><i class="fa fa-check"></i><b>40.2</b> 驯鹿身份信息</a></li>
 </ul></li>
-<li class="chapter" data-level="42.5" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#正式开始探索"><i class="fa fa-check"></i><b>42.5</b> 正式开始探索</a>
+<li class="chapter" data-level="41" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html"><i class="fa fa-check"></i><b>41</b> 探索性数据分析-企鹅的故事</a>
 <ul>
-<li class="chapter" data-level="42.5.1" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#各地区房屋价格均值"><i class="fa fa-check"></i><b>42.5.1</b> 各地区房屋价格均值</a></li>
-<li class="chapter" data-level="42.5.2" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#房屋价格与占地面积"><i class="fa fa-check"></i><b>42.5.2</b> 房屋价格与占地面积</a></li>
-<li class="chapter" data-level="42.5.3" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#房屋价格与房屋居住面积"><i class="fa fa-check"></i><b>42.5.3</b> 房屋价格与房屋居住面积</a></li>
-<li class="chapter" data-level="42.5.4" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#车库与房屋价格"><i class="fa fa-check"></i><b>42.5.4</b> 车库与房屋价格</a></li>
-</ul></li>
-<li class="chapter" data-level="42.6" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#建模-2"><i class="fa fa-check"></i><b>42.6</b> 建模</a></li>
-</ul></li>
-<li class="chapter" data-level="43" data-path="50-R-practise.html"><a href="50-R-practise.html"><i class="fa fa-check"></i><b>43</b> 练习</a>
+<li class="chapter" data-level="41.1" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#数据录入-1"><i class="fa fa-check"></i><b>41.1</b> 数据录入</a>
 <ul>
-<li class="chapter" data-level="43.1" data-path="50-R-practise.html"><a href="50-R-practise.html#旋转数据框"><i class="fa fa-check"></i><b>43.1</b> 1-旋转数据框</a></li>
-<li class="chapter" data-level="43.2" data-path="50-R-practise.html"><a href="50-R-practise.html#排序"><i class="fa fa-check"></i><b>43.2</b> 2-排序</a></li>
-<li class="chapter" data-level="43.3" data-path="50-R-practise.html"><a href="50-R-practise.html#统计并筛选"><i class="fa fa-check"></i><b>43.3</b> 3-统计并筛选</a></li>
-<li class="chapter" data-level="43.4" data-path="50-R-practise.html"><a href="50-R-practise.html#按条件分组"><i class="fa fa-check"></i><b>43.4</b> 4-按条件分组</a></li>
-<li class="chapter" data-level="43.5" data-path="50-R-practise.html"><a href="50-R-practise.html#section-1"><i class="fa fa-check"></i><b>43.5</b> </a></li>
+<li class="chapter" data-level="41.1.1" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#变量含义"><i class="fa fa-check"></i><b>41.1.1</b> 变量含义</a></li>
+</ul></li>
+<li class="chapter" data-level="41.2" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#数据清洗"><i class="fa fa-check"></i><b>41.2</b> 数据清洗</a></li>
+<li class="chapter" data-level="41.3" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#探索性分析"><i class="fa fa-check"></i><b>41.3</b> 探索性分析</a>
+<ul>
+<li class="chapter" data-level="41.3.1" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#每种类型的企鹅有多少只"><i class="fa fa-check"></i><b>41.3.1</b> 每种类型的企鹅有多少只</a></li>
+<li class="chapter" data-level="41.3.2" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#每种类型企鹅各种属性的均值和分布"><i class="fa fa-check"></i><b>41.3.2</b> 每种类型企鹅各种属性的均值和分布</a></li>
+<li class="chapter" data-level="41.3.3" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#嘴峰长度和深度的关联"><i class="fa fa-check"></i><b>41.3.3</b> 嘴峰长度和深度的关联</a></li>
+<li class="chapter" data-level="41.3.4" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#体重与翅膀长度的关联"><i class="fa fa-check"></i><b>41.3.4</b> 体重与翅膀长度的关联？</a></li>
+<li class="chapter" data-level="41.3.5" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#性别与不同体征信息的关系-建立模型"><i class="fa fa-check"></i><b>41.3.5</b> 性别与不同体征信息的关系-建立模型</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="42" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html"><i class="fa fa-check"></i><b>42</b> 探索性数据分析-大学生职业决策</a>
+<ul>
+<li class="chapter" data-level="42.1" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#预备知识"><i class="fa fa-check"></i><b>42.1</b> 预备知识</a></li>
+<li class="chapter" data-level="42.2" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#正式开始"><i class="fa fa-check"></i><b>42.2</b> 正式开始</a>
+<ul>
+<li class="chapter" data-level="42.2.1" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#检查缺失值"><i class="fa fa-check"></i><b>42.2.1</b> 检查缺失值</a></li>
+<li class="chapter" data-level="42.2.2" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#数据预处理"><i class="fa fa-check"></i><b>42.2.2</b> 数据预处理</a></li>
+<li class="chapter" data-level="42.2.3" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#标准化数据"><i class="fa fa-check"></i><b>42.2.3</b> 标准化数据</a></li>
+</ul></li>
+<li class="chapter" data-level="42.3" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#探索数据"><i class="fa fa-check"></i><b>42.3</b> 探索数据</a>
+<ul>
+<li class="chapter" data-level="42.3.1" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#想探索的问题"><i class="fa fa-check"></i><b>42.3.1</b> 想探索的问题</a></li>
+<li class="chapter" data-level="42.3.2" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#不同性别年纪生源地专业下各指标的分布差异"><i class="fa fa-check"></i><b>42.3.2</b> 不同性别、年纪、生源地、专业下，各指标的分布差异</a></li>
+<li class="chapter" data-level="42.3.3" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#来自不同地方的学生在职业探索上的不同"><i class="fa fa-check"></i><b>42.3.3</b> 来自不同地方的学生在职业探索上的不同</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="43" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html"><i class="fa fa-check"></i><b>43</b> 探索性数据分析-ames房价预测</a>
+<ul>
+<li class="chapter" data-level="43.1" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#探索设想"><i class="fa fa-check"></i><b>43.1</b> 探索设想</a></li>
+<li class="chapter" data-level="43.2" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#变量选取"><i class="fa fa-check"></i><b>43.2</b> 变量选取</a></li>
+<li class="chapter" data-level="43.3" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#缺失值处理"><i class="fa fa-check"></i><b>43.3</b> 缺失值处理</a></li>
+<li class="chapter" data-level="43.4" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#数据预处理-1"><i class="fa fa-check"></i><b>43.4</b> 数据预处理</a>
+<ul>
+<li class="chapter" data-level="43.4.1" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#标准化vs对数化"><i class="fa fa-check"></i><b>43.4.1</b> 标准化vs对数化</a></li>
+</ul></li>
+<li class="chapter" data-level="43.5" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#正式开始探索"><i class="fa fa-check"></i><b>43.5</b> 正式开始探索</a>
+<ul>
+<li class="chapter" data-level="43.5.1" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#各地区房屋价格均值"><i class="fa fa-check"></i><b>43.5.1</b> 各地区房屋价格均值</a></li>
+<li class="chapter" data-level="43.5.2" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#房屋价格与占地面积"><i class="fa fa-check"></i><b>43.5.2</b> 房屋价格与占地面积</a></li>
+<li class="chapter" data-level="43.5.3" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#房屋价格与房屋居住面积"><i class="fa fa-check"></i><b>43.5.3</b> 房屋价格与房屋居住面积</a></li>
+<li class="chapter" data-level="43.5.4" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#车库与房屋价格"><i class="fa fa-check"></i><b>43.5.4</b> 车库与房屋价格</a></li>
+</ul></li>
+<li class="chapter" data-level="43.6" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#建模-2"><i class="fa fa-check"></i><b>43.6</b> 建模</a></li>
+</ul></li>
+<li class="chapter" data-level="44" data-path="50-R-practise.html"><a href="50-R-practise.html"><i class="fa fa-check"></i><b>44</b> 练习</a>
+<ul>
+<li class="chapter" data-level="44.1" data-path="50-R-practise.html"><a href="50-R-practise.html#旋转数据框"><i class="fa fa-check"></i><b>44.1</b> 1-旋转数据框</a></li>
+<li class="chapter" data-level="44.2" data-path="50-R-practise.html"><a href="50-R-practise.html#排序"><i class="fa fa-check"></i><b>44.2</b> 2-排序</a></li>
+<li class="chapter" data-level="44.3" data-path="50-R-practise.html"><a href="50-R-practise.html#统计并筛选"><i class="fa fa-check"></i><b>44.3</b> 3-统计并筛选</a></li>
+<li class="chapter" data-level="44.4" data-path="50-R-practise.html"><a href="50-R-practise.html#按条件分组"><i class="fa fa-check"></i><b>44.4</b> 4-按条件分组</a></li>
+<li class="chapter" data-level="44.5" data-path="50-R-practise.html"><a href="50-R-practise.html#section-1"><i class="fa fa-check"></i><b>44.5</b> </a></li>
 </ul></li>
 <li class="appendix"><span><b>附录</b></span></li>
 <li class="chapter" data-level="A" data-path="999-appendix.html"><a href="999-appendix.html"><i class="fa fa-check"></i><b>A</b> 附录-有趣的“懒人”包</a>
@@ -490,19 +505,19 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="eda-covid2019" class="section level1 hasAnchor" number="36">
-<h1><span class="header-section-number">第 36 章</span> 探索性数据分析-新冠疫情<a href="35-eda-covid2019.html#eda-covid2019" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="eda-covid2019" class="section level1 hasAnchor" number="37">
+<h1><span class="header-section-number">第 37 章</span> 探索性数据分析-新冠疫情<a href="35-eda-covid2019.html#eda-covid2019" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>新型冠状病毒（<code>COVID-9</code>）疫情在多国蔓延，本章尝试了解疫情发展，愿人类早日战胜病毒。</p>
-<div id="数据来源" class="section level2 hasAnchor" number="36.1">
-<h2><span class="header-section-number">36.1</span> 数据来源<a href="35-eda-covid2019.html#数据来源" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="数据来源" class="section level2 hasAnchor" number="37.1">
+<h2><span class="header-section-number">37.1</span> 数据来源<a href="35-eda-covid2019.html#数据来源" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>数据来源于<a href="https://github.com/CSSEGISandData/COVID-19">本连接</a>，找到数据的时间序列（time_series）后，直接下载即可。</p>
 </div>
-<div id="读取数据" class="section level2 hasAnchor" number="36.2">
-<h2><span class="header-section-number">36.2</span> 读取数据<a href="35-eda-covid2019.html#读取数据" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="读取数据" class="section level2 hasAnchor" number="37.2">
+<h2><span class="header-section-number">37.2</span> 读取数据<a href="35-eda-covid2019.html#读取数据" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>在探索数据前，一定要对数据<strong>储存结构、数据变量名及其含义</strong>非常清楚，这样才能更好的进行探索分析。</p>
-<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="35-eda-covid2019.html#cb289-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 读取数据</span></span>
-<span id="cb289-2"><a href="35-eda-covid2019.html#cb289-2" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;datas/time_series_covid19_confirmed_global.csv&quot;</span>)</span>
-<span id="cb289-3"><a href="35-eda-covid2019.html#cb289-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(d)</span></code></pre></div>
+<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="35-eda-covid2019.html#cb313-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 读取数据</span></span>
+<span id="cb313-2"><a href="35-eda-covid2019.html#cb313-2" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;datas/time_series_covid19_confirmed_global.csv&quot;</span>)</span>
+<span id="cb313-3"><a href="35-eda-covid2019.html#cb313-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(d)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 74
 ##   `Province/State` `Country/Region`    Lat   Long `1/22/20` `1/23/20`
 ##   &lt;chr&gt;            &lt;chr&gt;             &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
@@ -519,8 +534,8 @@ div.csl-indent {
 ## #   `2/5/20` &lt;dbl&gt;, `2/6/20` &lt;dbl&gt;, `2/7/20` &lt;dbl&gt;, `2/8/20` &lt;dbl&gt;,
 ## #   `2/9/20` &lt;dbl&gt;, `2/10/20` &lt;dbl&gt;, `2/11/20` &lt;dbl&gt;,
 ## #   `2/12/20` &lt;dbl&gt;, `2/13/20` &lt;dbl&gt;, `2/14/20` &lt;dbl&gt;, ...</code></pre>
-<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="35-eda-covid2019.html#cb291-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 查看数据基本结构</span></span>
-<span id="cb291-2"><a href="35-eda-covid2019.html#cb291-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(d)</span></code></pre></div>
+<div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="35-eda-covid2019.html#cb315-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 查看数据基本结构</span></span>
+<span id="cb315-2"><a href="35-eda-covid2019.html#cb315-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(d)</span></code></pre></div>
 <pre><code>## Rows: 256
 ## Columns: 74
 ## $ `Province/State` &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, &quot;Australia~
@@ -598,19 +613,19 @@ div.csl-indent {
 ## $ `3/30/20`        &lt;dbl&gt; 170, 223, 584, 370, 7, 7, 820, 482, 78, 20~
 ## $ `3/31/20`        &lt;dbl&gt; 174, 243, 716, 376, 7, 7, 1054, 532, 80, 2~</code></pre>
 </div>
-<div id="数据清洗规整" class="section level2 hasAnchor" number="36.3">
-<h2><span class="header-section-number">36.3</span> 数据清洗规整<a href="35-eda-covid2019.html#数据清洗规整" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="35-eda-covid2019.html#cb293-1" aria-hidden="true" tabindex="-1"></a>d_country <span class="ot">&lt;-</span> d <span class="sc">%&gt;%</span> </span>
-<span id="cb293-2"><a href="35-eda-covid2019.html#cb293-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb293-3"><a href="35-eda-covid2019.html#cb293-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>),</span>
-<span id="cb293-4"><a href="35-eda-covid2019.html#cb293-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;date&quot;</span>,</span>
-<span id="cb293-5"><a href="35-eda-covid2019.html#cb293-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;cases&quot;</span></span>
-<span id="cb293-6"><a href="35-eda-covid2019.html#cb293-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
-<span id="cb293-7"><a href="35-eda-covid2019.html#cb293-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">date =</span> lubridate<span class="sc">::</span><span class="fu">mdy</span>(date)) <span class="sc">%&gt;%</span> </span>
-<span id="cb293-8"><a href="35-eda-covid2019.html#cb293-8" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb293-9"><a href="35-eda-covid2019.html#cb293-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(country_region, date) <span class="sc">%&gt;%</span> </span>
-<span id="cb293-10"><a href="35-eda-covid2019.html#cb293-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">cases =</span> <span class="fu">sum</span>(cases)) <span class="sc">%&gt;%</span> </span>
-<span id="cb293-11"><a href="35-eda-covid2019.html#cb293-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code></pre></div>
+<div id="数据清洗规整" class="section level2 hasAnchor" number="37.3">
+<h2><span class="header-section-number">37.3</span> 数据清洗规整<a href="35-eda-covid2019.html#数据清洗规整" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="35-eda-covid2019.html#cb317-1" aria-hidden="true" tabindex="-1"></a>d_country <span class="ot">&lt;-</span> d <span class="sc">%&gt;%</span> </span>
+<span id="cb317-2"><a href="35-eda-covid2019.html#cb317-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb317-3"><a href="35-eda-covid2019.html#cb317-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>),</span>
+<span id="cb317-4"><a href="35-eda-covid2019.html#cb317-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;date&quot;</span>,</span>
+<span id="cb317-5"><a href="35-eda-covid2019.html#cb317-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;cases&quot;</span></span>
+<span id="cb317-6"><a href="35-eda-covid2019.html#cb317-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb317-7"><a href="35-eda-covid2019.html#cb317-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">date =</span> lubridate<span class="sc">::</span><span class="fu">mdy</span>(date)) <span class="sc">%&gt;%</span> </span>
+<span id="cb317-8"><a href="35-eda-covid2019.html#cb317-8" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb317-9"><a href="35-eda-covid2019.html#cb317-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(country_region, date) <span class="sc">%&gt;%</span> </span>
+<span id="cb317-10"><a href="35-eda-covid2019.html#cb317-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">cases =</span> <span class="fu">sum</span>(cases)) <span class="sc">%&gt;%</span> </span>
+<span id="cb317-11"><a href="35-eda-covid2019.html#cb317-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code></pre></div>
 <pre><code>## Warning in FUN(X[[i]], ...): strings not representable in native
 ## encoding will be translated to UTF-8</code></pre>
 <pre><code>## Warning in FUN(X[[i]], ...): unable to translate &#39;&lt;U+00C4&gt;&#39; to native
@@ -635,7 +650,7 @@ div.csl-indent {
 ## encoding</code></pre>
 <pre><code>## Warning in FUN(X[[i]], ...): unable to translate &#39;&lt;U+00E5&gt;&#39; to native
 ## encoding</code></pre>
-<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="35-eda-covid2019.html#cb306-1" aria-hidden="true" tabindex="-1"></a>d_country</span></code></pre></div>
+<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="35-eda-covid2019.html#cb330-1" aria-hidden="true" tabindex="-1"></a>d_country</span></code></pre></div>
 <pre><code>## # A tibble: 12,600 x 3
 ##    country_region date       cases
 ##    &lt;chr&gt;          &lt;date&gt;     &lt;dbl&gt;
@@ -650,30 +665,30 @@ div.csl-indent {
 ##  9 Afghanistan    2020-01-30     0
 ## 10 Afghanistan    2020-01-31     0
 ## # ... with 12,590 more rows</code></pre>
-<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="35-eda-covid2019.html#cb308-1" aria-hidden="true" tabindex="-1"></a>d_date <span class="ot">&lt;-</span> d_country <span class="sc">%&gt;%</span> </span>
-<span id="cb308-2"><a href="35-eda-covid2019.html#cb308-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(date) <span class="sc">%&gt;%</span> </span>
-<span id="cb308-3"><a href="35-eda-covid2019.html#cb308-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">confirmed =</span> <span class="fu">sum</span>(cases))</span>
-<span id="cb308-4"><a href="35-eda-covid2019.html#cb308-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb308-5"><a href="35-eda-covid2019.html#cb308-5" aria-hidden="true" tabindex="-1"></a>d_date <span class="sc">%&gt;%</span> </span>
-<span id="cb308-6"><a href="35-eda-covid2019.html#cb308-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> confirmed)) <span class="sc">+</span></span>
-<span id="cb308-7"><a href="35-eda-covid2019.html#cb308-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb308-8"><a href="35-eda-covid2019.html#cb308-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_date</span>(</span>
-<span id="cb308-9"><a href="35-eda-covid2019.html#cb308-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">date_labels =</span> <span class="st">&quot;%m-%d&quot;</span>,</span>
-<span id="cb308-10"><a href="35-eda-covid2019.html#cb308-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">date_breaks =</span> <span class="st">&quot;1 week&quot;</span></span>
-<span id="cb308-11"><a href="35-eda-covid2019.html#cb308-11" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">+</span></span>
-<span id="cb308-12"><a href="35-eda-covid2019.html#cb308-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(</span>
-<span id="cb308-13"><a href="35-eda-covid2019.html#cb308-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">50000</span>, <span class="dv">100000</span>, <span class="dv">200000</span>, <span class="dv">300000</span>,</span>
-<span id="cb308-14"><a href="35-eda-covid2019.html#cb308-14" aria-hidden="true" tabindex="-1"></a>                   <span class="dv">500000</span>, <span class="dv">900000</span>),</span>
-<span id="cb308-15"><a href="35-eda-covid2019.html#cb308-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">labels =</span> scales<span class="sc">::</span>comma</span>
-<span id="cb308-16"><a href="35-eda-covid2019.html#cb308-16" aria-hidden="true" tabindex="-1"></a>      )</span></code></pre></div>
+<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="35-eda-covid2019.html#cb332-1" aria-hidden="true" tabindex="-1"></a>d_date <span class="ot">&lt;-</span> d_country <span class="sc">%&gt;%</span> </span>
+<span id="cb332-2"><a href="35-eda-covid2019.html#cb332-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(date) <span class="sc">%&gt;%</span> </span>
+<span id="cb332-3"><a href="35-eda-covid2019.html#cb332-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">confirmed =</span> <span class="fu">sum</span>(cases))</span>
+<span id="cb332-4"><a href="35-eda-covid2019.html#cb332-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb332-5"><a href="35-eda-covid2019.html#cb332-5" aria-hidden="true" tabindex="-1"></a>d_date <span class="sc">%&gt;%</span> </span>
+<span id="cb332-6"><a href="35-eda-covid2019.html#cb332-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> confirmed)) <span class="sc">+</span></span>
+<span id="cb332-7"><a href="35-eda-covid2019.html#cb332-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb332-8"><a href="35-eda-covid2019.html#cb332-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_date</span>(</span>
+<span id="cb332-9"><a href="35-eda-covid2019.html#cb332-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">date_labels =</span> <span class="st">&quot;%m-%d&quot;</span>,</span>
+<span id="cb332-10"><a href="35-eda-covid2019.html#cb332-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">date_breaks =</span> <span class="st">&quot;1 week&quot;</span></span>
+<span id="cb332-11"><a href="35-eda-covid2019.html#cb332-11" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">+</span></span>
+<span id="cb332-12"><a href="35-eda-covid2019.html#cb332-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(</span>
+<span id="cb332-13"><a href="35-eda-covid2019.html#cb332-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">50000</span>, <span class="dv">100000</span>, <span class="dv">200000</span>, <span class="dv">300000</span>,</span>
+<span id="cb332-14"><a href="35-eda-covid2019.html#cb332-14" aria-hidden="true" tabindex="-1"></a>                   <span class="dv">500000</span>, <span class="dv">900000</span>),</span>
+<span id="cb332-15"><a href="35-eda-covid2019.html#cb332-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">labels =</span> scales<span class="sc">::</span>comma</span>
+<span id="cb332-16"><a href="35-eda-covid2019.html#cb332-16" aria-hidden="true" tabindex="-1"></a>      )</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:date-confirmed"></span>
 <img src="35-eda-covid2019_files/figure-html/date-confirmed-1.png" alt="2020年1月至2020年3月新冠肺炎累积确诊病例" width="672" />
 <p class="caption">
-图 36.1: 2020年1月至2020年3月新冠肺炎累积确诊病例
+图 37.1: 2020年1月至2020年3月新冠肺炎累积确诊病例
 </p>
 </div>
-<div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb309-1"><a href="35-eda-covid2019.html#cb309-1" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb309-2"><a href="35-eda-covid2019.html#cb309-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot; &quot;</span>, <span class="at">y =</span> <span class="st">&quot;累积确诊病例&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="35-eda-covid2019.html#cb333-1" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb333-2"><a href="35-eda-covid2019.html#cb333-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot; &quot;</span>, <span class="at">y =</span> <span class="st">&quot;累积确诊病例&quot;</span>)</span></code></pre></div>
 <pre><code>## List of 95
 ##  $ line                      :List of 6
 ##   ..$ colour       : chr &quot;black&quot;
@@ -1101,46 +1116,46 @@ div.csl-indent {
 <li><p>根据WHO的报告，新冠肺炎从首例病例报告到感染者达到10万人用了67天；感染人数增至20万用了11天；从20万到突破30万则只用了4天。</p></li>
 </ul>
 <p>那么我国疫情的情况如何呢？</p>
-<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="35-eda-covid2019.html#cb311-1" aria-hidden="true" tabindex="-1"></a>d_china <span class="ot">&lt;-</span> d_country <span class="sc">%&gt;%</span> </span>
-<span id="cb311-2"><a href="35-eda-covid2019.html#cb311-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(country_region <span class="sc">==</span> <span class="st">&quot;China&quot;</span>)</span>
-<span id="cb311-3"><a href="35-eda-covid2019.html#cb311-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb311-4"><a href="35-eda-covid2019.html#cb311-4" aria-hidden="true" tabindex="-1"></a>d_china <span class="sc">%&gt;%</span> </span>
-<span id="cb311-5"><a href="35-eda-covid2019.html#cb311-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(country_region <span class="sc">==</span> <span class="st">&quot;China&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb311-6"><a href="35-eda-covid2019.html#cb311-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> cases)) <span class="sc">+</span></span>
-<span id="cb311-7"><a href="35-eda-covid2019.html#cb311-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb311-8"><a href="35-eda-covid2019.html#cb311-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_date</span>(<span class="at">date_breaks =</span> <span class="st">&quot;1 week&quot;</span>,</span>
-<span id="cb311-9"><a href="35-eda-covid2019.html#cb311-9" aria-hidden="true" tabindex="-1"></a>                 <span class="at">date_labels =</span> <span class="st">&quot;%m_%d&quot;</span>) <span class="sc">+</span></span>
-<span id="cb311-10"><a href="35-eda-covid2019.html#cb311-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_log10</span>(<span class="at">labels =</span> scales<span class="sc">::</span>comma)</span></code></pre></div>
+<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="35-eda-covid2019.html#cb335-1" aria-hidden="true" tabindex="-1"></a>d_china <span class="ot">&lt;-</span> d_country <span class="sc">%&gt;%</span> </span>
+<span id="cb335-2"><a href="35-eda-covid2019.html#cb335-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(country_region <span class="sc">==</span> <span class="st">&quot;China&quot;</span>)</span>
+<span id="cb335-3"><a href="35-eda-covid2019.html#cb335-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb335-4"><a href="35-eda-covid2019.html#cb335-4" aria-hidden="true" tabindex="-1"></a>d_china <span class="sc">%&gt;%</span> </span>
+<span id="cb335-5"><a href="35-eda-covid2019.html#cb335-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(country_region <span class="sc">==</span> <span class="st">&quot;China&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb335-6"><a href="35-eda-covid2019.html#cb335-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> cases)) <span class="sc">+</span></span>
+<span id="cb335-7"><a href="35-eda-covid2019.html#cb335-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb335-8"><a href="35-eda-covid2019.html#cb335-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_date</span>(<span class="at">date_breaks =</span> <span class="st">&quot;1 week&quot;</span>,</span>
+<span id="cb335-9"><a href="35-eda-covid2019.html#cb335-9" aria-hidden="true" tabindex="-1"></a>                 <span class="at">date_labels =</span> <span class="st">&quot;%m_%d&quot;</span>) <span class="sc">+</span></span>
+<span id="cb335-10"><a href="35-eda-covid2019.html#cb335-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_log10</span>(<span class="at">labels =</span> scales<span class="sc">::</span>comma)</span></code></pre></div>
 <p><img src="35-eda-covid2019_files/figure-html/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>从上图可以看出，在2020年1月至2月中旬期间我国确诊病例急速增加，在2020年2月中旬后，每日新增的确诊病例已经很少，反映出我国的疫情防控措施卓有成效。</p>
-<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="35-eda-covid2019.html#cb312-1" aria-hidden="true" tabindex="-1"></a>d_country <span class="sc">%&gt;%</span> </span>
-<span id="cb312-2"><a href="35-eda-covid2019.html#cb312-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(country_region) <span class="sc">%&gt;%</span> </span>
-<span id="cb312-3"><a href="35-eda-covid2019.html#cb312-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">max</span>(cases) <span class="sc">&gt;=</span> <span class="dv">20000</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb312-4"><a href="35-eda-covid2019.html#cb312-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb312-5"><a href="35-eda-covid2019.html#cb312-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> cases, <span class="at">color =</span> country_region)) <span class="sc">+</span></span>
-<span id="cb312-6"><a href="35-eda-covid2019.html#cb312-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb312-7"><a href="35-eda-covid2019.html#cb312-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_date</span>(<span class="at">date_breaks =</span> <span class="st">&quot;1 week&quot;</span>,</span>
-<span id="cb312-8"><a href="35-eda-covid2019.html#cb312-8" aria-hidden="true" tabindex="-1"></a>                 <span class="at">date_labels =</span> <span class="st">&quot;%m-%d&quot;</span>) <span class="sc">+</span></span>
-<span id="cb312-9"><a href="35-eda-covid2019.html#cb312-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_log10</span>() <span class="sc">+</span></span>
-<span id="cb312-10"><a href="35-eda-covid2019.html#cb312-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(country_region), <span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb312-11"><a href="35-eda-covid2019.html#cb312-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
-<span id="cb312-12"><a href="35-eda-covid2019.html#cb312-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, </span>
-<span id="cb312-13"><a href="35-eda-covid2019.html#cb312-13" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb312-14"><a href="35-eda-covid2019.html#cb312-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="35-eda-covid2019.html#cb336-1" aria-hidden="true" tabindex="-1"></a>d_country <span class="sc">%&gt;%</span> </span>
+<span id="cb336-2"><a href="35-eda-covid2019.html#cb336-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(country_region) <span class="sc">%&gt;%</span> </span>
+<span id="cb336-3"><a href="35-eda-covid2019.html#cb336-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">max</span>(cases) <span class="sc">&gt;=</span> <span class="dv">20000</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb336-4"><a href="35-eda-covid2019.html#cb336-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb336-5"><a href="35-eda-covid2019.html#cb336-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> cases, <span class="at">color =</span> country_region)) <span class="sc">+</span></span>
+<span id="cb336-6"><a href="35-eda-covid2019.html#cb336-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb336-7"><a href="35-eda-covid2019.html#cb336-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_date</span>(<span class="at">date_breaks =</span> <span class="st">&quot;1 week&quot;</span>,</span>
+<span id="cb336-8"><a href="35-eda-covid2019.html#cb336-8" aria-hidden="true" tabindex="-1"></a>                 <span class="at">date_labels =</span> <span class="st">&quot;%m-%d&quot;</span>) <span class="sc">+</span></span>
+<span id="cb336-9"><a href="35-eda-covid2019.html#cb336-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_log10</span>() <span class="sc">+</span></span>
+<span id="cb336-10"><a href="35-eda-covid2019.html#cb336-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(country_region), <span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb336-11"><a href="35-eda-covid2019.html#cb336-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
+<span id="cb336-12"><a href="35-eda-covid2019.html#cb336-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, </span>
+<span id="cb336-13"><a href="35-eda-covid2019.html#cb336-13" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb336-14"><a href="35-eda-covid2019.html#cb336-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
 <pre><code>## Warning: Transformation introduced infinite values in continuous y-
 ## axis</code></pre>
 <p><img src="35-eda-covid2019_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>由上图可以看出，除我国外，其它欧美主要国家的病例均在持续大幅增长。</p>
 </div>
-<div id="可视化探索-1" class="section level2 hasAnchor" number="36.4">
-<h2><span class="header-section-number">36.4</span> 可视化探索<a href="35-eda-covid2019.html#可视化探索-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="可视化探索-1" class="section level2 hasAnchor" number="37.4">
+<h2><span class="header-section-number">37.4</span> 可视化探索<a href="35-eda-covid2019.html#可视化探索-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><a href="https://www.ft.com/coronavirus-latest">该网站</a> 这张图很受关注，我们是否可以在R中将其重现？</p>
-<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="35-eda-covid2019.html#cb314-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">&quot;images/ft_coronavirus.jpg&quot;</span>,</span>
-<span id="cb314-2"><a href="35-eda-covid2019.html#cb314-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">dpi =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="35-eda-covid2019.html#cb338-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">&quot;images/ft_coronavirus.jpg&quot;</span>,</span>
+<span id="cb338-2"><a href="35-eda-covid2019.html#cb338-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">dpi =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ft"></span>
 <img src="images/ft_coronavirus.jpg" alt="图片来源www.ft.com"  />
 <p class="caption">
-图 36.2: 图片来源www.ft.com
+图 37.2: 图片来源www.ft.com
 </p>
 </div>
 <p>这张图表达出的几个信息：</p>

@@ -58,3 +58,57 @@ cut(Age,
 ## Levels: Young Middle Old
 ```
 :::
+
+## 练习
+
+1. 画出2007年美洲人口寿命柱状图，从高到低排序。
+
+
+```r
+library(gapminder)
+gapminder %>% 
+  filter(
+    year == 2007,
+    continent == "Americas"
+  ) %>% 
+  ggplot(aes(x = reorder(country, lifeExp), y = lifeExp)) +
+    geom_bar(stat = "identity") +
+    coord_flip() +
+    labs(x = "", y = "lifeExp")
+```
+
+<img src="2-factor_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" />
+
+2. 这是四个国家人口寿命的变化图。
+
+- 小题1：要求给四个分面排序，按每个国家寿命的中位数。
+
+- 小题2：要求给四个分面排序，按每个国家寿命差（最大值减去最小值）。
+
+
+```r
+# 小题1
+gapminder %>%
+  filter(country %in% c("Norway", "Portugal", "Spain", "Austria")) %>%
+  mutate(country = fct_reorder(country, lifeExp, median)) %>% 
+  ggplot(aes(year, lifeExp)) + 
+    geom_line() +
+    facet_wrap(vars(country), nrow = 1)
+```
+
+<img src="2-factor_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" />
+
+
+
+```r
+# 小题2
+gapminder %>%
+  filter(country %in% c("Norway", "Portugal", "Spain", "Austria")) %>%
+  mutate(country = fct_reorder(country, lifeExp, 
+                               function(x){max(x) - min(x)})) %>% 
+  ggplot(aes(year, lifeExp)) + 
+    geom_line() +
+    facet_wrap(vars(country), nrow = 1)
+```
+
+<img src="2-factor_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" />

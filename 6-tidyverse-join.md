@@ -28,12 +28,12 @@ bind_rows(
 
 ```
 ##   Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
-## 1          5.1         2.5          3.0         1.1 versicolor
-## 2          6.2         2.8          4.8         1.8  virginica
-## 3          6.5         3.0          5.5         1.8  virginica
-## 4          5.0         2.0          3.5         1.0 versicolor
-## 5          5.9         3.2          4.8         1.8 versicolor
-## 6          5.6         3.0          4.1         1.3 versicolor
+## 1          5.6         2.9          3.6         1.3 versicolor
+## 2          6.7         3.0          5.2         2.3  virginica
+## 3          6.3         3.4          5.6         2.4  virginica
+## 4          4.6         3.4          1.4         0.3     setosa
+## 5          6.1         3.0          4.9         1.8  virginica
+## 6          5.2         2.7          3.9         1.4 versicolor
 ```
 
 ```r

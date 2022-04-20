@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>第 14 章 线性回归 | 基于tidyverse的R语言学习笔记</title>
+  <title>第 13 章 函数式编程 | 基于tidyverse的R语言学习笔记</title>
   <meta name="description" content="最初看到 elegantbook 做的书籍样式很漂亮，就想把它引入到 bookdown 中，遂定制了此模版。在此基础上，做了迁移和扩展的工作，融合了 LaTeX (精美)、Pandoc (简洁) 和 R (强大) 的特性。This is a bookdown template based on ElegantBook. The output format for this template is bookdown::gitbook and bookdown::pdf_book." />
   <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="第 14 章 线性回归 | 基于tidyverse的R语言学习笔记" />
+  <meta property="og:title" content="第 13 章 函数式编程 | 基于tidyverse的R语言学习笔记" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="最初看到 elegantbook 做的书籍样式很漂亮，就想把它引入到 bookdown 中，遂定制了此模版。在此基础上，做了迁移和扩展的工作，融合了 LaTeX (精美)、Pandoc (简洁) 和 R (强大) 的特性。This is a bookdown template based on ElegantBook. The output format for this template is bookdown::gitbook and bookdown::pdf_book." />
   <meta name="github-repo" content="XiangyunHuang/ElegantBookdown" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="第 14 章 线性回归 | 基于tidyverse的R语言学习笔记" />
+  <meta name="twitter:title" content="第 13 章 函数式编程 | 基于tidyverse的R语言学习笔记" />
   
   <meta name="twitter:description" content="最初看到 elegantbook 做的书籍样式很漂亮，就想把它引入到 bookdown 中，遂定制了此模版。在此基础上，做了迁移和扩展的工作，融合了 LaTeX (精美)、Pandoc (简洁) 和 R (强大) 的特性。This is a bookdown template based on ElegantBook. The output format for this template is bookdown::gitbook and bookdown::pdf_book." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="tidyverse-purrr.html"/>
-<link rel="next" href="13-tidymodel-broom.html"/>
+<link rel="prev" href="11-tidystats_sampling.html"/>
+<link rel="next" href="12-tidymodel-linear-regression.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -505,237 +505,179 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="tidymodel-linear-regression" class="section level1 hasAnchor" number="14">
-<h1><span class="header-section-number">第 14 章</span> 线性回归<a href="12-tidymodel-linear-regression.html#tidymodel-linear-regression" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="从案例开始" class="section level2 hasAnchor" number="14.1">
-<h2><span class="header-section-number">14.1</span> 从案例开始<a href="12-tidymodel-linear-regression.html#从案例开始" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>一份1994年手机的1379个对象关于收入、身高、教育水平等信息的数据集。</p>
-<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="12-tidymodel-linear-regression.html#cb200-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb200-2"><a href="12-tidymodel-linear-regression.html#cb200-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 导入</span></span>
-<span id="cb200-3"><a href="12-tidymodel-linear-regression.html#cb200-3" aria-hidden="true" tabindex="-1"></a>wages <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;datas/wages.csv&quot;</span>)</span>
-<span id="cb200-4"><a href="12-tidymodel-linear-regression.html#cb200-4" aria-hidden="true" tabindex="-1"></a>wages <span class="sc">%&gt;%</span> </span>
-<span id="cb200-5"><a href="12-tidymodel-linear-regression.html#cb200-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div>
-<pre><code>## # A tibble: 6 x 6
-##     earn height sex    race     ed   age
-##    &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1 79571.   73.9 male   white    16    49
-## 2 96397.   66.2 female white    16    62
-## 3 48711.   63.8 female white    16    33
-## 4 80478.   63.2 female other    16    95
-## 5 82089.   63.1 female white    17    43
-## 6 15313.   64.5 female white    15    30</code></pre>
-<div id="缺失值检查" class="section level3 hasAnchor" number="14.1.1">
-<h3><span class="header-section-number">14.1.1</span> 缺失值检查<a href="12-tidymodel-linear-regression.html#缺失值检查" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>一般情况下，拿到一份数据，首先需要了解数据：</p>
-<ul>
-<li>了解每个变量的含义。</li>
-<li>检查缺失值情况。</li>
-</ul>
-<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="12-tidymodel-linear-regression.html#cb202-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 变量名称含义</span></span>
-<span id="cb202-2"><a href="12-tidymodel-linear-regression.html#cb202-2" aria-hidden="true" tabindex="-1"></a>wages <span class="sc">%&gt;%</span> </span>
-<span id="cb202-3"><a href="12-tidymodel-linear-regression.html#cb202-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colnames</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;earn&quot;   &quot;height&quot; &quot;sex&quot;    &quot;race&quot;   &quot;ed&quot;     &quot;age&quot;</code></pre>
-<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="12-tidymodel-linear-regression.html#cb204-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 统计缺失值</span></span>
-<span id="cb204-2"><a href="12-tidymodel-linear-regression.html#cb204-2" aria-hidden="true" tabindex="-1"></a>wages <span class="sc">%&gt;%</span> </span>
-<span id="cb204-3"><a href="12-tidymodel-linear-regression.html#cb204-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_df</span>( <span class="sc">~</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(.))) <span class="sc">%&gt;%</span> </span>
-<span id="cb204-4"><a href="12-tidymodel-linear-regression.html#cb204-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb204-5"><a href="12-tidymodel-linear-regression.html#cb204-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">everything</span>(),</span>
-<span id="cb204-6"><a href="12-tidymodel-linear-regression.html#cb204-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;col_names&quot;</span>,</span>
-<span id="cb204-7"><a href="12-tidymodel-linear-regression.html#cb204-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;sum_na&quot;</span></span>
-<span id="cb204-8"><a href="12-tidymodel-linear-regression.html#cb204-8" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
-<pre><code>## # A tibble: 6 x 2
-##   col_names sum_na
-##   &lt;chr&gt;      &lt;int&gt;
-## 1 earn           0
-## 2 height         0
-## 3 sex            0
-## 4 race           0
-## 5 ed             0
-## 6 age            0</code></pre>
-<p>可以看到本例中：</p>
-<ul>
-<li><p>共有6个变量。</p></li>
-<li><p>没有缺失值。</p></li>
-</ul>
-</div>
-<div id="简单变量统计" class="section level3 hasAnchor" number="14.1.2">
-<h3><span class="header-section-number">14.1.2</span> 简单变量统计<a href="12-tidymodel-linear-regression.html#简单变量统计" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>然后探索每个变量的分布。</p>
-<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="12-tidymodel-linear-regression.html#cb206-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 数据中男女分布的数量</span></span>
-<span id="cb206-2"><a href="12-tidymodel-linear-regression.html#cb206-2" aria-hidden="true" tabindex="-1"></a>wages <span class="sc">%&gt;%</span> </span>
-<span id="cb206-3"><a href="12-tidymodel-linear-regression.html#cb206-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(sex)</span></code></pre></div>
-<pre><code>## # A tibble: 2 x 2
-##   sex        n
-##   &lt;chr&gt;  &lt;int&gt;
-## 1 female   859
-## 2 male     520</code></pre>
-<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="12-tidymodel-linear-regression.html#cb208-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 男女两组的身高均值和收入均值并可视化</span></span>
-<span id="cb208-2"><a href="12-tidymodel-linear-regression.html#cb208-2" aria-hidden="true" tabindex="-1"></a>wages <span class="sc">%&gt;%</span> </span>
-<span id="cb208-3"><a href="12-tidymodel-linear-regression.html#cb208-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sex) <span class="sc">%&gt;%</span> </span>
-<span id="cb208-4"><a href="12-tidymodel-linear-regression.html#cb208-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb208-5"><a href="12-tidymodel-linear-regression.html#cb208-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
-<span id="cb208-6"><a href="12-tidymodel-linear-regression.html#cb208-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_height =</span> <span class="fu">mean</span>(height),</span>
-<span id="cb208-7"><a href="12-tidymodel-linear-regression.html#cb208-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_earn =</span> <span class="fu">mean</span>(earn)</span>
-<span id="cb208-8"><a href="12-tidymodel-linear-regression.html#cb208-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
-<span id="cb208-9"><a href="12-tidymodel-linear-regression.html#cb208-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> sex, <span class="at">y =</span> mean_earn, <span class="at">fill =</span> sex)) <span class="sc">+</span></span>
-<span id="cb208-10"><a href="12-tidymodel-linear-regression.html#cb208-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_col</span>()</span></code></pre></div>
-<p><img src="12-tidymodel-linear-regression_files/figure-html/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>现在我们提出几个问题：</p>
+<div id="sec:purrr" class="section level1 hasAnchor" number="13">
+<h1><span class="header-section-number">第 13 章</span> 函数式编程<a href="tidyverse-purrr.html#sec:purrr" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p><code>tidyverse</code>包对数据操作的核心思维是<strong>向量化</strong>，即使用自定义函数（或现成函数）解决分解的小问题，进而使用泛函式循环迭代解决完整问题。关键有三：</p>
 <ol style="list-style-type: decimal">
-<li><p>长得越高是否挣钱越多？</p></li>
-<li><p>是否男性比女性挣得多？</p></li>
-<li><p>对收入影响最大的变量是哪个？</p></li>
-<li><p>怎么判定我们建立的模型是不是很好？</p></li>
-</ol>
-</div>
-</div>
-<div id="线性归回模型" class="section level2 hasAnchor" number="14.2">
-<h2><span class="header-section-number">14.2</span> 线性归回模型<a href="12-tidymodel-linear-regression.html#线性归回模型" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="长得高挣得多" class="section level3 hasAnchor" number="14.2.1">
-<h3><span class="header-section-number">14.2.1</span> 长得高挣得多<a href="12-tidymodel-linear-regression.html#长得高挣得多" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>这个问题就涉及到了线性模型。顾名思义，就是假设x和y存在线性关系，在数学上可以写为：</p>
-<p><span class="math display" id="eq:liner">\[
-\begin{align}
-  y = \alpha + \beta * x + \epsilon \\
-  \epsilon = Normal(\mu,\delta)
-  \tag{14.1}
-\end{align}
-\]</span>
-<span class="math inline">\(\epsilon\)</span>代表误差项，与x无关，且服从正态分布。线性回归模型最常用的是使用最小二乘法（OLS），估算<span class="math inline">\(\hat{\alpha}\)</span>和<span class="math inline">\(\hat{\beta}\)</span>，使得残差平方和最小，即<span class="math inline">\(RSS = \sum_i(y_i-\hat{y_i})\)</span>或<span class="math inline">\(\sum_i(\epsilon_i^2)\)</span>最小。如下图所示。</p>
-<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="12-tidymodel-linear-regression.html#cb209-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">&quot;images/best_fit.png&quot;</span>, <span class="at">dpi =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
-<p><img src="images/best_fit.png" width="757" style="display: block; margin: auto;" /></p>
-</div>
-<div id="使用lm函数拟合线性回归模型" class="section level3 hasAnchor" number="14.2.2">
-<h3><span class="header-section-number">14.2.2</span> 使用lm()函数拟合线性回归模型<a href="12-tidymodel-linear-regression.html#使用lm函数拟合线性回归模型" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p><code>lm()</code>的基本用法如下：</p>
-<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="12-tidymodel-linear-regression.html#cb210-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="at">formula =</span> y <span class="sc">~</span> x, data)</span></code></pre></div>
+<li><p>将<strong>向量化</strong>的编程思维，纳入数据框或更高级的数据结构中：</p>
 <ul>
-<li><p><code>formula</code>：指定回归模型，<code>~</code>符号代表预测，<code>y ~ x</code>表示y由x预测，即y代表因变量，x代表自变量。</p></li>
-<li><p><code>data</code>：指定数据框。</p></li>
+<li><p>对想做的操作自定义操作函数（或使用现成函数）。</p></li>
+<li><p>将上一步的函数（自定义/现成）应用到数据框的多个列上，对列进行修改或汇总。</p></li>
+</ul></li>
+<li><p>将复杂的操作分解为若干基本数据操作的能力：</p>
+<ul>
+<li><p>复杂的数据操作都可以分解为若干简单的基本数据操作，数据连接、数据重塑（长宽变换/拆分合并列）、筛选行、排序行、选择列、修改列、分组汇总。</p></li>
+<li><p>完成问题的梳理和分解后，使用“管道”流以此对数据进行相应的基本操作即可。</p></li>
+</ul></li>
+<li><p>接受数据分解的操作思维：</p>
+<ul>
+<li><p><code>across()</code>函数可以同时操作多个列，实际只需要将对一个列的操作实现后，就可以使用该函数对所有需要操作的列进行循环迭代，在将结果进行合并即可。</p></li>
+<li><p>事实上，<code>tidyverse</code>中有很多函数可以帮助我们实现<strong>分解+分别操作+合并结果</strong>的过程，我们只需要关心<strong>分别操作</strong>的部分就好。</p></li>
+</ul></li>
+</ol>
+<p><code>tidyverse</code>核心包的数据操作过程如下图（图<a href="5-tidyverse-readr.html#fig:tidyverse-flow">4.1</a>）所示。</p>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="tidyverse-purrr.html#cb184-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">&quot;images/tidyverse-flow.jpg&quot;</span>, <span class="at">dpi =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:tidyverse-flow"></span>
+<img src="images/tidyverse-flow.jpg" alt="tidyverse核心包工作流"  />
+<p class="caption">
+图 4.1: tidyverse核心包工作流
+</p>
+</div>
+<div class="rmdnote">
+<ul>
+<li><p>数据经过管道默认传递给函数的第一个参数，此时通常可以省略。</p></li>
+<li><p>如果不是在第一个参数的位置使用数据，则需要用符号<code>.</code>代替，此时该符号不能被省略。</p></li>
+<li><p>对于<code>.</code>的用法，建议单独使用<code>.</code>符号时代替数据，而使用<code>.x</code>用于<code>purrr</code>中的匿名函数。</p></li>
 </ul>
-<p>在正式运行<code>lm()</code>之前，先画出身高和收入的散点图：<strong>旨在提醒我们是要寻找<em>身高</em>和<em>收入</em>的关系</strong>。</p>
-<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="12-tidymodel-linear-regression.html#cb211-1" aria-hidden="true" tabindex="-1"></a>wages <span class="sc">%&gt;%</span> </span>
-<span id="cb211-2"><a href="12-tidymodel-linear-regression.html#cb211-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(height, earn)) <span class="sc">+</span></span>
-<span id="cb211-3"><a href="12-tidymodel-linear-regression.html#cb211-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="12-tidymodel-linear-regression_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="12-tidymodel-linear-regression.html#cb212-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 正式建立模型</span></span>
-<span id="cb212-2"><a href="12-tidymodel-linear-regression.html#cb212-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 问题是长得高是否挣得多，自变量为身高，因变量为收入，</span></span>
-<span id="cb212-3"><a href="12-tidymodel-linear-regression.html#cb212-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 即身高对收入是否有影响。</span></span>
-<span id="cb212-4"><a href="12-tidymodel-linear-regression.html#cb212-4" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(</span>
-<span id="cb212-5"><a href="12-tidymodel-linear-regression.html#cb212-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula =</span> earn <span class="sc">~</span> height,</span>
-<span id="cb212-6"><a href="12-tidymodel-linear-regression.html#cb212-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> wages</span>
-<span id="cb212-7"><a href="12-tidymodel-linear-regression.html#cb212-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb212-8"><a href="12-tidymodel-linear-regression.html#cb212-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(model1)</span></code></pre></div>
-<pre><code>## 
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="tidyverse-purrr.html#cb185-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">%&gt;%</span> </span>
+<span id="cb185-2"><a href="tidyverse-purrr.html#cb185-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_split</span>(cyl) <span class="sc">%&gt;%</span>  <span class="co"># 数据mtcars作为第一个参数，省略。</span></span>
+<span id="cb185-3"><a href="tidyverse-purrr.html#cb185-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 数据首先作为第一个参数传入map函数，省略。</span></span>
+<span id="cb185-4"><a href="tidyverse-purrr.html#cb185-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 然后传入lm函数中，作为第二个参数，不能省略，且为purrr风格匿名函数，使用.x</span></span>
+<span id="cb185-5"><a href="tidyverse-purrr.html#cb185-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> wt, <span class="at">data =</span> .x))  </span></code></pre></div>
+<pre><code>## [[1]]
+## 
 ## Call:
-## lm(formula = earn ~ height, data = wages)
+## lm(formula = mpg ~ wt, data = .x)
 ## 
 ## Coefficients:
-## (Intercept)       height  
-##     -126523         2387</code></pre>
-<p>y以上结果有两部分信息：</p>
+## (Intercept)           wt  
+##      39.571       -5.647  
+## 
+## 
+## [[2]]
+## 
+## Call:
+## lm(formula = mpg ~ wt, data = .x)
+## 
+## Coefficients:
+## (Intercept)           wt  
+##       28.41        -2.78  
+## 
+## 
+## [[3]]
+## 
+## Call:
+## lm(formula = mpg ~ wt, data = .x)
+## 
+## Coefficients:
+## (Intercept)           wt  
+##      23.868       -2.192</code></pre>
+</div>
+<div id="purrr" class="section level2 hasAnchor" number="13.1">
+<h2><span class="header-section-number">13.1</span> `purrr<a href="tidyverse-purrr.html#purrr" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="map系列函数" class="section level3 hasAnchor" number="13.1.1">
+<h3><span class="header-section-number">13.1.1</span> map()系列函数<a href="tidyverse-purrr.html#map系列函数" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="tidyverse-purrr.html#cb187-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">&quot;images/map_function3.png&quot;</span>)</span></code></pre></div>
+<p><img src="images/map_function3.png" width="320" style="display: block; margin: auto;" /></p>
+</div>
+<div id="匿名函数" class="section level3 hasAnchor" number="13.1.2">
+<h3><span class="header-section-number">13.1.2</span> 匿名函数<a href="tidyverse-purrr.html#匿名函数" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="tidyverse-purrr.html#cb188-1" aria-hidden="true" tabindex="-1"></a>exams <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb188-2"><a href="tidyverse-purrr.html#cb188-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">student1 =</span> <span class="fu">round</span>(<span class="fu">runif</span>(<span class="dv">10</span>, <span class="dv">50</span>, <span class="dv">100</span>)),</span>
+<span id="cb188-3"><a href="tidyverse-purrr.html#cb188-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">student2 =</span> <span class="fu">round</span>(<span class="fu">runif</span>(<span class="dv">10</span>, <span class="dv">50</span>, <span class="dv">100</span>)),</span>
+<span id="cb188-4"><a href="tidyverse-purrr.html#cb188-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">student3 =</span> <span class="fu">round</span>(<span class="fu">runif</span>(<span class="dv">10</span>, <span class="dv">50</span>, <span class="dv">100</span>)),</span>
+<span id="cb188-5"><a href="tidyverse-purrr.html#cb188-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">student4 =</span> <span class="fu">round</span>(<span class="fu">runif</span>(<span class="dv">10</span>, <span class="dv">50</span>, <span class="dv">100</span>)),</span>
+<span id="cb188-6"><a href="tidyverse-purrr.html#cb188-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">student5 =</span> <span class="fu">round</span>(<span class="fu">runif</span>(<span class="dv">10</span>, <span class="dv">50</span>, <span class="dv">100</span>))</span>
+<span id="cb188-7"><a href="tidyverse-purrr.html#cb188-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb188-8"><a href="tidyverse-purrr.html#cb188-8" aria-hidden="true" tabindex="-1"></a>exams</span></code></pre></div>
+<pre><code>## $student1
+##  [1] 75 69 69 81 70 58 89 75 53 79
+## 
+## $student2
+##  [1] 69 70 91 82 67 57 79 64 80 53
+## 
+## $student3
+##  [1]  51  84  63  86  67 100  76  86  59  60
+## 
+## $student4
+##  [1]  67  95  66  91  96  55  73  53  96 100
+## 
+## $student5
+##  [1] 80 82 59 71 96 94 73 87 68 62</code></pre>
+<p>对于exams数据框，我们有几种办法对其中每个向量进行去中心化。</p>
 <ol style="list-style-type: decimal">
-<li><p>第一部分是我们建立的模型。</p></li>
-<li><p>第二部分是R语言给出的截距（Intercept）和斜率（height）。根据结果可得出我们的模型为：</p></li>
+<li>定义去中心化的function()。</li>
 </ol>
-<p><span class="math inline">\(\hat{y} = -126523 + 2387x\)</span></p>
-<p>进一步查看模型的详细信息：</p>
-<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="12-tidymodel-linear-regression.html#cb214-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 模型详细信息</span></span>
-<span id="cb214-2"><a href="12-tidymodel-linear-regression.html#cb214-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model1)</span></code></pre></div>
-<pre><code>## 
-## Call:
-## lm(formula = earn ~ height, data = wages)
-## 
-## Residuals:
-##    Min     1Q Median     3Q    Max 
-## -47903 -19744  -5184  11642 276796 
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  -126523      14076  -8.989   &lt;2e-16 ***
-## height          2387        211  11.312   &lt;2e-16 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 29910 on 1377 degrees of freedom
-## Multiple R-squared:  0.08503,    Adjusted R-squared:  0.08437 
-## F-statistic:   128 on 1 and 1377 DF,  p-value: &lt; 2.2e-16</code></pre>
-<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="12-tidymodel-linear-regression.html#cb216-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 模型拟合值-即预测结果</span></span>
-<span id="cb216-2"><a href="12-tidymodel-linear-regression.html#cb216-2" aria-hidden="true" tabindex="-1"></a>wages <span class="sc">%&gt;%</span> </span>
-<span id="cb216-3"><a href="12-tidymodel-linear-regression.html#cb216-3" aria-hidden="true" tabindex="-1"></a>  modelr<span class="sc">::</span><span class="fu">add_predictions</span>(model1)</span></code></pre></div>
-<pre><code>## # A tibble: 1,379 x 7
-##      earn height sex    race        ed   age   pred
-##     &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
-##  1 79571.   73.9 male   white       16    49 49867.
-##  2 96397.   66.2 female white       16    62 31581.
-##  3 48711.   63.8 female white       16    33 25708.
-##  4 80478.   63.2 female other       16    95 24395.
-##  5 82089.   63.1 female white       17    43 24061.
-##  6 15313.   64.5 female white       15    30 27522.
-##  7 47104.   61.5 female white       12    53 20385.
-##  8 50960.   73.3 male   white       17    50 48434.
-##  9  3213.   72.2 male   hispanic    15    25 45928.
-## 10 42997.   72.4 male   white       12    30 46310.
-## # ... with 1,369 more rows</code></pre>
-<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="12-tidymodel-linear-regression.html#cb218-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 查看残差值-即观测值与估计值（拟合值）的差。</span></span>
-<span id="cb218-2"><a href="12-tidymodel-linear-regression.html#cb218-2" aria-hidden="true" tabindex="-1"></a>wages <span class="sc">%&gt;%</span> </span>
-<span id="cb218-3"><a href="12-tidymodel-linear-regression.html#cb218-3" aria-hidden="true" tabindex="-1"></a>  modelr<span class="sc">::</span><span class="fu">add_predictions</span>(model1) <span class="sc">%&gt;%</span> </span>
-<span id="cb218-4"><a href="12-tidymodel-linear-regression.html#cb218-4" aria-hidden="true" tabindex="-1"></a>  modelr<span class="sc">::</span><span class="fu">add_residuals</span>(model1)</span></code></pre></div>
-<pre><code>## # A tibble: 1,379 x 8
-##      earn height sex    race        ed   age   pred   resid
-##     &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
-##  1 79571.   73.9 male   white       16    49 49867.  29705.
-##  2 96397.   66.2 female white       16    62 31581.  64816.
-##  3 48711.   63.8 female white       16    33 25708.  23003.
-##  4 80478.   63.2 female other       16    95 24395.  56083.
-##  5 82089.   63.1 female white       17    43 24061.  58028.
-##  6 15313.   64.5 female white       15    30 27522. -12209.
-##  7 47104.   61.5 female white       12    53 20385.  26720.
-##  8 50960.   73.3 male   white       17    50 48434.   2526.
-##  9  3213.   72.2 male   hispanic    15    25 45928. -42715.
-## 10 42997.   72.4 male   white       12    30 46310.  -3313.
-## # ... with 1,369 more rows</code></pre>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="tidyverse-purrr.html#cb190-1" aria-hidden="true" tabindex="-1"></a>my_fun <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb190-2"><a href="tidyverse-purrr.html#cb190-2" aria-hidden="true" tabindex="-1"></a>  x <span class="sc">-</span> <span class="fu">mean</span>(x)</span>
+<span id="cb190-3"><a href="tidyverse-purrr.html#cb190-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb190-4"><a href="tidyverse-purrr.html#cb190-4" aria-hidden="true" tabindex="-1"></a>exams <span class="sc">%&gt;%</span> </span>
+<span id="cb190-5"><a href="tidyverse-purrr.html#cb190-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_df</span>(my_fun)</span></code></pre></div>
+<pre><code>## # A tibble: 10 x 5
+##    student1 student2 student3 student4 student5
+##       &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+##  1     3.20    -2.20   -22.2     -12.2     2.80
+##  2    -2.80    -1.20    10.8      15.8     4.8 
+##  3    -2.80    19.8    -10.2     -13.2   -18.2 
+##  4     9.2     10.8     12.8      11.8    -6.2 
+##  5    -1.80    -4.20    -6.2      16.8    18.8 
+##  6   -13.8    -14.2     26.8     -24.2    16.8 
+##  7    17.2      7.8      2.80     -6.2    -4.20
+##  8     3.20    -7.2     12.8     -26.2     9.8 
+##  9   -18.8      8.8    -14.2      16.8    -9.2 
+## 10     7.2    -18.2    -13.2      20.8   -15.2</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>如果不想命名函数，则可以使用匿名函数。</li>
+</ol>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="tidyverse-purrr.html#cb192-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 形式1：常规写法</span></span>
+<span id="cb192-2"><a href="tidyverse-purrr.html#cb192-2" aria-hidden="true" tabindex="-1"></a>exams <span class="sc">%&gt;%</span> </span>
+<span id="cb192-3"><a href="tidyverse-purrr.html#cb192-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_df</span>(<span class="cf">function</span>(x) x <span class="sc">-</span> <span class="fu">mean</span>(x))</span></code></pre></div>
+<pre><code>## # A tibble: 10 x 5
+##    student1 student2 student3 student4 student5
+##       &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+##  1     3.20    -2.20   -22.2     -12.2     2.80
+##  2    -2.80    -1.20    10.8      15.8     4.8 
+##  3    -2.80    19.8    -10.2     -13.2   -18.2 
+##  4     9.2     10.8     12.8      11.8    -6.2 
+##  5    -1.80    -4.20    -6.2      16.8    18.8 
+##  6   -13.8    -14.2     26.8     -24.2    16.8 
+##  7    17.2      7.8      2.80     -6.2    -4.20
+##  8     3.20    -7.2     12.8     -26.2     9.8 
+##  9   -18.8      8.8    -14.2      16.8    -9.2 
+## 10     7.2    -18.2    -13.2      20.8   -15.2</code></pre>
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="tidyverse-purrr.html#cb194-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 形式2：简便写法，使用符号~代替function()</span></span>
+<span id="cb194-2"><a href="tidyverse-purrr.html#cb194-2" aria-hidden="true" tabindex="-1"></a>exams <span class="sc">%&gt;%</span> </span>
+<span id="cb194-3"><a href="tidyverse-purrr.html#cb194-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_df</span>(<span class="sc">~</span> .x <span class="sc">-</span> <span class="fu">mean</span>(.x))</span></code></pre></div>
+<pre><code>## # A tibble: 10 x 5
+##    student1 student2 student3 student4 student5
+##       &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+##  1     3.20    -2.20   -22.2     -12.2     2.80
+##  2    -2.80    -1.20    10.8      15.8     4.8 
+##  3    -2.80    19.8    -10.2     -13.2   -18.2 
+##  4     9.2     10.8     12.8      11.8    -6.2 
+##  5    -1.80    -4.20    -6.2      16.8    18.8 
+##  6   -13.8    -14.2     26.8     -24.2    16.8 
+##  7    17.2      7.8      2.80     -6.2    -4.20
+##  8     3.20    -7.2     12.8     -26.2     9.8 
+##  9   -18.8      8.8    -14.2      16.8    -9.2 
+## 10     7.2    -18.2    -13.2      20.8   -15.2</code></pre>
+<div class="rmdnote">
+<p>上面的例子中，符号<code>~</code>告诉map()后面的函数是一个匿名函数，<code>.x</code>对应函数的参数，是一个占位符。例如，以下代码是找出每位学生有多少成绩是在80以上的。</p>
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="tidyverse-purrr.html#cb196-1" aria-hidden="true" tabindex="-1"></a>exams <span class="sc">%&gt;%</span> </span>
+<span id="cb196-2"><a href="tidyverse-purrr.html#cb196-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_int</span>(<span class="cf">function</span>(x){</span>
+<span id="cb196-3"><a href="tidyverse-purrr.html#cb196-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">length</span>(x[x<span class="sc">&gt;</span><span class="dv">80</span>])  <span class="co"># 这里的x指代exams中的student1~student5</span></span>
+<span id="cb196-4"><a href="tidyverse-purrr.html#cb196-4" aria-hidden="true" tabindex="-1"></a>  })</span></code></pre></div>
+<pre><code>## student1 student2 student3 student4 student5 
+##        2        2        4        5        4</code></pre>
+<p>以上代码可以简写为：</p>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="tidyverse-purrr.html#cb198-1" aria-hidden="true" tabindex="-1"></a>exams <span class="sc">%&gt;%</span> </span>
+<span id="cb198-2"><a href="tidyverse-purrr.html#cb198-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_int</span>(<span class="sc">~</span> <span class="fu">length</span>(.x[.x<span class="sc">&gt;</span><span class="dv">80</span>]))</span></code></pre></div>
+<pre><code>## student1 student2 student3 student4 student5 
+##        2        2        4        5        4</code></pre>
+<p>虽然之前已经说过，但还是需要强调，为了便于区分，建议单独使用<code>.</code>符号时代替数据，而使用<code>.x</code>用于<code>purrr</code>中的匿名函数。</p>
 </div>
-<div id="模型的解释" class="section level3 hasAnchor" number="14.2.3">
-<h3><span class="header-section-number">14.2.3</span> 模型的解释<a href="12-tidymodel-linear-regression.html#模型的解释" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>建立一个线性模型很简单，重要的是如何对模型进行解释，</p>
-<p><code>model1</code>模型的解释：</p>
-<ul>
-<li><p>斜率<span class="math inline">\(\beta = 2387\)</span>，表明身高每增加1个单位，收入增加2387个单位。</p></li>
-<li><p>截距<span class="math inline">\(\alpha = -126532\)</span>表明当身高为0时，期望的收入为-126532。</p></li>
-</ul>
-<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="12-tidymodel-linear-regression.html#cb220-1" aria-hidden="true" tabindex="-1"></a>wages <span class="sc">%&gt;%</span> </span>
-<span id="cb220-2"><a href="12-tidymodel-linear-regression.html#cb220-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> height, <span class="at">y =</span> earn)) <span class="sc">+</span></span>
-<span id="cb220-3"><a href="12-tidymodel-linear-regression.html#cb220-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.25</span>) <span class="sc">+</span></span>
-<span id="cb220-4"><a href="12-tidymodel-linear-regression.html#cb220-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
-<p><img src="12-tidymodel-linear-regression_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
-</div>
-</div>
-<div id="多元线性回归" class="section level2 hasAnchor" number="14.3">
-<h2><span class="header-section-number">14.3</span> 多元线性回归<a href="12-tidymodel-linear-regression.html#多元线性回归" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>前例为单个自变量<code>height</code>，现在增加一个自变量<code>ed</code>，对一元模型进行扩展。</p>
-<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="12-tidymodel-linear-regression.html#cb221-1" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(earn <span class="sc">~</span> height <span class="sc">+</span> ed, <span class="at">data =</span> wages)</span>
-<span id="cb221-2"><a href="12-tidymodel-linear-regression.html#cb221-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model2)</span></code></pre></div>
-<pre><code>## 
-## Call:
-## lm(formula = earn ~ height + ed, data = wages)
-## 
-## Residuals:
-##    Min     1Q Median     3Q    Max 
-## -63031 -17079  -3589  10488 258760 
-## 
-## Coefficients:
-##              Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) -161541.5    13539.1  -11.93   &lt;2e-16 ***
-## height         2087.2      200.3   10.42   &lt;2e-16 ***
-## ed             4118.0      313.6   13.13   &lt;2e-16 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 28210 on 1376 degrees of freedom
-## Multiple R-squared:  0.1869, Adjusted R-squared:  0.1857 
-## F-statistic: 158.2 on 2 and 1376 DF,  p-value: &lt; 2.2e-16</code></pre>
 
+</div>
 </div>
 </div>
             </section>
@@ -743,8 +685,8 @@ div.csl-indent {
           </div>
         </div>
       </div>
-<a href="tidyverse-purrr.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="13-tidymodel-broom.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="11-tidystats_sampling.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="12-tidymodel-linear-regression.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -775,7 +717,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/XiangyunHuang/masr/edit/master/12-tidymodel-linear-regression.Rmd",
+"link": "https://github.com/XiangyunHuang/masr/edit/master/tidyverse-purrr.rmd",
 "text": "编辑"
 },
 "history": {
@@ -783,7 +725,7 @@ gitbook.start({
 "text": null
 },
 "view": {
-"link": "https://github.com/XiangyunHuang/masr/blob/master/12-tidymodel-linear-regression.Rmd",
+"link": "https://github.com/XiangyunHuang/masr/blob/master/tidyverse-purrr.rmd",
 "text": "查看"
 },
 "download": ["elegantbookdown.pdf", "elegantbookdown.epub"],

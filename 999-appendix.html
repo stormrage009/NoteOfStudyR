@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>A 附录-有趣的“懒人”包 | 基于tidyverse的R语言学习笔记</title>
   <meta name="description" content="最初看到 elegantbook 做的书籍样式很漂亮，就想把它引入到 bookdown 中，遂定制了此模版。在此基础上，做了迁移和扩展的工作，融合了 LaTeX (精美)、Pandoc (简洁) 和 R (强大) 的特性。This is a bookdown template based on ElegantBook. The output format for this template is bookdown::gitbook and bookdown::pdf_book." />
-  <meta name="generator" content="bookdown 0.25.6 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
   <meta property="og:title" content="A 附录-有趣的“懒人”包 | 基于tidyverse的R语言学习笔记" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="李凯" />
 
 
-<meta name="date" content="2022-04-15" />
+<meta name="date" content="2022-04-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -195,6 +195,7 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="2.1" data-path="2-factor.html"><a href="2-factor.html#创建因子"><i class="fa fa-check"></i><b>2.1</b> 创建因子</a></li>
 <li class="chapter" data-level="2.2" data-path="2-factor.html"><a href="2-factor.html#有用函数"><i class="fa fa-check"></i><b>2.2</b> 有用函数</a></li>
+<li class="chapter" data-level="2.3" data-path="2-factor.html"><a href="2-factor.html#练习"><i class="fa fa-check"></i><b>2.3</b> 练习</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="3-str-date.html"><a href="3-str-date.html"><i class="fa fa-check"></i><b>3</b> 字符串和时间日期</a></li>
 <li class="chapter" data-level="4" data-path="4-re.html"><a href="4-re.html"><i class="fa fa-check"></i><b>4</b> 正则表达式</a>
@@ -233,7 +234,13 @@ div.csl-indent {
 <li class="chapter" data-level="6.2" data-path="6-tidyverse-join.html"><a href="6-tidyverse-join.html#多个数据表连接"><i class="fa fa-check"></i><b>6.2</b> 多个数据表连接</a></li>
 <li class="chapter" data-level="6.3" data-path="6-tidyverse-join.html"><a href="6-tidyverse-join.html#集合运算"><i class="fa fa-check"></i><b>6.3</b> 集合运算</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="37-ggplot2.html"><a href="37-ggplot2.html"><i class="fa fa-check"></i><b>7</b> ggplot2</a></li>
+<li class="chapter" data-level="7" data-path="37-ggplot2.html"><a href="37-ggplot2.html"><i class="fa fa-check"></i><b>7</b> ggplot2</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="37-ggplot2.html"><a href="37-ggplot2.html#几何形状"><i class="fa fa-check"></i><b>7.1</b> 几何形状</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="37-ggplot2.html"><a href="37-ggplot2.html#图形部件"><i class="fa fa-check"></i><b>7.1.1</b> 图形部件</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="8" data-path="7-tidyverse-reshape.html"><a href="7-tidyverse-reshape.html"><i class="fa fa-check"></i><b>8</b> 数据重塑</a>
 <ul>
 <li class="chapter" data-level="8.1" data-path="7-tidyverse-reshape.html"><a href="7-tidyverse-reshape.html#什么是整洁的数据"><i class="fa fa-check"></i><b>8.1</b> 什么是整洁的数据</a></li>
@@ -265,187 +272,195 @@ div.csl-indent {
 <li class="chapter" data-level="12.3.1" data-path="11-tidystats_sampling.html"><a href="11-tidystats_sampling.html#使用tidyverse重复infer的过程"><i class="fa fa-check"></i><b>12.3.1</b> 使用tidyverse重复infer的过程</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html"><i class="fa fa-check"></i><b>13</b> 线性回归</a>
+<li class="chapter" data-level="13" data-path="tidyverse-purrr.html"><a href="tidyverse-purrr.html"><i class="fa fa-check"></i><b>13</b> 函数式编程</a>
 <ul>
-<li class="chapter" data-level="13.1" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#从案例开始"><i class="fa fa-check"></i><b>13.1</b> 从案例开始</a>
+<li class="chapter" data-level="13.1" data-path="tidyverse-purrr.html"><a href="tidyverse-purrr.html#purrr"><i class="fa fa-check"></i><b>13.1</b> `purrr</a>
 <ul>
-<li class="chapter" data-level="13.1.1" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#缺失值检查"><i class="fa fa-check"></i><b>13.1.1</b> 缺失值检查</a></li>
-<li class="chapter" data-level="13.1.2" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#简单变量统计"><i class="fa fa-check"></i><b>13.1.2</b> 简单变量统计</a></li>
-</ul></li>
-<li class="chapter" data-level="13.2" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#线性归回模型"><i class="fa fa-check"></i><b>13.2</b> 线性归回模型</a>
-<ul>
-<li class="chapter" data-level="13.2.1" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#长得高挣得多"><i class="fa fa-check"></i><b>13.2.1</b> 长得高挣得多</a></li>
-<li class="chapter" data-level="13.2.2" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#使用lm函数拟合线性回归模型"><i class="fa fa-check"></i><b>13.2.2</b> 使用lm()函数拟合线性回归模型</a></li>
-<li class="chapter" data-level="13.2.3" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#模型的解释"><i class="fa fa-check"></i><b>13.2.3</b> 模型的解释</a></li>
-</ul></li>
-<li class="chapter" data-level="13.3" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#多元线性回归"><i class="fa fa-check"></i><b>13.3</b> 多元线性回归</a></li>
-</ul></li>
-<li class="chapter" data-level="14" data-path="13-tidymodel-broom.html"><a href="13-tidymodel-broom.html"><i class="fa fa-check"></i><b>14</b> 结果整合</a>
-<ul>
-<li class="chapter" data-level="14.1" data-path="13-tidymodel-broom.html"><a href="13-tidymodel-broom.html#案例"><i class="fa fa-check"></i><b>14.1</b> 案例</a>
-<ul>
-<li class="chapter" data-level="14.1.1" data-path="13-tidymodel-broom.html"><a href="13-tidymodel-broom.html#可视化探索"><i class="fa fa-check"></i><b>14.1.1</b> 可视化探索</a></li>
+<li class="chapter" data-level="13.1.1" data-path="tidyverse-purrr.html"><a href="tidyverse-purrr.html#map系列函数"><i class="fa fa-check"></i><b>13.1.1</b> map()系列函数</a></li>
+<li class="chapter" data-level="13.1.2" data-path="tidyverse-purrr.html"><a href="tidyverse-purrr.html#匿名函数"><i class="fa fa-check"></i><b>13.1.2</b> 匿名函数</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="15" data-path="14-tidymodel-t-test.html"><a href="14-tidymodel-t-test.html"><i class="fa fa-check"></i><b>15</b> 双样本t检验</a>
+<li class="chapter" data-level="14" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html"><i class="fa fa-check"></i><b>14</b> 线性回归</a>
 <ul>
-<li class="chapter" data-level="15.1" data-path="14-tidymodel-t-test.html"><a href="14-tidymodel-t-test.html#实验设计"><i class="fa fa-check"></i><b>15.1</b> 实验设计</a></li>
-<li class="chapter" data-level="15.2" data-path="14-tidymodel-t-test.html"><a href="14-tidymodel-t-test.html#提问"><i class="fa fa-check"></i><b>15.2</b> 提问</a>
+<li class="chapter" data-level="14.1" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#从案例开始"><i class="fa fa-check"></i><b>14.1</b> 从案例开始</a>
 <ul>
-<li class="chapter" data-level="15.2.1" data-path="14-tidymodel-t-test.html"><a href="14-tidymodel-t-test.html#不同性别企鹅的bill_length_mm嘴峰长度是否相同"><i class="fa fa-check"></i><b>15.2.1</b> 不同性别企鹅的bill_length_mm（嘴峰长度）是否相同？</a></li>
+<li class="chapter" data-level="14.1.1" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#缺失值检查"><i class="fa fa-check"></i><b>14.1.1</b> 缺失值检查</a></li>
+<li class="chapter" data-level="14.1.2" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#简单变量统计"><i class="fa fa-check"></i><b>14.1.2</b> 简单变量统计</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#线性归回模型"><i class="fa fa-check"></i><b>14.2</b> 线性归回模型</a>
+<ul>
+<li class="chapter" data-level="14.2.1" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#长得高挣得多"><i class="fa fa-check"></i><b>14.2.1</b> 长得高挣得多</a></li>
+<li class="chapter" data-level="14.2.2" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#使用lm函数拟合线性回归模型"><i class="fa fa-check"></i><b>14.2.2</b> 使用lm()函数拟合线性回归模型</a></li>
+<li class="chapter" data-level="14.2.3" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#模型的解释"><i class="fa fa-check"></i><b>14.2.3</b> 模型的解释</a></li>
+</ul></li>
+<li class="chapter" data-level="14.3" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#多元线性回归"><i class="fa fa-check"></i><b>14.3</b> 多元线性回归</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="13-tidymodel-broom.html"><a href="13-tidymodel-broom.html"><i class="fa fa-check"></i><b>15</b> 结果整合</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="13-tidymodel-broom.html"><a href="13-tidymodel-broom.html#案例"><i class="fa fa-check"></i><b>15.1</b> 案例</a>
+<ul>
+<li class="chapter" data-level="15.1.1" data-path="13-tidymodel-broom.html"><a href="13-tidymodel-broom.html#可视化探索"><i class="fa fa-check"></i><b>15.1.1</b> 可视化探索</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="16" data-path="15-tidymodel-avo.html"><a href="15-tidymodel-avo.html"><i class="fa fa-check"></i><b>16</b> avo-方差分析</a></li>
-<li class="chapter" data-level="17" data-path="16-tidymodel-as-linear.html"><a href="16-tidymodel-as-linear.html"><i class="fa fa-check"></i><b>17</b> 统计检验与线性模型</a></li>
-<li class="chapter" data-level="18" data-path="17-tidymodel-lmm.html"><a href="17-tidymodel-lmm.html"><i class="fa fa-check"></i><b>18</b> 多层线性模型</a></li>
-<li class="chapter" data-level="19" data-path="18-tidymodel-poisson-regression.html"><a href="18-tidymodel-poisson-regression.html"><i class="fa fa-check"></i><b>19</b> 广义线性模型</a></li>
-<li class="chapter" data-level="20" data-path="19-tidymodel-logistic-regression.html"><a href="19-tidymodel-logistic-regression.html"><i class="fa fa-check"></i><b>20</b> logistic回归模型</a></li>
-<li class="chapter" data-level="21" data-path="20-tidymodel-ordinal.html"><a href="20-tidymodel-ordinal.html"><i class="fa fa-check"></i><b>21</b> 有序logistic回归</a></li>
+<li class="chapter" data-level="16" data-path="14-tidymodel-t-test.html"><a href="14-tidymodel-t-test.html"><i class="fa fa-check"></i><b>16</b> 双样本t检验</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="14-tidymodel-t-test.html"><a href="14-tidymodel-t-test.html#实验设计"><i class="fa fa-check"></i><b>16.1</b> 实验设计</a></li>
+<li class="chapter" data-level="16.2" data-path="14-tidymodel-t-test.html"><a href="14-tidymodel-t-test.html#提问"><i class="fa fa-check"></i><b>16.2</b> 提问</a>
+<ul>
+<li class="chapter" data-level="16.2.1" data-path="14-tidymodel-t-test.html"><a href="14-tidymodel-t-test.html#不同性别企鹅的bill_length_mm嘴峰长度是否相同"><i class="fa fa-check"></i><b>16.2.1</b> 不同性别企鹅的bill_length_mm（嘴峰长度）是否相同？</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="15-tidymodel-avo.html"><a href="15-tidymodel-avo.html"><i class="fa fa-check"></i><b>17</b> avo-方差分析</a></li>
+<li class="chapter" data-level="18" data-path="16-tidymodel-as-linear.html"><a href="16-tidymodel-as-linear.html"><i class="fa fa-check"></i><b>18</b> 统计检验与线性模型</a></li>
+<li class="chapter" data-level="19" data-path="17-tidymodel-lmm.html"><a href="17-tidymodel-lmm.html"><i class="fa fa-check"></i><b>19</b> 多层线性模型</a></li>
+<li class="chapter" data-level="20" data-path="18-tidymodel-poisson-regression.html"><a href="18-tidymodel-poisson-regression.html"><i class="fa fa-check"></i><b>20</b> 广义线性模型</a></li>
+<li class="chapter" data-level="21" data-path="19-tidymodel-logistic-regression.html"><a href="19-tidymodel-logistic-regression.html"><i class="fa fa-check"></i><b>21</b> logistic回归模型</a></li>
+<li class="chapter" data-level="22" data-path="20-tidymodel-ordinal.html"><a href="20-tidymodel-ordinal.html"><i class="fa fa-check"></i><b>22</b> 有序logistic回归</a></li>
 <li class="part"><span><b>IV tidymodels包篇</b></span></li>
-<li class="chapter" data-level="22" data-path="21-meching-leanrning-tidymodels.html"><a href="21-meching-leanrning-tidymodels.html"><i class="fa fa-check"></i><b>22</b> 机器学习</a>
+<li class="chapter" data-level="23" data-path="21-meching-leanrning-tidymodels.html"><a href="21-meching-leanrning-tidymodels.html"><i class="fa fa-check"></i><b>23</b> 机器学习</a>
 <ul>
-<li class="chapter" data-level="22.1" data-path="21-meching-leanrning-tidymodels.html"><a href="21-meching-leanrning-tidymodels.html#数据"><i class="fa fa-check"></i><b>22.1</b> 数据</a></li>
-<li class="chapter" data-level="22.2" data-path="21-meching-leanrning-tidymodels.html"><a href="21-meching-leanrning-tidymodels.html#机器学习"><i class="fa fa-check"></i><b>22.2</b> 机器学习</a></li>
+<li class="chapter" data-level="23.1" data-path="21-meching-leanrning-tidymodels.html"><a href="21-meching-leanrning-tidymodels.html#数据"><i class="fa fa-check"></i><b>23.1</b> 数据</a></li>
+<li class="chapter" data-level="23.2" data-path="21-meching-leanrning-tidymodels.html"><a href="21-meching-leanrning-tidymodels.html#机器学习"><i class="fa fa-check"></i><b>23.2</b> 机器学习</a></li>
 </ul></li>
 <li class="part"><span><b>V bayesian篇</b></span></li>
-<li class="chapter" data-level="23" data-path="22-bayesian-inference.html"><a href="22-bayesian-inference.html"><i class="fa fa-check"></i><b>23</b> 贝叶斯推断</a>
+<li class="chapter" data-level="24" data-path="22-bayesian-inference.html"><a href="22-bayesian-inference.html"><i class="fa fa-check"></i><b>24</b> 贝叶斯推断</a>
 <ul>
-<li class="chapter" data-level="23.1" data-path="22-bayesian-inference.html"><a href="22-bayesian-inference.html#一个简单的贝叶斯推断实例-学生身高分布"><i class="fa fa-check"></i><b>23.1</b> 一个简单的贝叶斯推断实例-学生身高分布</a></li>
-<li class="chapter" data-level="23.2" data-path="22-bayesian-inference.html"><a href="22-bayesian-inference.html#一个简单的贝叶斯推断实例-推断"><i class="fa fa-check"></i><b>23.2</b> 一个简单的贝叶斯推断实例-推断</a></li>
+<li class="chapter" data-level="24.1" data-path="22-bayesian-inference.html"><a href="22-bayesian-inference.html#一个简单的贝叶斯推断实例-学生身高分布"><i class="fa fa-check"></i><b>24.1</b> 一个简单的贝叶斯推断实例-学生身高分布</a></li>
+<li class="chapter" data-level="24.2" data-path="22-bayesian-inference.html"><a href="22-bayesian-inference.html#一个简单的贝叶斯推断实例-推断"><i class="fa fa-check"></i><b>24.2</b> 一个简单的贝叶斯推断实例-推断</a></li>
 </ul></li>
-<li class="chapter" data-level="24" data-path="23-bayesian-intro-stan.html"><a href="23-bayesian-intro-stan.html"><i class="fa fa-check"></i><b>24</b> stan入门</a></li>
-<li class="chapter" data-level="25" data-path="24-bayesian-intro-lm.html"><a href="24-bayesian-intro-lm.html"><i class="fa fa-check"></i><b>25</b> 贝叶斯线性回归</a></li>
-<li class="chapter" data-level="26" data-path="25-bayesian-t-test.html"><a href="25-bayesian-t-test.html"><i class="fa fa-check"></i><b>26</b> 贝叶斯假设检验</a></li>
-<li class="chapter" data-level="27" data-path="26-bayesian-glm.html"><a href="26-bayesian-glm.html"><i class="fa fa-check"></i><b>27</b> 贝叶斯广义线性模型</a></li>
-<li class="chapter" data-level="28" data-path="27-bayesian-hierarchical.html"><a href="27-bayesian-hierarchical.html"><i class="fa fa-check"></i><b>28</b> 贝叶斯层级模型</a></li>
-<li class="chapter" data-level="29" data-path="28-bayesian-mixtures.html"><a href="28-bayesian-mixtures.html"><i class="fa fa-check"></i><b>29</b> 贝叶斯混合模型</a></li>
-<li class="chapter" data-level="30" data-path="29-bayesian-categorical.html"><a href="29-bayesian-categorical.html"><i class="fa fa-check"></i><b>30</b> 贝叶斯分类模型</a></li>
-<li class="chapter" data-level="31" data-path="30-bayesian-workflow.html"><a href="30-bayesian-workflow.html"><i class="fa fa-check"></i><b>31</b> 贝叶斯工作流程</a></li>
-<li class="chapter" data-level="32" data-path="31-bayesian-vaccine-effectiveness.html"><a href="31-bayesian-vaccine-effectiveness.html"><i class="fa fa-check"></i><b>32</b> 贝叶斯分析案例-新冠疫苗有效率的计算</a></li>
-<li class="chapter" data-level="33" data-path="32-bayesian-tokyo-olympics-100m.html"><a href="32-bayesian-tokyo-olympics-100m.html"><i class="fa fa-check"></i><b>33</b> 贝叶斯分析案例-预测奥运会男子100米短跑成绩</a></li>
+<li class="chapter" data-level="25" data-path="23-bayesian-intro-stan.html"><a href="23-bayesian-intro-stan.html"><i class="fa fa-check"></i><b>25</b> stan入门</a></li>
+<li class="chapter" data-level="26" data-path="24-bayesian-intro-lm.html"><a href="24-bayesian-intro-lm.html"><i class="fa fa-check"></i><b>26</b> 贝叶斯线性回归</a></li>
+<li class="chapter" data-level="27" data-path="25-bayesian-t-test.html"><a href="25-bayesian-t-test.html"><i class="fa fa-check"></i><b>27</b> 贝叶斯假设检验</a></li>
+<li class="chapter" data-level="28" data-path="26-bayesian-glm.html"><a href="26-bayesian-glm.html"><i class="fa fa-check"></i><b>28</b> 贝叶斯广义线性模型</a></li>
+<li class="chapter" data-level="29" data-path="27-bayesian-hierarchical.html"><a href="27-bayesian-hierarchical.html"><i class="fa fa-check"></i><b>29</b> 贝叶斯层级模型</a></li>
+<li class="chapter" data-level="30" data-path="28-bayesian-mixtures.html"><a href="28-bayesian-mixtures.html"><i class="fa fa-check"></i><b>30</b> 贝叶斯混合模型</a></li>
+<li class="chapter" data-level="31" data-path="29-bayesian-categorical.html"><a href="29-bayesian-categorical.html"><i class="fa fa-check"></i><b>31</b> 贝叶斯分类模型</a></li>
+<li class="chapter" data-level="32" data-path="30-bayesian-workflow.html"><a href="30-bayesian-workflow.html"><i class="fa fa-check"></i><b>32</b> 贝叶斯工作流程</a></li>
+<li class="chapter" data-level="33" data-path="31-bayesian-vaccine-effectiveness.html"><a href="31-bayesian-vaccine-effectiveness.html"><i class="fa fa-check"></i><b>33</b> 贝叶斯分析案例-新冠疫苗有效率的计算</a></li>
+<li class="chapter" data-level="34" data-path="32-bayesian-tokyo-olympics-100m.html"><a href="32-bayesian-tokyo-olympics-100m.html"><i class="fa fa-check"></i><b>34</b> 贝叶斯分析案例-预测奥运会男子100米短跑成绩</a></li>
 <li class="part"><span><b>VI 应用篇</b></span></li>
-<li class="chapter" data-level="34" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html"><i class="fa fa-check"></i><b>34</b> 探索性数据分析-诺奖获得者</a>
+<li class="chapter" data-level="35" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html"><i class="fa fa-check"></i><b>35</b> 探索性数据分析-诺奖获得者</a>
 <ul>
-<li class="chapter" data-level="34.1" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#探索性"><i class="fa fa-check"></i><b>34.1</b> 探索性</a></li>
-<li class="chapter" data-level="34.2" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#数据集"><i class="fa fa-check"></i><b>34.2</b> 数据集</a></li>
-<li class="chapter" data-level="34.3" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#导入数据"><i class="fa fa-check"></i><b>34.3</b> 导入数据</a></li>
-<li class="chapter" data-level="34.4" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#数据结构"><i class="fa fa-check"></i><b>34.4</b> 数据结构</a></li>
-<li class="chapter" data-level="34.5" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#确定想探索的问题"><i class="fa fa-check"></i><b>34.5</b> 确定想探索的问题</a>
+<li class="chapter" data-level="35.1" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#探索性"><i class="fa fa-check"></i><b>35.1</b> 探索性</a></li>
+<li class="chapter" data-level="35.2" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#数据集"><i class="fa fa-check"></i><b>35.2</b> 数据集</a></li>
+<li class="chapter" data-level="35.3" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#导入数据"><i class="fa fa-check"></i><b>35.3</b> 导入数据</a></li>
+<li class="chapter" data-level="35.4" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#数据结构"><i class="fa fa-check"></i><b>35.4</b> 数据结构</a></li>
+<li class="chapter" data-level="35.5" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#确定想探索的问题"><i class="fa fa-check"></i><b>35.5</b> 确定想探索的问题</a>
 <ul>
-<li class="chapter" data-level="34.5.1" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#每个学科获奖次数"><i class="fa fa-check"></i><b>34.5.1</b> 每个学科获奖次数</a></li>
-<li class="chapter" data-level="34.5.2" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#我国科学家获奖情况"><i class="fa fa-check"></i><b>34.5.2</b> 我国科学家获奖情况</a></li>
-<li class="chapter" data-level="34.5.3" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#哪些人多次获奖"><i class="fa fa-check"></i><b>34.5.3</b> 哪些人多次获奖</a></li>
-<li class="chapter" data-level="34.5.4" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#获奖人年龄"><i class="fa fa-check"></i><b>34.5.4</b> 获奖人年龄</a></li>
-<li class="chapter" data-level="34.5.5" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#性别比例"><i class="fa fa-check"></i><b>34.5.5</b> 性别比例</a></li>
-<li class="chapter" data-level="34.5.6" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#获奖人出生年代"><i class="fa fa-check"></i><b>34.5.6</b> 获奖人出生年代</a></li>
-<li class="chapter" data-level="34.5.7" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#最年轻的诺奖获得者"><i class="fa fa-check"></i><b>34.5.7</b> 最年轻的诺奖获得者</a></li>
-<li class="chapter" data-level="34.5.8" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#平均年龄和各领域获奖数量"><i class="fa fa-check"></i><b>34.5.8</b> 平均年龄和各领域获奖数量</a></li>
+<li class="chapter" data-level="35.5.1" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#每个学科获奖次数"><i class="fa fa-check"></i><b>35.5.1</b> 每个学科获奖次数</a></li>
+<li class="chapter" data-level="35.5.2" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#我国科学家获奖情况"><i class="fa fa-check"></i><b>35.5.2</b> 我国科学家获奖情况</a></li>
+<li class="chapter" data-level="35.5.3" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#哪些人多次获奖"><i class="fa fa-check"></i><b>35.5.3</b> 哪些人多次获奖</a></li>
+<li class="chapter" data-level="35.5.4" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#获奖人年龄"><i class="fa fa-check"></i><b>35.5.4</b> 获奖人年龄</a></li>
+<li class="chapter" data-level="35.5.5" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#性别比例"><i class="fa fa-check"></i><b>35.5.5</b> 性别比例</a></li>
+<li class="chapter" data-level="35.5.6" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#获奖人出生年代"><i class="fa fa-check"></i><b>35.5.6</b> 获奖人出生年代</a></li>
+<li class="chapter" data-level="35.5.7" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#最年轻的诺奖获得者"><i class="fa fa-check"></i><b>35.5.7</b> 最年轻的诺奖获得者</a></li>
+<li class="chapter" data-level="35.5.8" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#平均年龄和各领域获奖数量"><i class="fa fa-check"></i><b>35.5.8</b> 平均年龄和各领域获奖数量</a></li>
 </ul></li>
-<li class="chapter" data-level="34.6" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#地图"><i class="fa fa-check"></i><b>34.6</b> 地图</a>
+<li class="chapter" data-level="35.6" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#地图"><i class="fa fa-check"></i><b>35.6</b> 地图</a>
 <ul>
-<li class="chapter" data-level="34.6.1" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#出生地和工作地不一样的占比"><i class="fa fa-check"></i><b>34.6.1</b> 出生地和工作地不一样的占比</a></li>
-<li class="chapter" data-level="34.6.2" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#共同获奖人"><i class="fa fa-check"></i><b>34.6.2</b> 共同获奖人</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="35" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html"><i class="fa fa-check"></i><b>35</b> 探索性数据分析-奥林匹克</a>
-<ul>
-<li class="chapter" data-level="35.1" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#导入数据-1"><i class="fa fa-check"></i><b>35.1</b> 导入数据</a></li>
-<li class="chapter" data-level="35.2" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#可视化"><i class="fa fa-check"></i><b>35.2</b> 可视化</a></li>
-<li class="chapter" data-level="35.3" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#回归分析"><i class="fa fa-check"></i><b>35.3</b> 回归分析</a></li>
-<li class="chapter" data-level="35.4" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#预测"><i class="fa fa-check"></i><b>35.4</b> 预测</a></li>
-<li class="chapter" data-level="35.5" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#再次可视化"><i class="fa fa-check"></i><b>35.5</b> 再次可视化</a></li>
-<li class="chapter" data-level="35.6" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#section"><i class="fa fa-check"></i><b>35.6</b> </a></li>
-</ul></li>
-<li class="chapter" data-level="36" data-path="35-eda-covid2019.html"><a href="35-eda-covid2019.html"><i class="fa fa-check"></i><b>36</b> 探索性数据分析-新冠疫情</a>
-<ul>
-<li class="chapter" data-level="36.1" data-path="35-eda-covid2019.html"><a href="35-eda-covid2019.html#数据来源"><i class="fa fa-check"></i><b>36.1</b> 数据来源</a></li>
-<li class="chapter" data-level="36.2" data-path="35-eda-covid2019.html"><a href="35-eda-covid2019.html#读取数据"><i class="fa fa-check"></i><b>36.2</b> 读取数据</a></li>
-<li class="chapter" data-level="36.3" data-path="35-eda-covid2019.html"><a href="35-eda-covid2019.html#数据清洗规整"><i class="fa fa-check"></i><b>36.3</b> 数据清洗规整</a></li>
-<li class="chapter" data-level="36.4" data-path="35-eda-covid2019.html"><a href="35-eda-covid2019.html#可视化探索-1"><i class="fa fa-check"></i><b>36.4</b> 可视化探索</a></li>
-</ul></li>
-<li class="chapter" data-level="37" data-path="36-eda-anscombe.html"><a href="36-eda-anscombe.html"><i class="fa fa-check"></i><b>37</b> 探索性数据分析-anscombe数据集</a>
-<ul>
-<li class="chapter" data-level="37.1" data-path="36-eda-anscombe.html"><a href="36-eda-anscombe.html#规整数据"><i class="fa fa-check"></i><b>37.1</b> 规整数据</a></li>
-<li class="chapter" data-level="37.2" data-path="36-eda-anscombe.html"><a href="36-eda-anscombe.html#统计"><i class="fa fa-check"></i><b>37.2</b> 统计</a></li>
-<li class="chapter" data-level="37.3" data-path="36-eda-anscombe.html"><a href="36-eda-anscombe.html#建模"><i class="fa fa-check"></i><b>37.3</b> 建模</a></li>
-<li class="chapter" data-level="37.4" data-path="36-eda-anscombe.html"><a href="36-eda-anscombe.html#可视化-1"><i class="fa fa-check"></i><b>37.4</b> 可视化</a></li>
-</ul></li>
-<li class="chapter" data-level="38" data-path="38-eda-height.html"><a href="38-eda-height.html"><i class="fa fa-check"></i><b>38</b> 探索性数据分析-身高体重关系</a>
-<ul>
-<li class="chapter" data-level="38.1" data-path="38-eda-height.html"><a href="38-eda-height.html#可视化-2"><i class="fa fa-check"></i><b>38.1</b> 可视化</a>
-<ul>
-<li class="chapter" data-level="38.1.1" data-path="38-eda-height.html"><a href="38-eda-height.html#不同性别的身高分布-普通方法"><i class="fa fa-check"></i><b>38.1.1</b> 不同性别的身高分布-普通方法</a></li>
-<li class="chapter" data-level="38.1.2" data-path="38-eda-height.html"><a href="38-eda-height.html#不同性别的身高分布-高级方法"><i class="fa fa-check"></i><b>38.1.2</b> 不同性别的身高分布-高级方法</a></li>
-<li class="chapter" data-level="38.1.3" data-path="38-eda-height.html"><a href="38-eda-height.html#不同性别的体重分布"><i class="fa fa-check"></i><b>38.1.3</b> 不同性别的体重分布</a></li>
-</ul></li>
-<li class="chapter" data-level="38.2" data-path="38-eda-height.html"><a href="38-eda-height.html#建模-1"><i class="fa fa-check"></i><b>38.2</b> 建模</a>
-<ul>
-<li class="chapter" data-level="38.2.1" data-path="38-eda-height.html"><a href="38-eda-height.html#身高体重的散点图"><i class="fa fa-check"></i><b>38.2.1</b> 身高体重的散点图</a></li>
-<li class="chapter" data-level="38.2.2" data-path="38-eda-height.html"><a href="38-eda-height.html#建立身高体重线性模型"><i class="fa fa-check"></i><b>38.2.2</b> 建立身高体重线性模型</a></li>
+<li class="chapter" data-level="35.6.1" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#出生地和工作地不一样的占比"><i class="fa fa-check"></i><b>35.6.1</b> 出生地和工作地不一样的占比</a></li>
+<li class="chapter" data-level="35.6.2" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#共同获奖人"><i class="fa fa-check"></i><b>35.6.2</b> 共同获奖人</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="39" data-path="39-eda-caribou.html"><a href="39-eda-caribou.html"><i class="fa fa-check"></i><b>39</b> 探索性数据分析-驯鹿迁移</a>
+<li class="chapter" data-level="36" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html"><i class="fa fa-check"></i><b>36</b> 探索性数据分析-奥林匹克</a>
 <ul>
-<li class="chapter" data-level="39.1" data-path="39-eda-caribou.html"><a href="39-eda-caribou.html#数据录入"><i class="fa fa-check"></i><b>39.1</b> 数据录入</a></li>
-<li class="chapter" data-level="39.2" data-path="39-eda-caribou.html"><a href="39-eda-caribou.html#驯鹿身份信息"><i class="fa fa-check"></i><b>39.2</b> 驯鹿身份信息</a></li>
+<li class="chapter" data-level="36.1" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#导入数据-1"><i class="fa fa-check"></i><b>36.1</b> 导入数据</a></li>
+<li class="chapter" data-level="36.2" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#可视化"><i class="fa fa-check"></i><b>36.2</b> 可视化</a></li>
+<li class="chapter" data-level="36.3" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#回归分析"><i class="fa fa-check"></i><b>36.3</b> 回归分析</a></li>
+<li class="chapter" data-level="36.4" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#预测"><i class="fa fa-check"></i><b>36.4</b> 预测</a></li>
+<li class="chapter" data-level="36.5" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#再次可视化"><i class="fa fa-check"></i><b>36.5</b> 再次可视化</a></li>
+<li class="chapter" data-level="36.6" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#section"><i class="fa fa-check"></i><b>36.6</b> </a></li>
 </ul></li>
-<li class="chapter" data-level="40" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html"><i class="fa fa-check"></i><b>40</b> 探索性数据分析-企鹅的故事</a>
+<li class="chapter" data-level="37" data-path="35-eda-covid2019.html"><a href="35-eda-covid2019.html"><i class="fa fa-check"></i><b>37</b> 探索性数据分析-新冠疫情</a>
 <ul>
-<li class="chapter" data-level="40.1" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#数据录入-1"><i class="fa fa-check"></i><b>40.1</b> 数据录入</a>
-<ul>
-<li class="chapter" data-level="40.1.1" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#变量含义"><i class="fa fa-check"></i><b>40.1.1</b> 变量含义</a></li>
+<li class="chapter" data-level="37.1" data-path="35-eda-covid2019.html"><a href="35-eda-covid2019.html#数据来源"><i class="fa fa-check"></i><b>37.1</b> 数据来源</a></li>
+<li class="chapter" data-level="37.2" data-path="35-eda-covid2019.html"><a href="35-eda-covid2019.html#读取数据"><i class="fa fa-check"></i><b>37.2</b> 读取数据</a></li>
+<li class="chapter" data-level="37.3" data-path="35-eda-covid2019.html"><a href="35-eda-covid2019.html#数据清洗规整"><i class="fa fa-check"></i><b>37.3</b> 数据清洗规整</a></li>
+<li class="chapter" data-level="37.4" data-path="35-eda-covid2019.html"><a href="35-eda-covid2019.html#可视化探索-1"><i class="fa fa-check"></i><b>37.4</b> 可视化探索</a></li>
 </ul></li>
-<li class="chapter" data-level="40.2" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#数据清洗"><i class="fa fa-check"></i><b>40.2</b> 数据清洗</a></li>
-<li class="chapter" data-level="40.3" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#探索性分析"><i class="fa fa-check"></i><b>40.3</b> 探索性分析</a>
+<li class="chapter" data-level="38" data-path="36-eda-anscombe.html"><a href="36-eda-anscombe.html"><i class="fa fa-check"></i><b>38</b> 探索性数据分析-anscombe数据集</a>
 <ul>
-<li class="chapter" data-level="40.3.1" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#每种类型的企鹅有多少只"><i class="fa fa-check"></i><b>40.3.1</b> 每种类型的企鹅有多少只</a></li>
-<li class="chapter" data-level="40.3.2" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#每种类型企鹅各种属性的均值和分布"><i class="fa fa-check"></i><b>40.3.2</b> 每种类型企鹅各种属性的均值和分布</a></li>
-<li class="chapter" data-level="40.3.3" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#嘴峰长度和深度的关联"><i class="fa fa-check"></i><b>40.3.3</b> 嘴峰长度和深度的关联</a></li>
-<li class="chapter" data-level="40.3.4" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#体重与翅膀长度的关联"><i class="fa fa-check"></i><b>40.3.4</b> 体重与翅膀长度的关联？</a></li>
-<li class="chapter" data-level="40.3.5" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#性别与不同体征信息的关系-建立模型"><i class="fa fa-check"></i><b>40.3.5</b> 性别与不同体征信息的关系-建立模型</a></li>
+<li class="chapter" data-level="38.1" data-path="36-eda-anscombe.html"><a href="36-eda-anscombe.html#规整数据"><i class="fa fa-check"></i><b>38.1</b> 规整数据</a></li>
+<li class="chapter" data-level="38.2" data-path="36-eda-anscombe.html"><a href="36-eda-anscombe.html#统计"><i class="fa fa-check"></i><b>38.2</b> 统计</a></li>
+<li class="chapter" data-level="38.3" data-path="36-eda-anscombe.html"><a href="36-eda-anscombe.html#建模"><i class="fa fa-check"></i><b>38.3</b> 建模</a></li>
+<li class="chapter" data-level="38.4" data-path="36-eda-anscombe.html"><a href="36-eda-anscombe.html#可视化-1"><i class="fa fa-check"></i><b>38.4</b> 可视化</a></li>
 </ul></li>
+<li class="chapter" data-level="39" data-path="38-eda-height.html"><a href="38-eda-height.html"><i class="fa fa-check"></i><b>39</b> 探索性数据分析-身高体重关系</a>
+<ul>
+<li class="chapter" data-level="39.1" data-path="38-eda-height.html"><a href="38-eda-height.html#可视化-2"><i class="fa fa-check"></i><b>39.1</b> 可视化</a>
+<ul>
+<li class="chapter" data-level="39.1.1" data-path="38-eda-height.html"><a href="38-eda-height.html#不同性别的身高分布-普通方法"><i class="fa fa-check"></i><b>39.1.1</b> 不同性别的身高分布-普通方法</a></li>
+<li class="chapter" data-level="39.1.2" data-path="38-eda-height.html"><a href="38-eda-height.html#不同性别的身高分布-高级方法"><i class="fa fa-check"></i><b>39.1.2</b> 不同性别的身高分布-高级方法</a></li>
+<li class="chapter" data-level="39.1.3" data-path="38-eda-height.html"><a href="38-eda-height.html#不同性别的体重分布"><i class="fa fa-check"></i><b>39.1.3</b> 不同性别的体重分布</a></li>
 </ul></li>
-<li class="chapter" data-level="41" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html"><i class="fa fa-check"></i><b>41</b> 探索性数据分析-大学生职业决策</a>
+<li class="chapter" data-level="39.2" data-path="38-eda-height.html"><a href="38-eda-height.html#建模-1"><i class="fa fa-check"></i><b>39.2</b> 建模</a>
 <ul>
-<li class="chapter" data-level="41.1" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#预备知识"><i class="fa fa-check"></i><b>41.1</b> 预备知识</a></li>
-<li class="chapter" data-level="41.2" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#正式开始"><i class="fa fa-check"></i><b>41.2</b> 正式开始</a>
-<ul>
-<li class="chapter" data-level="41.2.1" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#检查缺失值"><i class="fa fa-check"></i><b>41.2.1</b> 检查缺失值</a></li>
-<li class="chapter" data-level="41.2.2" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#数据预处理"><i class="fa fa-check"></i><b>41.2.2</b> 数据预处理</a></li>
-<li class="chapter" data-level="41.2.3" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#标准化数据"><i class="fa fa-check"></i><b>41.2.3</b> 标准化数据</a></li>
-</ul></li>
-<li class="chapter" data-level="41.3" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#探索数据"><i class="fa fa-check"></i><b>41.3</b> 探索数据</a>
-<ul>
-<li class="chapter" data-level="41.3.1" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#想探索的问题"><i class="fa fa-check"></i><b>41.3.1</b> 想探索的问题</a></li>
-<li class="chapter" data-level="41.3.2" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#不同性别年纪生源地专业下各指标的分布差异"><i class="fa fa-check"></i><b>41.3.2</b> 不同性别、年纪、生源地、专业下，各指标的分布差异</a></li>
-<li class="chapter" data-level="41.3.3" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#来自不同地方的学生在职业探索上的不同"><i class="fa fa-check"></i><b>41.3.3</b> 来自不同地方的学生在职业探索上的不同</a></li>
+<li class="chapter" data-level="39.2.1" data-path="38-eda-height.html"><a href="38-eda-height.html#身高体重的散点图"><i class="fa fa-check"></i><b>39.2.1</b> 身高体重的散点图</a></li>
+<li class="chapter" data-level="39.2.2" data-path="38-eda-height.html"><a href="38-eda-height.html#建立身高体重线性模型"><i class="fa fa-check"></i><b>39.2.2</b> 建立身高体重线性模型</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="42" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html"><i class="fa fa-check"></i><b>42</b> 探索性数据分析-ames房价预测</a>
+<li class="chapter" data-level="40" data-path="39-eda-caribou.html"><a href="39-eda-caribou.html"><i class="fa fa-check"></i><b>40</b> 探索性数据分析-驯鹿迁移</a>
 <ul>
-<li class="chapter" data-level="42.1" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#探索设想"><i class="fa fa-check"></i><b>42.1</b> 探索设想</a></li>
-<li class="chapter" data-level="42.2" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#变量选取"><i class="fa fa-check"></i><b>42.2</b> 变量选取</a></li>
-<li class="chapter" data-level="42.3" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#缺失值处理"><i class="fa fa-check"></i><b>42.3</b> 缺失值处理</a></li>
-<li class="chapter" data-level="42.4" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#数据预处理-1"><i class="fa fa-check"></i><b>42.4</b> 数据预处理</a>
-<ul>
-<li class="chapter" data-level="42.4.1" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#标准化vs对数化"><i class="fa fa-check"></i><b>42.4.1</b> 标准化vs对数化</a></li>
+<li class="chapter" data-level="40.1" data-path="39-eda-caribou.html"><a href="39-eda-caribou.html#数据录入"><i class="fa fa-check"></i><b>40.1</b> 数据录入</a></li>
+<li class="chapter" data-level="40.2" data-path="39-eda-caribou.html"><a href="39-eda-caribou.html#驯鹿身份信息"><i class="fa fa-check"></i><b>40.2</b> 驯鹿身份信息</a></li>
 </ul></li>
-<li class="chapter" data-level="42.5" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#正式开始探索"><i class="fa fa-check"></i><b>42.5</b> 正式开始探索</a>
+<li class="chapter" data-level="41" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html"><i class="fa fa-check"></i><b>41</b> 探索性数据分析-企鹅的故事</a>
 <ul>
-<li class="chapter" data-level="42.5.1" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#各地区房屋价格均值"><i class="fa fa-check"></i><b>42.5.1</b> 各地区房屋价格均值</a></li>
-<li class="chapter" data-level="42.5.2" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#房屋价格与占地面积"><i class="fa fa-check"></i><b>42.5.2</b> 房屋价格与占地面积</a></li>
-<li class="chapter" data-level="42.5.3" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#房屋价格与房屋居住面积"><i class="fa fa-check"></i><b>42.5.3</b> 房屋价格与房屋居住面积</a></li>
-<li class="chapter" data-level="42.5.4" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#车库与房屋价格"><i class="fa fa-check"></i><b>42.5.4</b> 车库与房屋价格</a></li>
-</ul></li>
-<li class="chapter" data-level="42.6" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#建模-2"><i class="fa fa-check"></i><b>42.6</b> 建模</a></li>
-</ul></li>
-<li class="chapter" data-level="43" data-path="50-R-practise.html"><a href="50-R-practise.html"><i class="fa fa-check"></i><b>43</b> 练习</a>
+<li class="chapter" data-level="41.1" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#数据录入-1"><i class="fa fa-check"></i><b>41.1</b> 数据录入</a>
 <ul>
-<li class="chapter" data-level="43.1" data-path="50-R-practise.html"><a href="50-R-practise.html#旋转数据框"><i class="fa fa-check"></i><b>43.1</b> 1-旋转数据框</a></li>
-<li class="chapter" data-level="43.2" data-path="50-R-practise.html"><a href="50-R-practise.html#排序"><i class="fa fa-check"></i><b>43.2</b> 2-排序</a></li>
-<li class="chapter" data-level="43.3" data-path="50-R-practise.html"><a href="50-R-practise.html#统计并筛选"><i class="fa fa-check"></i><b>43.3</b> 3-统计并筛选</a></li>
-<li class="chapter" data-level="43.4" data-path="50-R-practise.html"><a href="50-R-practise.html#按条件分组"><i class="fa fa-check"></i><b>43.4</b> 4-按条件分组</a></li>
-<li class="chapter" data-level="43.5" data-path="50-R-practise.html"><a href="50-R-practise.html#section-1"><i class="fa fa-check"></i><b>43.5</b> </a></li>
+<li class="chapter" data-level="41.1.1" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#变量含义"><i class="fa fa-check"></i><b>41.1.1</b> 变量含义</a></li>
+</ul></li>
+<li class="chapter" data-level="41.2" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#数据清洗"><i class="fa fa-check"></i><b>41.2</b> 数据清洗</a></li>
+<li class="chapter" data-level="41.3" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#探索性分析"><i class="fa fa-check"></i><b>41.3</b> 探索性分析</a>
+<ul>
+<li class="chapter" data-level="41.3.1" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#每种类型的企鹅有多少只"><i class="fa fa-check"></i><b>41.3.1</b> 每种类型的企鹅有多少只</a></li>
+<li class="chapter" data-level="41.3.2" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#每种类型企鹅各种属性的均值和分布"><i class="fa fa-check"></i><b>41.3.2</b> 每种类型企鹅各种属性的均值和分布</a></li>
+<li class="chapter" data-level="41.3.3" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#嘴峰长度和深度的关联"><i class="fa fa-check"></i><b>41.3.3</b> 嘴峰长度和深度的关联</a></li>
+<li class="chapter" data-level="41.3.4" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#体重与翅膀长度的关联"><i class="fa fa-check"></i><b>41.3.4</b> 体重与翅膀长度的关联？</a></li>
+<li class="chapter" data-level="41.3.5" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#性别与不同体征信息的关系-建立模型"><i class="fa fa-check"></i><b>41.3.5</b> 性别与不同体征信息的关系-建立模型</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="42" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html"><i class="fa fa-check"></i><b>42</b> 探索性数据分析-大学生职业决策</a>
+<ul>
+<li class="chapter" data-level="42.1" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#预备知识"><i class="fa fa-check"></i><b>42.1</b> 预备知识</a></li>
+<li class="chapter" data-level="42.2" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#正式开始"><i class="fa fa-check"></i><b>42.2</b> 正式开始</a>
+<ul>
+<li class="chapter" data-level="42.2.1" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#检查缺失值"><i class="fa fa-check"></i><b>42.2.1</b> 检查缺失值</a></li>
+<li class="chapter" data-level="42.2.2" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#数据预处理"><i class="fa fa-check"></i><b>42.2.2</b> 数据预处理</a></li>
+<li class="chapter" data-level="42.2.3" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#标准化数据"><i class="fa fa-check"></i><b>42.2.3</b> 标准化数据</a></li>
+</ul></li>
+<li class="chapter" data-level="42.3" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#探索数据"><i class="fa fa-check"></i><b>42.3</b> 探索数据</a>
+<ul>
+<li class="chapter" data-level="42.3.1" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#想探索的问题"><i class="fa fa-check"></i><b>42.3.1</b> 想探索的问题</a></li>
+<li class="chapter" data-level="42.3.2" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#不同性别年纪生源地专业下各指标的分布差异"><i class="fa fa-check"></i><b>42.3.2</b> 不同性别、年纪、生源地、专业下，各指标的分布差异</a></li>
+<li class="chapter" data-level="42.3.3" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#来自不同地方的学生在职业探索上的不同"><i class="fa fa-check"></i><b>42.3.3</b> 来自不同地方的学生在职业探索上的不同</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="43" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html"><i class="fa fa-check"></i><b>43</b> 探索性数据分析-ames房价预测</a>
+<ul>
+<li class="chapter" data-level="43.1" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#探索设想"><i class="fa fa-check"></i><b>43.1</b> 探索设想</a></li>
+<li class="chapter" data-level="43.2" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#变量选取"><i class="fa fa-check"></i><b>43.2</b> 变量选取</a></li>
+<li class="chapter" data-level="43.3" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#缺失值处理"><i class="fa fa-check"></i><b>43.3</b> 缺失值处理</a></li>
+<li class="chapter" data-level="43.4" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#数据预处理-1"><i class="fa fa-check"></i><b>43.4</b> 数据预处理</a>
+<ul>
+<li class="chapter" data-level="43.4.1" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#标准化vs对数化"><i class="fa fa-check"></i><b>43.4.1</b> 标准化vs对数化</a></li>
+</ul></li>
+<li class="chapter" data-level="43.5" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#正式开始探索"><i class="fa fa-check"></i><b>43.5</b> 正式开始探索</a>
+<ul>
+<li class="chapter" data-level="43.5.1" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#各地区房屋价格均值"><i class="fa fa-check"></i><b>43.5.1</b> 各地区房屋价格均值</a></li>
+<li class="chapter" data-level="43.5.2" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#房屋价格与占地面积"><i class="fa fa-check"></i><b>43.5.2</b> 房屋价格与占地面积</a></li>
+<li class="chapter" data-level="43.5.3" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#房屋价格与房屋居住面积"><i class="fa fa-check"></i><b>43.5.3</b> 房屋价格与房屋居住面积</a></li>
+<li class="chapter" data-level="43.5.4" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#车库与房屋价格"><i class="fa fa-check"></i><b>43.5.4</b> 车库与房屋价格</a></li>
+</ul></li>
+<li class="chapter" data-level="43.6" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#建模-2"><i class="fa fa-check"></i><b>43.6</b> 建模</a></li>
+</ul></li>
+<li class="chapter" data-level="44" data-path="50-R-practise.html"><a href="50-R-practise.html"><i class="fa fa-check"></i><b>44</b> 练习</a>
+<ul>
+<li class="chapter" data-level="44.1" data-path="50-R-practise.html"><a href="50-R-practise.html#旋转数据框"><i class="fa fa-check"></i><b>44.1</b> 1-旋转数据框</a></li>
+<li class="chapter" data-level="44.2" data-path="50-R-practise.html"><a href="50-R-practise.html#排序"><i class="fa fa-check"></i><b>44.2</b> 2-排序</a></li>
+<li class="chapter" data-level="44.3" data-path="50-R-practise.html"><a href="50-R-practise.html#统计并筛选"><i class="fa fa-check"></i><b>44.3</b> 3-统计并筛选</a></li>
+<li class="chapter" data-level="44.4" data-path="50-R-practise.html"><a href="50-R-practise.html#按条件分组"><i class="fa fa-check"></i><b>44.4</b> 4-按条件分组</a></li>
+<li class="chapter" data-level="44.5" data-path="50-R-practise.html"><a href="50-R-practise.html#section-1"><i class="fa fa-check"></i><b>44.5</b> </a></li>
 </ul></li>
 <li class="appendix"><span><b>附录</b></span></li>
 <li class="chapter" data-level="A" data-path="999-appendix.html"><a href="999-appendix.html"><i class="fa fa-check"></i><b>A</b> 附录-有趣的“懒人”包</a>
@@ -490,23 +505,23 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="附录-有趣的懒人包" class="section level1 hasAnchor" number="44">
+<div id="附录-有趣的懒人包" class="section level1 hasAnchor" number="45">
 <h1><span class="header-section-number">A</span> 附录-有趣的“懒人”包<a href="999-appendix.html#附录-有趣的懒人包" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="自动生成正则表达式" class="section level2 hasAnchor" number="44.1">
+<div id="自动生成正则表达式" class="section level2 hasAnchor" number="45.1">
 <h2><span class="header-section-number">A.1</span> 自动生成正则表达式<a href="999-appendix.html#自动生成正则表达式" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb476"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb476-1"><a href="999-appendix.html#cb476-1" aria-hidden="true" tabindex="-1"></a><span class="co"># remotes::install_github(&quot;daranzolin/inferregex&quot;)</span></span>
-<span id="cb476-2"><a href="999-appendix.html#cb476-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(inferregex)</span>
-<span id="cb476-3"><a href="999-appendix.html#cb476-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb476-4"><a href="999-appendix.html#cb476-4" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="st">&quot;abcd-9999-ab9&quot;</span></span>
-<span id="cb476-5"><a href="999-appendix.html#cb476-5" aria-hidden="true" tabindex="-1"></a><span class="fu">infer_regex</span>(s)[<span class="dv">1</span>,<span class="dv">2</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb500"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb500-1"><a href="999-appendix.html#cb500-1" aria-hidden="true" tabindex="-1"></a><span class="co"># remotes::install_github(&quot;daranzolin/inferregex&quot;)</span></span>
+<span id="cb500-2"><a href="999-appendix.html#cb500-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(inferregex)</span>
+<span id="cb500-3"><a href="999-appendix.html#cb500-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb500-4"><a href="999-appendix.html#cb500-4" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="st">&quot;abcd-9999-ab9&quot;</span></span>
+<span id="cb500-5"><a href="999-appendix.html#cb500-5" aria-hidden="true" tabindex="-1"></a><span class="fu">infer_regex</span>(s)[<span class="dv">1</span>,<span class="dv">2</span>]</span></code></pre></div>
 <pre><code>## [1] &quot;^[a-z]{4}-\\d{4}-[a-z]{2}\\d$&quot;</code></pre>
 </div>
-<div id="janitor包" class="section level2 hasAnchor" number="44.2">
+<div id="janitor包" class="section level2 hasAnchor" number="45.2">
 <h2><span class="header-section-number">A.2</span> <a href="https://github.com/sfirke/janitor">janitor包</a><a href="999-appendix.html#janitor包" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>janitor has simple little tools for examining and cleaning dirty data.</p>
-<div id="整理列名" class="section level3 hasAnchor" number="44.2.1">
+<div id="整理列名" class="section level3 hasAnchor" number="45.2.1">
 <h3><span class="header-section-number">A.2.1</span> 整理列名<a href="999-appendix.html#整理列名" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb478"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb478-1"><a href="999-appendix.html#cb478-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb502"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb502-1"><a href="999-appendix.html#cb502-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <pre><code>## -- Attaching packages ---------------------------- tidyverse 1.3.1 --</code></pre>
 <pre><code>## v ggplot2 3.3.5     v purrr   0.3.4
 ## v tibble  3.1.6     v dplyr   1.0.8
@@ -515,27 +530,27 @@ div.csl-indent {
 <pre><code>## -- Conflicts ------------------------------- tidyverse_conflicts() --
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()</code></pre>
-<div class="sourceCode" id="cb482"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb482-1"><a href="999-appendix.html#cb482-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span></code></pre></div>
+<div class="sourceCode" id="cb506"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb506-1"><a href="999-appendix.html#cb506-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span></code></pre></div>
 <pre><code>## 
 ## 载入程辑包：&#39;janitor&#39;</code></pre>
 <pre><code>## The following objects are masked from &#39;package:stats&#39;:
 ## 
 ##     chisq.test, fisher.test</code></pre>
-<div class="sourceCode" id="cb485"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb485-1"><a href="999-appendix.html#cb485-1" aria-hidden="true" tabindex="-1"></a>fake_raw <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
-<span id="cb485-2"><a href="999-appendix.html#cb485-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>id, <span class="sc">~</span><span class="st">`</span><span class="at">count/num</span><span class="st">`</span>, <span class="sc">~</span>W.t, <span class="sc">~</span>Case, <span class="sc">~</span><span class="st">`</span><span class="at">time--d</span><span class="st">`</span>, <span class="sc">~</span><span class="st">`</span><span class="at">%percent</span><span class="st">`</span>,</span>
-<span id="cb485-3"><a href="999-appendix.html#cb485-3" aria-hidden="true" tabindex="-1"></a>  1L, <span class="st">&quot;china&quot;</span>, 3L, <span class="st">&quot;w&quot;</span>, 5L, 25L,</span>
-<span id="cb485-4"><a href="999-appendix.html#cb485-4" aria-hidden="true" tabindex="-1"></a>  2L, <span class="st">&quot;us&quot;</span>, 4L, <span class="st">&quot;f&quot;</span>, 6L, 34L,</span>
-<span id="cb485-5"><a href="999-appendix.html#cb485-5" aria-hidden="true" tabindex="-1"></a>  3L, <span class="st">&quot;india&quot;</span>, 5L, <span class="st">&quot;q&quot;</span>, 8L, 78L</span>
-<span id="cb485-6"><a href="999-appendix.html#cb485-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb485-7"><a href="999-appendix.html#cb485-7" aria-hidden="true" tabindex="-1"></a>fake_raw</span></code></pre></div>
+<div class="sourceCode" id="cb509"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb509-1"><a href="999-appendix.html#cb509-1" aria-hidden="true" tabindex="-1"></a>fake_raw <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
+<span id="cb509-2"><a href="999-appendix.html#cb509-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>id, <span class="sc">~</span><span class="st">`</span><span class="at">count/num</span><span class="st">`</span>, <span class="sc">~</span>W.t, <span class="sc">~</span>Case, <span class="sc">~</span><span class="st">`</span><span class="at">time--d</span><span class="st">`</span>, <span class="sc">~</span><span class="st">`</span><span class="at">%percent</span><span class="st">`</span>,</span>
+<span id="cb509-3"><a href="999-appendix.html#cb509-3" aria-hidden="true" tabindex="-1"></a>  1L, <span class="st">&quot;china&quot;</span>, 3L, <span class="st">&quot;w&quot;</span>, 5L, 25L,</span>
+<span id="cb509-4"><a href="999-appendix.html#cb509-4" aria-hidden="true" tabindex="-1"></a>  2L, <span class="st">&quot;us&quot;</span>, 4L, <span class="st">&quot;f&quot;</span>, 6L, 34L,</span>
+<span id="cb509-5"><a href="999-appendix.html#cb509-5" aria-hidden="true" tabindex="-1"></a>  3L, <span class="st">&quot;india&quot;</span>, 5L, <span class="st">&quot;q&quot;</span>, 8L, 78L</span>
+<span id="cb509-6"><a href="999-appendix.html#cb509-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb509-7"><a href="999-appendix.html#cb509-7" aria-hidden="true" tabindex="-1"></a>fake_raw</span></code></pre></div>
 <pre><code>## # A tibble: 3 x 6
 ##      id `count/num`   W.t Case  `time--d` `%percent`
 ##   &lt;int&gt; &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;     &lt;int&gt;      &lt;int&gt;
 ## 1     1 china           3 w             5         25
 ## 2     2 us              4 f             6         34
 ## 3     3 india           5 q             8         78</code></pre>
-<div class="sourceCode" id="cb487"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb487-1"><a href="999-appendix.html#cb487-1" aria-hidden="true" tabindex="-1"></a>fake_raw <span class="sc">%&gt;%</span></span>
-<span id="cb487-2"><a href="999-appendix.html#cb487-2" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb511"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb511-1"><a href="999-appendix.html#cb511-1" aria-hidden="true" tabindex="-1"></a>fake_raw <span class="sc">%&gt;%</span></span>
+<span id="cb511-2"><a href="999-appendix.html#cb511-2" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>()</span></code></pre></div>
 <pre><code>## Warning in FUN(X[[i]], ...): strings not representable in native
 ## encoding will be translated to UTF-8</code></pre>
 <pre><code>## Warning in FUN(X[[i]], ...): unable to translate &#39;&lt;U+00C4&gt;&#39; to native
@@ -567,26 +582,26 @@ div.csl-indent {
 ## 2     2 us            4 f          6              34
 ## 3     3 india         5 q          8              78</code></pre>
 </div>
-<div id="统计分析" class="section level3 hasAnchor" number="44.2.2">
+<div id="统计分析" class="section level3 hasAnchor" number="45.2.2">
 <h3><span class="header-section-number">A.2.2</span> 统计分析<a href="999-appendix.html#统计分析" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb501"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb501-1"><a href="999-appendix.html#cb501-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">%&gt;%</span></span>
-<span id="cb501-2"><a href="999-appendix.html#cb501-2" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">tabyl</span>(cyl)</span></code></pre></div>
+<div class="sourceCode" id="cb525"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb525-1"><a href="999-appendix.html#cb525-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">%&gt;%</span></span>
+<span id="cb525-2"><a href="999-appendix.html#cb525-2" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">tabyl</span>(cyl)</span></code></pre></div>
 <pre><code>##  cyl  n percent
 ##    4 11 0.34375
 ##    6  7 0.21875
 ##    8 14 0.43750</code></pre>
 </div>
-<div id="查看指定列有重复的行" class="section level3 hasAnchor" number="44.2.3">
+<div id="查看指定列有重复的行" class="section level3 hasAnchor" number="45.2.3">
 <h3><span class="header-section-number">A.2.3</span> 查看指定列有重复的行<a href="999-appendix.html#查看指定列有重复的行" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb503"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb503-1"><a href="999-appendix.html#cb503-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb503-2"><a href="999-appendix.html#cb503-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>id, <span class="sc">~</span>date, <span class="sc">~</span>store_id, <span class="sc">~</span>sales,</span>
-<span id="cb503-3"><a href="999-appendix.html#cb503-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span>, <span class="st">&quot;2020-03-01&quot;</span>, <span class="dv">1</span>, <span class="dv">100</span>,</span>
-<span id="cb503-4"><a href="999-appendix.html#cb503-4" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span>, <span class="st">&quot;2020-03-01&quot;</span>, <span class="dv">2</span>, <span class="dv">100</span>,</span>
-<span id="cb503-5"><a href="999-appendix.html#cb503-5" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span>, <span class="st">&quot;2020-03-01&quot;</span>, <span class="dv">3</span>, <span class="dv">150</span>,</span>
-<span id="cb503-6"><a href="999-appendix.html#cb503-6" aria-hidden="true" tabindex="-1"></a>  <span class="dv">4</span>, <span class="st">&quot;2020-03-02&quot;</span>, <span class="dv">1</span>, <span class="dv">110</span>,</span>
-<span id="cb503-7"><a href="999-appendix.html#cb503-7" aria-hidden="true" tabindex="-1"></a>  <span class="dv">5</span>, <span class="st">&quot;2020-03-02&quot;</span>, <span class="dv">3</span>, <span class="dv">101</span></span>
-<span id="cb503-8"><a href="999-appendix.html#cb503-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb503-9"><a href="999-appendix.html#cb503-9" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
+<div class="sourceCode" id="cb527"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb527-1"><a href="999-appendix.html#cb527-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb527-2"><a href="999-appendix.html#cb527-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>id, <span class="sc">~</span>date, <span class="sc">~</span>store_id, <span class="sc">~</span>sales,</span>
+<span id="cb527-3"><a href="999-appendix.html#cb527-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span>, <span class="st">&quot;2020-03-01&quot;</span>, <span class="dv">1</span>, <span class="dv">100</span>,</span>
+<span id="cb527-4"><a href="999-appendix.html#cb527-4" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span>, <span class="st">&quot;2020-03-01&quot;</span>, <span class="dv">2</span>, <span class="dv">100</span>,</span>
+<span id="cb527-5"><a href="999-appendix.html#cb527-5" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span>, <span class="st">&quot;2020-03-01&quot;</span>, <span class="dv">3</span>, <span class="dv">150</span>,</span>
+<span id="cb527-6"><a href="999-appendix.html#cb527-6" aria-hidden="true" tabindex="-1"></a>  <span class="dv">4</span>, <span class="st">&quot;2020-03-02&quot;</span>, <span class="dv">1</span>, <span class="dv">110</span>,</span>
+<span id="cb527-7"><a href="999-appendix.html#cb527-7" aria-hidden="true" tabindex="-1"></a>  <span class="dv">5</span>, <span class="st">&quot;2020-03-02&quot;</span>, <span class="dv">3</span>, <span class="dv">101</span></span>
+<span id="cb527-8"><a href="999-appendix.html#cb527-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb527-9"><a href="999-appendix.html#cb527-9" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
 <pre><code>## # A tibble: 5 x 4
 ##      id date       store_id sales
 ##   &lt;dbl&gt; &lt;chr&gt;         &lt;dbl&gt; &lt;dbl&gt;
@@ -595,8 +610,8 @@ div.csl-indent {
 ## 3     3 2020-03-01        3   150
 ## 4     4 2020-03-02        1   110
 ## 5     5 2020-03-02        3   101</code></pre>
-<div class="sourceCode" id="cb505"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb505-1"><a href="999-appendix.html#cb505-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span></span>
-<span id="cb505-2"><a href="999-appendix.html#cb505-2" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">get_dupes</span>(store_id)</span></code></pre></div>
+<div class="sourceCode" id="cb529"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb529-1"><a href="999-appendix.html#cb529-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span></span>
+<span id="cb529-2"><a href="999-appendix.html#cb529-2" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">get_dupes</span>(store_id)</span></code></pre></div>
 <pre><code>## # A tibble: 4 x 5
 ##   store_id dupe_count    id date       sales
 ##      &lt;dbl&gt;      &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;dbl&gt;
@@ -606,13 +621,13 @@ div.csl-indent {
 ## 4        3          2     5 2020-03-02   101</code></pre>
 </div>
 </div>
-<div id="自动生成模型公式" class="section level2 hasAnchor" number="44.3">
+<div id="自动生成模型公式" class="section level2 hasAnchor" number="45.3">
 <h2><span class="header-section-number">A.3</span> <a href="https://github.com/datalorax/equatiomatic">自动生成模型公式</a><a href="999-appendix.html#自动生成模型公式" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb507"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb507-1"><a href="999-appendix.html#cb507-1" aria-hidden="true" tabindex="-1"></a><span class="co"># remotes::install_github(&quot;datalorax/equatiomatic&quot;)</span></span>
-<span id="cb507-2"><a href="999-appendix.html#cb507-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(equatiomatic)</span>
-<span id="cb507-3"><a href="999-appendix.html#cb507-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb507-4"><a href="999-appendix.html#cb507-4" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> cyl <span class="sc">+</span> disp, mtcars)</span>
-<span id="cb507-5"><a href="999-appendix.html#cb507-5" aria-hidden="true" tabindex="-1"></a><span class="fu">extract_eq</span>(mod1)</span></code></pre></div>
+<div class="sourceCode" id="cb531"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb531-1"><a href="999-appendix.html#cb531-1" aria-hidden="true" tabindex="-1"></a><span class="co"># remotes::install_github(&quot;datalorax/equatiomatic&quot;)</span></span>
+<span id="cb531-2"><a href="999-appendix.html#cb531-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(equatiomatic)</span>
+<span id="cb531-3"><a href="999-appendix.html#cb531-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb531-4"><a href="999-appendix.html#cb531-4" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> cyl <span class="sc">+</span> disp, mtcars)</span>
+<span id="cb531-5"><a href="999-appendix.html#cb531-5" aria-hidden="true" tabindex="-1"></a><span class="fu">extract_eq</span>(mod1)</span></code></pre></div>
 <p><span class="math display">\[
 \operatorname{mpg} = \alpha + \beta_{1}(\operatorname{cyl}) + \beta_{2}(\operatorname{disp}) + \epsilon
 \]</span></p>
@@ -620,11 +635,11 @@ div.csl-indent {
 \operatorname{mpg} = \alpha + \beta_{1}(\operatorname{cyl}) + \beta_{2}(\operatorname{disp}) + \epsilon
 \]</span></p>
 </div>
-<div id="自动生成论文报告" class="section level2 hasAnchor" number="44.4">
+<div id="自动生成论文报告" class="section level2 hasAnchor" number="45.4">
 <h2><span class="header-section-number">A.4</span> <a href="https://github.com/easystats/report">自动生成论文报告</a><a href="999-appendix.html#自动生成论文报告" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb508"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb508-1"><a href="999-appendix.html#cb508-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(report)</span>
-<span id="cb508-2"><a href="999-appendix.html#cb508-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sepal.Length <span class="sc">~</span> Species, <span class="at">data =</span> iris)</span>
-<span id="cb508-3"><a href="999-appendix.html#cb508-3" aria-hidden="true" tabindex="-1"></a><span class="fu">report</span>(model)</span></code></pre></div>
+<div class="sourceCode" id="cb532"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb532-1"><a href="999-appendix.html#cb532-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(report)</span>
+<span id="cb532-2"><a href="999-appendix.html#cb532-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sepal.Length <span class="sc">~</span> Species, <span class="at">data =</span> iris)</span>
+<span id="cb532-3"><a href="999-appendix.html#cb532-3" aria-hidden="true" tabindex="-1"></a><span class="fu">report</span>(model)</span></code></pre></div>
 <pre><code>## Registered S3 method overwritten by &#39;parameters&#39;:
 ##   method                         from      
 ##   format.parameters_distribution datawizard</code></pre>
@@ -635,38 +650,38 @@ div.csl-indent {
 ## 
 ## Standardized parameters were obtained by fitting the model on a standardized version of the dataset. 95% Confidence Intervals (CIs) and p-values were computed using the Wald approximation.</code></pre>
 </div>
-<div id="自动评估模型" class="section level2 hasAnchor" number="44.5">
+<div id="自动评估模型" class="section level2 hasAnchor" number="45.5">
 <h2><span class="header-section-number">A.5</span> <a href="https://easystats.github.io/performance/">自动评估模型</a><a href="999-appendix.html#自动评估模型" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb511"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb511-1"><a href="999-appendix.html#cb511-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(performance)</span>
-<span id="cb511-2"><a href="999-appendix.html#cb511-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb511-3"><a href="999-appendix.html#cb511-3" aria-hidden="true" tabindex="-1"></a><span class="co"># defining a model</span></span>
-<span id="cb511-4"><a href="999-appendix.html#cb511-4" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> wt <span class="sc">+</span> am <span class="sc">+</span> gear <span class="sc">+</span> vs <span class="sc">*</span> cyl, <span class="at">data =</span> mtcars)</span>
-<span id="cb511-5"><a href="999-appendix.html#cb511-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb511-6"><a href="999-appendix.html#cb511-6" aria-hidden="true" tabindex="-1"></a><span class="co"># checking model assumptions </span></span>
-<span id="cb511-7"><a href="999-appendix.html#cb511-7" aria-hidden="true" tabindex="-1"></a><span class="fu">check_model</span>(model)  <span class="co"># 注意生成图片时的窗口不能过小</span></span></code></pre></div>
+<div class="sourceCode" id="cb535"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb535-1"><a href="999-appendix.html#cb535-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(performance)</span>
+<span id="cb535-2"><a href="999-appendix.html#cb535-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb535-3"><a href="999-appendix.html#cb535-3" aria-hidden="true" tabindex="-1"></a><span class="co"># defining a model</span></span>
+<span id="cb535-4"><a href="999-appendix.html#cb535-4" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> wt <span class="sc">+</span> am <span class="sc">+</span> gear <span class="sc">+</span> vs <span class="sc">*</span> cyl, <span class="at">data =</span> mtcars)</span>
+<span id="cb535-5"><a href="999-appendix.html#cb535-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb535-6"><a href="999-appendix.html#cb535-6" aria-hidden="true" tabindex="-1"></a><span class="co"># checking model assumptions </span></span>
+<span id="cb535-7"><a href="999-appendix.html#cb535-7" aria-hidden="true" tabindex="-1"></a><span class="fu">check_model</span>(model)  <span class="co"># 注意生成图片时的窗口不能过小</span></span></code></pre></div>
 <p><img src="999-appendix_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 </div>
-<div id="自动生成统计表格" class="section level2 hasAnchor" number="44.6">
+<div id="自动生成统计表格" class="section level2 hasAnchor" number="45.6">
 <h2><span class="header-section-number">A.6</span> <a href="https://github.com/ddsjoberg/gtsummary">自动生成统计表格</a><a href="999-appendix.html#自动生成统计表格" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb512"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb512-1"><a href="999-appendix.html#cb512-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span></code></pre></div>
-<pre><code>## #BlackLivesMatter</code></pre>
-<div class="sourceCode" id="cb514"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb514-1"><a href="999-appendix.html#cb514-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 生成的表格可以直接复制进论文即可</span></span>
-<span id="cb514-2"><a href="999-appendix.html#cb514-2" aria-hidden="true" tabindex="-1"></a>gtsummary<span class="sc">::</span>trial <span class="sc">%&gt;%</span> </span>
-<span id="cb514-3"><a href="999-appendix.html#cb514-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(trt, age, grade, response) <span class="sc">%&gt;%</span> </span>
-<span id="cb514-4"><a href="999-appendix.html#cb514-4" aria-hidden="true" tabindex="-1"></a>  gtsummary<span class="sc">::</span><span class="fu">tbl_summary</span>(</span>
-<span id="cb514-5"><a href="999-appendix.html#cb514-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> trt,</span>
-<span id="cb514-6"><a href="999-appendix.html#cb514-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">missing =</span> <span class="st">&quot;no&quot;</span></span>
-<span id="cb514-7"><a href="999-appendix.html#cb514-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
-<span id="cb514-8"><a href="999-appendix.html#cb514-8" aria-hidden="true" tabindex="-1"></a>  gtsummary<span class="sc">::</span><span class="fu">add_p</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb514-9"><a href="999-appendix.html#cb514-9" aria-hidden="true" tabindex="-1"></a>  gtsummary<span class="sc">::</span><span class="fu">add_overall</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb514-10"><a href="999-appendix.html#cb514-10" aria-hidden="true" tabindex="-1"></a>  gtsummary<span class="sc">::</span><span class="fu">add_n</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb514-11"><a href="999-appendix.html#cb514-11" aria-hidden="true" tabindex="-1"></a>  gtsummary<span class="sc">::</span><span class="fu">bold_labels</span>()</span></code></pre></div>
-<div id="xnrdwuctcq" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div class="sourceCode" id="cb536"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb536-1"><a href="999-appendix.html#cb536-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
+<span id="cb536-2"><a href="999-appendix.html#cb536-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb536-3"><a href="999-appendix.html#cb536-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 生成的表格可以直接复制进论文即可</span></span>
+<span id="cb536-4"><a href="999-appendix.html#cb536-4" aria-hidden="true" tabindex="-1"></a>gtsummary<span class="sc">::</span>trial <span class="sc">%&gt;%</span> </span>
+<span id="cb536-5"><a href="999-appendix.html#cb536-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(trt, age, grade, response) <span class="sc">%&gt;%</span> </span>
+<span id="cb536-6"><a href="999-appendix.html#cb536-6" aria-hidden="true" tabindex="-1"></a>  gtsummary<span class="sc">::</span><span class="fu">tbl_summary</span>(</span>
+<span id="cb536-7"><a href="999-appendix.html#cb536-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> trt,</span>
+<span id="cb536-8"><a href="999-appendix.html#cb536-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">missing =</span> <span class="st">&quot;no&quot;</span></span>
+<span id="cb536-9"><a href="999-appendix.html#cb536-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb536-10"><a href="999-appendix.html#cb536-10" aria-hidden="true" tabindex="-1"></a>  gtsummary<span class="sc">::</span><span class="fu">add_p</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb536-11"><a href="999-appendix.html#cb536-11" aria-hidden="true" tabindex="-1"></a>  gtsummary<span class="sc">::</span><span class="fu">add_overall</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb536-12"><a href="999-appendix.html#cb536-12" aria-hidden="true" tabindex="-1"></a>  gtsummary<span class="sc">::</span><span class="fu">add_n</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb536-13"><a href="999-appendix.html#cb536-13" aria-hidden="true" tabindex="-1"></a>  gtsummary<span class="sc">::</span><span class="fu">bold_labels</span>()</span></code></pre></div>
+<div id="usojhbzfzn" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#xnrdwuctcq .gt_table {
+#usojhbzfzn .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -691,7 +706,7 @@ div.csl-indent {
   border-left-color: #D3D3D3;
 }
 
-#xnrdwuctcq .gt_heading {
+#usojhbzfzn .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -703,7 +718,7 @@ div.csl-indent {
   border-right-color: #D3D3D3;
 }
 
-#xnrdwuctcq .gt_title {
+#usojhbzfzn .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -715,7 +730,7 @@ div.csl-indent {
   border-bottom-width: 0;
 }
 
-#xnrdwuctcq .gt_subtitle {
+#usojhbzfzn .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -727,13 +742,13 @@ div.csl-indent {
   border-top-width: 0;
 }
 
-#xnrdwuctcq .gt_bottom_border {
+#usojhbzfzn .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#xnrdwuctcq .gt_col_headings {
+#usojhbzfzn .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -748,7 +763,7 @@ div.csl-indent {
   border-right-color: #D3D3D3;
 }
 
-#xnrdwuctcq .gt_col_heading {
+#usojhbzfzn .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -768,7 +783,7 @@ div.csl-indent {
   overflow-x: hidden;
 }
 
-#xnrdwuctcq .gt_column_spanner_outer {
+#usojhbzfzn .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -780,15 +795,15 @@ div.csl-indent {
   padding-right: 4px;
 }
 
-#xnrdwuctcq .gt_column_spanner_outer:first-child {
+#usojhbzfzn .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#xnrdwuctcq .gt_column_spanner_outer:last-child {
+#usojhbzfzn .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#xnrdwuctcq .gt_column_spanner {
+#usojhbzfzn .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -800,7 +815,7 @@ div.csl-indent {
   width: 100%;
 }
 
-#xnrdwuctcq .gt_group_heading {
+#usojhbzfzn .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -825,7 +840,7 @@ div.csl-indent {
   vertical-align: middle;
 }
 
-#xnrdwuctcq .gt_empty_group_heading {
+#usojhbzfzn .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -840,15 +855,15 @@ div.csl-indent {
   vertical-align: middle;
 }
 
-#xnrdwuctcq .gt_from_md > :first-child {
+#usojhbzfzn .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#xnrdwuctcq .gt_from_md > :last-child {
+#usojhbzfzn .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#xnrdwuctcq .gt_row {
+#usojhbzfzn .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -867,7 +882,7 @@ div.csl-indent {
   overflow-x: hidden;
 }
 
-#xnrdwuctcq .gt_stub {
+#usojhbzfzn .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -880,7 +895,7 @@ div.csl-indent {
   padding-right: 5px;
 }
 
-#xnrdwuctcq .gt_stub_row_group {
+#usojhbzfzn .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -894,11 +909,11 @@ div.csl-indent {
   vertical-align: top;
 }
 
-#xnrdwuctcq .gt_row_group_first td {
+#usojhbzfzn .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#xnrdwuctcq .gt_summary_row {
+#usojhbzfzn .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -908,16 +923,16 @@ div.csl-indent {
   padding-right: 5px;
 }
 
-#xnrdwuctcq .gt_first_summary_row {
+#usojhbzfzn .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#xnrdwuctcq .gt_first_summary_row.thick {
+#usojhbzfzn .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#xnrdwuctcq .gt_last_summary_row {
+#usojhbzfzn .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -927,7 +942,7 @@ div.csl-indent {
   border-bottom-color: #D3D3D3;
 }
 
-#xnrdwuctcq .gt_grand_summary_row {
+#usojhbzfzn .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -937,7 +952,7 @@ div.csl-indent {
   padding-right: 5px;
 }
 
-#xnrdwuctcq .gt_first_grand_summary_row {
+#usojhbzfzn .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -947,11 +962,11 @@ div.csl-indent {
   border-top-color: #D3D3D3;
 }
 
-#xnrdwuctcq .gt_striped {
+#usojhbzfzn .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#xnrdwuctcq .gt_table_body {
+#usojhbzfzn .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -960,7 +975,7 @@ div.csl-indent {
   border-bottom-color: #D3D3D3;
 }
 
-#xnrdwuctcq .gt_footnotes {
+#usojhbzfzn .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -974,7 +989,7 @@ div.csl-indent {
   border-right-color: #D3D3D3;
 }
 
-#xnrdwuctcq .gt_footnote {
+#usojhbzfzn .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -983,7 +998,7 @@ div.csl-indent {
   padding-right: 5px;
 }
 
-#xnrdwuctcq .gt_sourcenotes {
+#usojhbzfzn .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -997,7 +1012,7 @@ div.csl-indent {
   border-right-color: #D3D3D3;
 }
 
-#xnrdwuctcq .gt_sourcenote {
+#usojhbzfzn .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1005,60 +1020,60 @@ div.csl-indent {
   padding-right: 5px;
 }
 
-#xnrdwuctcq .gt_left {
+#usojhbzfzn .gt_left {
   text-align: left;
 }
 
-#xnrdwuctcq .gt_center {
+#usojhbzfzn .gt_center {
   text-align: center;
 }
 
-#xnrdwuctcq .gt_right {
+#usojhbzfzn .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#xnrdwuctcq .gt_font_normal {
+#usojhbzfzn .gt_font_normal {
   font-weight: normal;
 }
 
-#xnrdwuctcq .gt_font_bold {
+#usojhbzfzn .gt_font_bold {
   font-weight: bold;
 }
 
-#xnrdwuctcq .gt_font_italic {
+#usojhbzfzn .gt_font_italic {
   font-style: italic;
 }
 
-#xnrdwuctcq .gt_super {
+#usojhbzfzn .gt_super {
   font-size: 65%;
 }
 
-#xnrdwuctcq .gt_footnote_marks {
+#usojhbzfzn .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#xnrdwuctcq .gt_asterisk {
+#usojhbzfzn .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#xnrdwuctcq .gt_slash_mark {
+#usojhbzfzn .gt_slash_mark {
   font-size: 0.7em;
   line-height: 0.7em;
   vertical-align: 0.15em;
 }
 
-#xnrdwuctcq .gt_fraction_numerator {
+#usojhbzfzn .gt_fraction_numerator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: 0.45em;
 }
 
-#xnrdwuctcq .gt_fraction_denominator {
+#usojhbzfzn .gt_fraction_denominator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: -0.05em;
@@ -1125,27 +1140,27 @@ div.csl-indent {
   </tfoot>
 </table>
 </div>
-<div class="sourceCode" id="cb515"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb515-1"><a href="999-appendix.html#cb515-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 生成的表格可以直接复制进论文即可</span></span>
-<span id="cb515-2"><a href="999-appendix.html#cb515-2" aria-hidden="true" tabindex="-1"></a>t1 <span class="ot">&lt;-</span></span>
-<span id="cb515-3"><a href="999-appendix.html#cb515-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glm</span>(response <span class="sc">~</span> trt <span class="sc">+</span> age <span class="sc">+</span> grade, trial, <span class="at">family =</span> binomial) <span class="sc">%&gt;%</span></span>
-<span id="cb515-4"><a href="999-appendix.html#cb515-4" aria-hidden="true" tabindex="-1"></a>  gtsummary<span class="sc">::</span><span class="fu">tbl_regression</span>(<span class="at">exponentiate =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb515-5"><a href="999-appendix.html#cb515-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb515-6"><a href="999-appendix.html#cb515-6" aria-hidden="true" tabindex="-1"></a>t2 <span class="ot">&lt;-</span></span>
-<span id="cb515-7"><a href="999-appendix.html#cb515-7" aria-hidden="true" tabindex="-1"></a>  survival<span class="sc">::</span><span class="fu">coxph</span>(survival<span class="sc">::</span><span class="fu">Surv</span>(ttdeath, death) <span class="sc">~</span> trt <span class="sc">+</span> grade <span class="sc">+</span> age, trial) <span class="sc">%&gt;%</span></span>
-<span id="cb515-8"><a href="999-appendix.html#cb515-8" aria-hidden="true" tabindex="-1"></a>  gtsummary<span class="sc">::</span><span class="fu">tbl_regression</span>(<span class="at">exponentiate =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb515-9"><a href="999-appendix.html#cb515-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb515-10"><a href="999-appendix.html#cb515-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb515-11"><a href="999-appendix.html#cb515-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb515-12"><a href="999-appendix.html#cb515-12" aria-hidden="true" tabindex="-1"></a>gtsummary<span class="sc">::</span><span class="fu">tbl_merge</span>(</span>
-<span id="cb515-13"><a href="999-appendix.html#cb515-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">tbls =</span> <span class="fu">list</span>(t1, t2),</span>
-<span id="cb515-14"><a href="999-appendix.html#cb515-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">tab_spanner =</span> <span class="fu">c</span>(<span class="st">&quot;**Tumor Response**&quot;</span>, <span class="st">&quot;**Time to Death**&quot;</span>)</span>
-<span id="cb515-15"><a href="999-appendix.html#cb515-15" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<div id="ufezlsehrh" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div class="sourceCode" id="cb537"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb537-1"><a href="999-appendix.html#cb537-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 生成的表格可以直接复制进论文即可</span></span>
+<span id="cb537-2"><a href="999-appendix.html#cb537-2" aria-hidden="true" tabindex="-1"></a>t1 <span class="ot">&lt;-</span></span>
+<span id="cb537-3"><a href="999-appendix.html#cb537-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glm</span>(response <span class="sc">~</span> trt <span class="sc">+</span> age <span class="sc">+</span> grade, trial, <span class="at">family =</span> binomial) <span class="sc">%&gt;%</span></span>
+<span id="cb537-4"><a href="999-appendix.html#cb537-4" aria-hidden="true" tabindex="-1"></a>  gtsummary<span class="sc">::</span><span class="fu">tbl_regression</span>(<span class="at">exponentiate =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb537-5"><a href="999-appendix.html#cb537-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb537-6"><a href="999-appendix.html#cb537-6" aria-hidden="true" tabindex="-1"></a>t2 <span class="ot">&lt;-</span></span>
+<span id="cb537-7"><a href="999-appendix.html#cb537-7" aria-hidden="true" tabindex="-1"></a>  survival<span class="sc">::</span><span class="fu">coxph</span>(survival<span class="sc">::</span><span class="fu">Surv</span>(ttdeath, death) <span class="sc">~</span> trt <span class="sc">+</span> grade <span class="sc">+</span> age, trial) <span class="sc">%&gt;%</span></span>
+<span id="cb537-8"><a href="999-appendix.html#cb537-8" aria-hidden="true" tabindex="-1"></a>  gtsummary<span class="sc">::</span><span class="fu">tbl_regression</span>(<span class="at">exponentiate =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb537-9"><a href="999-appendix.html#cb537-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb537-10"><a href="999-appendix.html#cb537-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb537-11"><a href="999-appendix.html#cb537-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb537-12"><a href="999-appendix.html#cb537-12" aria-hidden="true" tabindex="-1"></a>gtsummary<span class="sc">::</span><span class="fu">tbl_merge</span>(</span>
+<span id="cb537-13"><a href="999-appendix.html#cb537-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">tbls =</span> <span class="fu">list</span>(t1, t2),</span>
+<span id="cb537-14"><a href="999-appendix.html#cb537-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">tab_spanner =</span> <span class="fu">c</span>(<span class="st">&quot;**Tumor Response**&quot;</span>, <span class="st">&quot;**Time to Death**&quot;</span>)</span>
+<span id="cb537-15"><a href="999-appendix.html#cb537-15" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div id="keshzyozde" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#ufezlsehrh .gt_table {
+#keshzyozde .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -1170,7 +1185,7 @@ div.csl-indent {
   border-left-color: #D3D3D3;
 }
 
-#ufezlsehrh .gt_heading {
+#keshzyozde .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1182,7 +1197,7 @@ div.csl-indent {
   border-right-color: #D3D3D3;
 }
 
-#ufezlsehrh .gt_title {
+#keshzyozde .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1194,7 +1209,7 @@ div.csl-indent {
   border-bottom-width: 0;
 }
 
-#ufezlsehrh .gt_subtitle {
+#keshzyozde .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1206,13 +1221,13 @@ div.csl-indent {
   border-top-width: 0;
 }
 
-#ufezlsehrh .gt_bottom_border {
+#keshzyozde .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ufezlsehrh .gt_col_headings {
+#keshzyozde .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1227,7 +1242,7 @@ div.csl-indent {
   border-right-color: #D3D3D3;
 }
 
-#ufezlsehrh .gt_col_heading {
+#keshzyozde .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1247,7 +1262,7 @@ div.csl-indent {
   overflow-x: hidden;
 }
 
-#ufezlsehrh .gt_column_spanner_outer {
+#keshzyozde .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1259,15 +1274,15 @@ div.csl-indent {
   padding-right: 4px;
 }
 
-#ufezlsehrh .gt_column_spanner_outer:first-child {
+#keshzyozde .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ufezlsehrh .gt_column_spanner_outer:last-child {
+#keshzyozde .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ufezlsehrh .gt_column_spanner {
+#keshzyozde .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1279,7 +1294,7 @@ div.csl-indent {
   width: 100%;
 }
 
-#ufezlsehrh .gt_group_heading {
+#keshzyozde .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1304,7 +1319,7 @@ div.csl-indent {
   vertical-align: middle;
 }
 
-#ufezlsehrh .gt_empty_group_heading {
+#keshzyozde .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1319,15 +1334,15 @@ div.csl-indent {
   vertical-align: middle;
 }
 
-#ufezlsehrh .gt_from_md > :first-child {
+#keshzyozde .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ufezlsehrh .gt_from_md > :last-child {
+#keshzyozde .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ufezlsehrh .gt_row {
+#keshzyozde .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1346,7 +1361,7 @@ div.csl-indent {
   overflow-x: hidden;
 }
 
-#ufezlsehrh .gt_stub {
+#keshzyozde .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1359,7 +1374,7 @@ div.csl-indent {
   padding-right: 5px;
 }
 
-#ufezlsehrh .gt_stub_row_group {
+#keshzyozde .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1373,11 +1388,11 @@ div.csl-indent {
   vertical-align: top;
 }
 
-#ufezlsehrh .gt_row_group_first td {
+#keshzyozde .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#ufezlsehrh .gt_summary_row {
+#keshzyozde .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1387,16 +1402,16 @@ div.csl-indent {
   padding-right: 5px;
 }
 
-#ufezlsehrh .gt_first_summary_row {
+#keshzyozde .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#ufezlsehrh .gt_first_summary_row.thick {
+#keshzyozde .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#ufezlsehrh .gt_last_summary_row {
+#keshzyozde .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1406,7 +1421,7 @@ div.csl-indent {
   border-bottom-color: #D3D3D3;
 }
 
-#ufezlsehrh .gt_grand_summary_row {
+#keshzyozde .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1416,7 +1431,7 @@ div.csl-indent {
   padding-right: 5px;
 }
 
-#ufezlsehrh .gt_first_grand_summary_row {
+#keshzyozde .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1426,11 +1441,11 @@ div.csl-indent {
   border-top-color: #D3D3D3;
 }
 
-#ufezlsehrh .gt_striped {
+#keshzyozde .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ufezlsehrh .gt_table_body {
+#keshzyozde .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1439,7 +1454,7 @@ div.csl-indent {
   border-bottom-color: #D3D3D3;
 }
 
-#ufezlsehrh .gt_footnotes {
+#keshzyozde .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1453,7 +1468,7 @@ div.csl-indent {
   border-right-color: #D3D3D3;
 }
 
-#ufezlsehrh .gt_footnote {
+#keshzyozde .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -1462,7 +1477,7 @@ div.csl-indent {
   padding-right: 5px;
 }
 
-#ufezlsehrh .gt_sourcenotes {
+#keshzyozde .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1476,7 +1491,7 @@ div.csl-indent {
   border-right-color: #D3D3D3;
 }
 
-#ufezlsehrh .gt_sourcenote {
+#keshzyozde .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1484,60 +1499,60 @@ div.csl-indent {
   padding-right: 5px;
 }
 
-#ufezlsehrh .gt_left {
+#keshzyozde .gt_left {
   text-align: left;
 }
 
-#ufezlsehrh .gt_center {
+#keshzyozde .gt_center {
   text-align: center;
 }
 
-#ufezlsehrh .gt_right {
+#keshzyozde .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ufezlsehrh .gt_font_normal {
+#keshzyozde .gt_font_normal {
   font-weight: normal;
 }
 
-#ufezlsehrh .gt_font_bold {
+#keshzyozde .gt_font_bold {
   font-weight: bold;
 }
 
-#ufezlsehrh .gt_font_italic {
+#keshzyozde .gt_font_italic {
   font-style: italic;
 }
 
-#ufezlsehrh .gt_super {
+#keshzyozde .gt_super {
   font-size: 65%;
 }
 
-#ufezlsehrh .gt_footnote_marks {
+#keshzyozde .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#ufezlsehrh .gt_asterisk {
+#keshzyozde .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#ufezlsehrh .gt_slash_mark {
+#keshzyozde .gt_slash_mark {
   font-size: 0.7em;
   line-height: 0.7em;
   vertical-align: 0.15em;
 }
 
-#ufezlsehrh .gt_fraction_numerator {
+#keshzyozde .gt_fraction_numerator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: 0.45em;
 }
 
-#ufezlsehrh .gt_fraction_denominator {
+#keshzyozde .gt_fraction_denominator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: -0.05em;
@@ -1631,41 +1646,41 @@ div.csl-indent {
 </table>
 </div>
 </div>
-<div id="把统计结果写在图上" class="section level2 hasAnchor" number="44.7">
+<div id="把统计结果写在图上" class="section level2 hasAnchor" number="45.7">
 <h2><span class="header-section-number">A.7</span> <a href="https://indrajeetpatil.github.io/statsExpressions/">把统计结果写在图上</a><a href="999-appendix.html#把统计结果写在图上" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb516"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb516-1"><a href="999-appendix.html#cb516-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(statsExpressions)</span>
-<span id="cb516-2"><a href="999-appendix.html#cb516-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb516-3"><a href="999-appendix.html#cb516-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb516-4"><a href="999-appendix.html#cb516-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(<span class="at">x =</span> mpg, <span class="at">y =</span> wt)) <span class="sc">+</span></span>
-<span id="cb516-5"><a href="999-appendix.html#cb516-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb516-6"><a href="999-appendix.html#cb516-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="sc">+</span></span>
-<span id="cb516-7"><a href="999-appendix.html#cb516-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb516-8"><a href="999-appendix.html#cb516-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Spearman&#39;s rank correlation coefficient&quot;</span>,</span>
-<span id="cb516-9"><a href="999-appendix.html#cb516-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="fu">expr_corr_test</span>(mtcars, mpg, wt, <span class="at">type =</span> <span class="st">&quot;nonparametric&quot;</span>)</span>
-<span id="cb516-10"><a href="999-appendix.html#cb516-10" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb538"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb538-1"><a href="999-appendix.html#cb538-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(statsExpressions)</span>
+<span id="cb538-2"><a href="999-appendix.html#cb538-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb538-3"><a href="999-appendix.html#cb538-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb538-4"><a href="999-appendix.html#cb538-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(<span class="at">x =</span> mpg, <span class="at">y =</span> wt)) <span class="sc">+</span></span>
+<span id="cb538-5"><a href="999-appendix.html#cb538-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb538-6"><a href="999-appendix.html#cb538-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="sc">+</span></span>
+<span id="cb538-7"><a href="999-appendix.html#cb538-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb538-8"><a href="999-appendix.html#cb538-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Spearman&#39;s rank correlation coefficient&quot;</span>,</span>
+<span id="cb538-9"><a href="999-appendix.html#cb538-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="fu">expr_corr_test</span>(mtcars, mpg, wt, <span class="at">type =</span> <span class="st">&quot;nonparametric&quot;</span>)</span>
+<span id="cb538-10"><a href="999-appendix.html#cb538-10" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 </div>
-<div id="画图配色" class="section level2 hasAnchor" number="44.8">
+<div id="画图配色" class="section level2 hasAnchor" number="45.8">
 <h2><span class="header-section-number">A.8</span> 画图配色<a href="999-appendix.html#画图配色" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="第三方主题-ggthem" class="section level3 hasAnchor" number="44.8.1">
+<div id="第三方主题-ggthem" class="section level3 hasAnchor" number="45.8.1">
 <h3><span class="header-section-number">A.8.1</span> 第三方主题-<a href="https://rdrr.io/github/cttobin/ggthemr/">ggthem</a><a href="999-appendix.html#第三方主题-ggthem" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb517"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb517-1"><a href="999-appendix.html#cb517-1" aria-hidden="true" tabindex="-1"></a><span class="co"># devtools::install_github(&#39;cttobin/ggthemr&#39;)</span></span>
-<span id="cb517-2"><a href="999-appendix.html#cb517-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb517-3"><a href="999-appendix.html#cb517-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggthemr)</span>
-<span id="cb517-4"><a href="999-appendix.html#cb517-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggthemr</span>(<span class="st">&quot;dust&quot;</span>)</span>
-<span id="cb517-5"><a href="999-appendix.html#cb517-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb517-6"><a href="999-appendix.html#cb517-6" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">%&gt;%</span> </span>
-<span id="cb517-7"><a href="999-appendix.html#cb517-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cyl =</span> <span class="fu">factor</span>(cyl)) <span class="sc">%&gt;%</span> </span>
-<span id="cb517-8"><a href="999-appendix.html#cb517-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> mpg, <span class="at">fill =</span> cyl, <span class="at">color =</span> cyl)) <span class="sc">+</span></span>
-<span id="cb517-9"><a href="999-appendix.html#cb517-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.75</span>) <span class="sc">+</span></span>
-<span id="cb517-10"><a href="999-appendix.html#cb517-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">&quot;Cylinders&quot;</span>, <span class="at">color =</span> <span class="st">&quot;Cylinders&quot;</span>,</span>
-<span id="cb517-11"><a href="999-appendix.html#cb517-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">&quot;MPG&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Density&quot;</span>) <span class="sc">+</span></span>
-<span id="cb517-12"><a href="999-appendix.html#cb517-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">legend_top</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb539"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb539-1"><a href="999-appendix.html#cb539-1" aria-hidden="true" tabindex="-1"></a><span class="co"># devtools::install_github(&#39;cttobin/ggthemr&#39;)</span></span>
+<span id="cb539-2"><a href="999-appendix.html#cb539-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb539-3"><a href="999-appendix.html#cb539-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggthemr)</span>
+<span id="cb539-4"><a href="999-appendix.html#cb539-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggthemr</span>(<span class="st">&quot;dust&quot;</span>)</span>
+<span id="cb539-5"><a href="999-appendix.html#cb539-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb539-6"><a href="999-appendix.html#cb539-6" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">%&gt;%</span> </span>
+<span id="cb539-7"><a href="999-appendix.html#cb539-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cyl =</span> <span class="fu">factor</span>(cyl)) <span class="sc">%&gt;%</span> </span>
+<span id="cb539-8"><a href="999-appendix.html#cb539-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> mpg, <span class="at">fill =</span> cyl, <span class="at">color =</span> cyl)) <span class="sc">+</span></span>
+<span id="cb539-9"><a href="999-appendix.html#cb539-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.75</span>) <span class="sc">+</span></span>
+<span id="cb539-10"><a href="999-appendix.html#cb539-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">&quot;Cylinders&quot;</span>, <span class="at">color =</span> <span class="st">&quot;Cylinders&quot;</span>,</span>
+<span id="cb539-11"><a href="999-appendix.html#cb539-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">&quot;MPG&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Density&quot;</span>) <span class="sc">+</span></span>
+<span id="cb539-12"><a href="999-appendix.html#cb539-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">legend_top</span>()</span></code></pre></div>
 <p><img src="999-appendix_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
-<div class="sourceCode" id="cb518"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb518-1"><a href="999-appendix.html#cb518-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggthemr_reset</span>()  <span class="co"># 重置为默认主题</span></span></code></pre></div>
+<div class="sourceCode" id="cb540"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb540-1"><a href="999-appendix.html#cb540-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggthemr_reset</span>()  <span class="co"># 重置为默认主题</span></span></code></pre></div>
 </div>
-<div id="画图颜色-scales" class="section level3 hasAnchor" number="44.8.2">
+<div id="画图颜色-scales" class="section level3 hasAnchor" number="45.8.2">
 <h3><span class="header-section-number">A.8.2</span> 画图颜色-<a href="https://github.com/r-lib/scales">scales</a><a href="999-appendix.html#画图颜色-scales" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb519"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb519-1"><a href="999-appendix.html#cb519-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span></code></pre></div>
+<div class="sourceCode" id="cb541"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb541-1"><a href="999-appendix.html#cb541-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span></code></pre></div>
 <pre><code>## 
 ## 载入程辑包：&#39;scales&#39;</code></pre>
 <pre><code>## The following object is masked from &#39;package:purrr&#39;:
@@ -1674,19 +1689,19 @@ div.csl-indent {
 <pre><code>## The following object is masked from &#39;package:readr&#39;:
 ## 
 ##     col_factor</code></pre>
-<div class="sourceCode" id="cb523"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb523-1"><a href="999-appendix.html#cb523-1" aria-hidden="true" tabindex="-1"></a><span class="fu">show_col</span>(<span class="fu">viridis_pal</span>()(<span class="dv">10</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb545"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb545-1"><a href="999-appendix.html#cb545-1" aria-hidden="true" tabindex="-1"></a><span class="fu">show_col</span>(<span class="fu">viridis_pal</span>()(<span class="dv">10</span>))</span></code></pre></div>
 <p><img src="999-appendix_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 <p>推荐适用专业的配色网站 <a href="https://colorbrewer2.org/#type=sequential&amp;scheme=BuGn&amp;n=3">colorbrewer</a>先看看颜色，再选择。</p>
 </div>
 </div>
-<div id="其它有用的包" class="section level2 hasAnchor" number="44.9">
+<div id="其它有用的包" class="section level2 hasAnchor" number="45.9">
 <h2><span class="header-section-number">A.9</span> 其它有用的包<a href="999-appendix.html#其它有用的包" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ol style="list-style-type: decimal">
 <li>整理Rmarkdown</li>
 </ol>
-<div class="sourceCode" id="cb524"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb524-1"><a href="999-appendix.html#cb524-1" aria-hidden="true" tabindex="-1"></a><span class="co"># remotes::install_github(&quot;tjmahr/WrapRmd&quot;)</span></span>
-<span id="cb524-2"><a href="999-appendix.html#cb524-2" aria-hidden="true" tabindex="-1"></a><span class="co"># remotes::install_github(&quot;fkeck/quickview&quot;)</span></span>
-<span id="cb524-3"><a href="999-appendix.html#cb524-3" aria-hidden="true" tabindex="-1"></a><span class="co"># remotes::install_github(&quot;mwip/beautifyR&quot;)</span></span></code></pre></div>
+<div class="sourceCode" id="cb546"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb546-1"><a href="999-appendix.html#cb546-1" aria-hidden="true" tabindex="-1"></a><span class="co"># remotes::install_github(&quot;tjmahr/WrapRmd&quot;)</span></span>
+<span id="cb546-2"><a href="999-appendix.html#cb546-2" aria-hidden="true" tabindex="-1"></a><span class="co"># remotes::install_github(&quot;fkeck/quickview&quot;)</span></span>
+<span id="cb546-3"><a href="999-appendix.html#cb546-3" aria-hidden="true" tabindex="-1"></a><span class="co"># remotes::install_github(&quot;mwip/beautifyR&quot;)</span></span></code></pre></div>
 
 </div>
 </div>

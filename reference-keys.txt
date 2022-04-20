@@ -1,5 +1,6 @@
 eq:standardization
 fig:tidyverse-flow
+fig:unnamed-chunk-4
 eq:liner
 fig:date-confirmed
 fig:ft
@@ -18,6 +19,7 @@ r语言基础语法
 sec:factor
 创建因子
 有用函数
+练习
 sec:str-date
 sec:re
 使用正则表达式进行模式匹配
@@ -42,6 +44,8 @@ tidyverse-join
 多个数据表连接
 集合运算
 ggplot2
+几何形状
+图形部件
 tidyverse-reshape
 什么是整洁的数据
 综合实例
@@ -61,6 +65,10 @@ tidystats-sampling
 让统计分析透明-重现infer基于模拟的假设检验
 使用tidyverse重复infer的过程
 重复diff-in-mean的抽样过程
+sec:purrr
+purrr
+map系列函数
+匿名函数
 tidymodel-linear-regression
 从案例开始
 缺失值检查
@@ -199,3 +207,9 @@ janitor包
 第三方主题-ggthem
 画图颜色-scales
 其它有用的包
+fig:unnamed-chunk-5
+fig:unnamed-chunk-6
+标度
+丰富的标度体系
+主题设置
+图形的整体元素

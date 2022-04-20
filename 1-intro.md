@@ -20,7 +20,8 @@ output:
 ```
 
 ```
-## Warning in 2:3 + 1:5: 长的对象长度不是短的对象长度的整倍数
+## Warning in 2:3 + 1:5: longer object length is not a multiple of
+## shorter object length
 ```
 
 ```

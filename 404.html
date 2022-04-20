@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Page not found | 基于tidyverse的R语言学习笔记</title>
   <meta name="description" content="最初看到 elegantbook 做的书籍样式很漂亮，就想把它引入到 bookdown 中，遂定制了此模版。在此基础上，做了迁移和扩展的工作，融合了 LaTeX (精美)、Pandoc (简洁) 和 R (强大) 的特性。This is a bookdown template based on ElegantBook. The output format for this template is bookdown::gitbook and bookdown::pdf_book." />
-  <meta name="generator" content="bookdown 0.25.6 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Page not found | 基于tidyverse的R语言学习笔记" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="李凯" />
 
 
-<meta name="date" content="2022-04-15" />
+<meta name="date" content="2022-04-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -195,6 +195,7 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="2.1" data-path="2-factor.html"><a href="2-factor.html#创建因子"><i class="fa fa-check"></i><b>2.1</b> 创建因子</a></li>
 <li class="chapter" data-level="2.2" data-path="2-factor.html"><a href="2-factor.html#有用函数"><i class="fa fa-check"></i><b>2.2</b> 有用函数</a></li>
+<li class="chapter" data-level="2.3" data-path="2-factor.html"><a href="2-factor.html#练习"><i class="fa fa-check"></i><b>2.3</b> 练习</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="3-str-date.html"><a href="3-str-date.html"><i class="fa fa-check"></i><b>3</b> 字符串和时间日期</a></li>
 <li class="chapter" data-level="4" data-path="4-re.html"><a href="4-re.html"><i class="fa fa-check"></i><b>4</b> 正则表达式</a>
@@ -217,52 +218,73 @@ div.csl-indent {
 </ul></li>
 </ul></li>
 <li class="part"><span><b>II 数据操作</b></span></li>
-<li class="chapter" data-level="" data-path="5-tidyverse-readr.html"><a href="5-tidyverse-readr.html"><i class="fa fa-check"></i>tidyverse简介</a></li>
-<li class="chapter" data-level="5" data-path="5-tidyverse-readr.html"><a href="5-tidyverse-readr.html#tidyverse-readr"><i class="fa fa-check"></i><b>5</b> 数据读写</a>
+<li class="chapter" data-level="" data-path="5-tidyverse-readr.html"><a href="5-tidyverse-readr.html"><i class="fa fa-check"></i>tidyverse简介</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="5-tidyverse-readr.html"><a href="5-tidyverse-readr.html#数据读入"><i class="fa fa-check"></i><b>5.1</b> 数据读入</a>
+<li class="chapter" data-level="4.4" data-path="5-tidyverse-readr.html"><a href="5-tidyverse-readr.html#数据读入"><i class="fa fa-check"></i><b>4.4</b> 数据读入</a>
 <ul>
-<li class="chapter" data-level="5.1.1" data-path="5-tidyverse-readr.html"><a href="5-tidyverse-readr.html#例1多个文件数据读取后合并"><i class="fa fa-check"></i><b>5.1.1</b> 例1：多个文件数据读取后合并</a></li>
-<li class="chapter" data-level="5.1.2" data-path="5-tidyverse-readr.html"><a href="5-tidyverse-readr.html#例2一个excel中多个sheet表的读取合并"><i class="fa fa-check"></i><b>5.1.2</b> 例2：一个excel中多个sheet表的读取合并</a></li>
+<li class="chapter" data-level="4.4.1" data-path="5-tidyverse-readr.html"><a href="5-tidyverse-readr.html#例1多个文件数据读取后合并"><i class="fa fa-check"></i><b>4.4.1</b> 例1：多个文件数据读取后合并</a></li>
+<li class="chapter" data-level="4.4.2" data-path="5-tidyverse-readr.html"><a href="5-tidyverse-readr.html#例2一个excel中多个sheet表的读取合并"><i class="fa fa-check"></i><b>4.4.2</b> 例2：一个excel中多个sheet表的读取合并</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="5-tidyverse-readr.html"><a href="5-tidyverse-readr.html#数据写出"><i class="fa fa-check"></i><b>5.2</b> 数据写出</a></li>
+<li class="chapter" data-level="4.5" data-path="5-tidyverse-readr.html"><a href="5-tidyverse-readr.html#数据写出"><i class="fa fa-check"></i><b>4.5</b> 数据写出</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="6-tidyverse-join.html"><a href="6-tidyverse-join.html"><i class="fa fa-check"></i><b>6</b> 数据连接</a>
+<li class="chapter" data-level="5" data-path="6-tidyverse-join.html"><a href="6-tidyverse-join.html"><i class="fa fa-check"></i><b>5</b> 数据连接</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="6-tidyverse-join.html"><a href="6-tidyverse-join.html#合并行列"><i class="fa fa-check"></i><b>6.1</b> 合并行/列</a></li>
-<li class="chapter" data-level="6.2" data-path="6-tidyverse-join.html"><a href="6-tidyverse-join.html#多个数据表连接"><i class="fa fa-check"></i><b>6.2</b> 多个数据表连接</a></li>
-<li class="chapter" data-level="6.3" data-path="6-tidyverse-join.html"><a href="6-tidyverse-join.html#集合运算"><i class="fa fa-check"></i><b>6.3</b> 集合运算</a></li>
+<li class="chapter" data-level="5.1" data-path="6-tidyverse-join.html"><a href="6-tidyverse-join.html#合并行列"><i class="fa fa-check"></i><b>5.1</b> 合并行/列</a></li>
+<li class="chapter" data-level="5.2" data-path="6-tidyverse-join.html"><a href="6-tidyverse-join.html#多个数据表连接"><i class="fa fa-check"></i><b>5.2</b> 多个数据表连接</a></li>
+<li class="chapter" data-level="5.3" data-path="6-tidyverse-join.html"><a href="6-tidyverse-join.html#集合运算"><i class="fa fa-check"></i><b>5.3</b> 集合运算</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="37-ggplot2.html"><a href="37-ggplot2.html"><i class="fa fa-check"></i><b>7</b> ggplot2</a></li>
-<li class="chapter" data-level="8" data-path="7-tidyverse-reshape.html"><a href="7-tidyverse-reshape.html"><i class="fa fa-check"></i><b>8</b> 数据重塑</a>
+<li class="chapter" data-level="6" data-path="37-ggplot2.html"><a href="37-ggplot2.html"><i class="fa fa-check"></i><b>6</b> ggplot2</a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="7-tidyverse-reshape.html"><a href="7-tidyverse-reshape.html#什么是整洁的数据"><i class="fa fa-check"></i><b>8.1</b> 什么是整洁的数据</a></li>
-<li class="chapter" data-level="8.2" data-path="7-tidyverse-reshape.html"><a href="7-tidyverse-reshape.html#综合实例"><i class="fa fa-check"></i><b>8.2</b> 综合实例</a></li>
-<li class="chapter" data-level="8.3" data-path="7-tidyverse-reshape.html"><a href="7-tidyverse-reshape.html#方形化"><i class="fa fa-check"></i><b>8.3</b> 方形化</a></li>
+<li class="chapter" data-level="6.1" data-path="37-ggplot2.html"><a href="37-ggplot2.html#几何形状"><i class="fa fa-check"></i><b>6.1</b> 几何形状</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="37-ggplot2.html"><a href="37-ggplot2.html#图形部件"><i class="fa fa-check"></i><b>6.1.1</b> 图形部件</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="8-tidyverse-manipulate1.html"><a href="8-tidyverse-manipulate1.html"><i class="fa fa-check"></i><b>9</b> 数据操作-part1</a>
+<li class="chapter" data-level="6.2" data-path="37-ggplot2.html"><a href="37-ggplot2.html#标度"><i class="fa fa-check"></i><b>6.2</b> 标度</a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="8-tidyverse-manipulate1.html"><a href="8-tidyverse-manipulate1.html#基本数据操作"><i class="fa fa-check"></i><b>9.1</b> 基本数据操作</a></li>
-<li class="chapter" data-level="9.2" data-path="8-tidyverse-manipulate1.html"><a href="8-tidyverse-manipulate1.html#其它数据操作"><i class="fa fa-check"></i><b>9.2</b> 其它数据操作</a>
+<li class="chapter" data-level="6.2.1" data-path="37-ggplot2.html"><a href="37-ggplot2.html#丰富的标度体系"><i class="fa fa-check"></i><b>6.2.1</b> 丰富的标度体系</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="37-ggplot2.html"><a href="37-ggplot2.html#主题设置"><i class="fa fa-check"></i><b>6.3</b> 主题设置</a>
 <ul>
-<li class="chapter" data-level="9.2.1" data-path="8-tidyverse-manipulate1.html"><a href="8-tidyverse-manipulate1.html#按行汇总"><i class="fa fa-check"></i><b>9.2.1</b> 按行汇总</a></li>
-<li class="chapter" data-level="9.2.2" data-path="8-tidyverse-manipulate1.html"><a href="8-tidyverse-manipulate1.html#整洁计算"><i class="fa fa-check"></i><b>9.2.2</b> 整洁计算</a></li>
+<li class="chapter" data-level="6.3.1" data-path="37-ggplot2.html"><a href="37-ggplot2.html#图形的整体元素"><i class="fa fa-check"></i><b>6.3.1</b> 图形的整体元素</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="9-tidyverse-manipulate2.html"><a href="9-tidyverse-manipulate2.html"><i class="fa fa-check"></i><b>10</b> 数据操作-part2</a></li>
-<li class="chapter" data-level="11" data-path="10-tidyverse-extra.html"><a href="10-tidyverse-extra.html"><i class="fa fa-check"></i><b>11</b> 其它数据操作</a></li>
+<li class="chapter" data-level="7" data-path="7-tidyverse-reshape.html"><a href="7-tidyverse-reshape.html"><i class="fa fa-check"></i><b>7</b> 数据重塑</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="7-tidyverse-reshape.html"><a href="7-tidyverse-reshape.html#什么是整洁的数据"><i class="fa fa-check"></i><b>7.1</b> 什么是整洁的数据</a></li>
+<li class="chapter" data-level="7.2" data-path="7-tidyverse-reshape.html"><a href="7-tidyverse-reshape.html#综合实例"><i class="fa fa-check"></i><b>7.2</b> 综合实例</a></li>
+<li class="chapter" data-level="7.3" data-path="7-tidyverse-reshape.html"><a href="7-tidyverse-reshape.html#方形化"><i class="fa fa-check"></i><b>7.3</b> 方形化</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="8-tidyverse-manipulate1.html"><a href="8-tidyverse-manipulate1.html"><i class="fa fa-check"></i><b>8</b> 数据操作-part1</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="8-tidyverse-manipulate1.html"><a href="8-tidyverse-manipulate1.html#基本数据操作"><i class="fa fa-check"></i><b>8.1</b> 基本数据操作</a></li>
+<li class="chapter" data-level="8.2" data-path="8-tidyverse-manipulate1.html"><a href="8-tidyverse-manipulate1.html#其它数据操作"><i class="fa fa-check"></i><b>8.2</b> 其它数据操作</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="8-tidyverse-manipulate1.html"><a href="8-tidyverse-manipulate1.html#按行汇总"><i class="fa fa-check"></i><b>8.2.1</b> 按行汇总</a></li>
+<li class="chapter" data-level="8.2.2" data-path="8-tidyverse-manipulate1.html"><a href="8-tidyverse-manipulate1.html#整洁计算"><i class="fa fa-check"></i><b>8.2.2</b> 整洁计算</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="9-tidyverse-manipulate2.html"><a href="9-tidyverse-manipulate2.html"><i class="fa fa-check"></i><b>9</b> 数据操作-part2</a></li>
+<li class="chapter" data-level="10" data-path="10-tidyverse-extra.html"><a href="10-tidyverse-extra.html"><i class="fa fa-check"></i><b>10</b> 其它数据操作</a></li>
 <li class="part"><span><b>III 建模</b></span></li>
-<li class="chapter" data-level="12" data-path="11-tidystats_sampling.html"><a href="11-tidystats_sampling.html"><i class="fa fa-check"></i><b>12</b> 模拟与抽样1</a>
+<li class="chapter" data-level="11" data-path="11-tidystats_sampling.html"><a href="11-tidystats_sampling.html"><i class="fa fa-check"></i><b>11</b> 模拟与抽样1</a>
 <ul>
-<li class="chapter" data-level="12.1" data-path="11-tidystats_sampling.html"><a href="11-tidystats_sampling.html#模拟"><i class="fa fa-check"></i><b>12.1</b> 模拟</a>
+<li class="chapter" data-level="11.1" data-path="11-tidystats_sampling.html"><a href="11-tidystats_sampling.html#模拟"><i class="fa fa-check"></i><b>11.1</b> 模拟</a>
 <ul>
-<li class="chapter" data-level="12.1.1" data-path="11-tidystats_sampling.html"><a href="11-tidystats_sampling.html#生成随机数"><i class="fa fa-check"></i><b>12.1.1</b> 生成随机数</a></li>
-<li class="chapter" data-level="12.1.2" data-path="11-tidystats_sampling.html"><a href="11-tidystats_sampling.html#生成多元正态分布"><i class="fa fa-check"></i><b>12.1.2</b> 生成多元正态分布[^]</a></li>
+<li class="chapter" data-level="11.1.1" data-path="11-tidystats_sampling.html"><a href="11-tidystats_sampling.html#生成随机数"><i class="fa fa-check"></i><b>11.1.1</b> 生成随机数</a></li>
+<li class="chapter" data-level="11.1.2" data-path="11-tidystats_sampling.html"><a href="11-tidystats_sampling.html#生成多元正态分布"><i class="fa fa-check"></i><b>11.1.2</b> 生成多元正态分布[^]</a></li>
 </ul></li>
-<li class="chapter" data-level="12.2" data-path="11-tidystats_sampling.html"><a href="11-tidystats_sampling.html#抽样与样本"><i class="fa fa-check"></i><b>12.2</b> 抽样与样本</a></li>
-<li class="chapter" data-level="12.3" data-path="11-tidystats_sampling.html"><a href="11-tidystats_sampling.html#让统计分析透明-重现infer基于模拟的假设检验"><i class="fa fa-check"></i><b>12.3</b> 让统计分析透明-重现infer基于模拟的假设检验</a>
+<li class="chapter" data-level="11.2" data-path="11-tidystats_sampling.html"><a href="11-tidystats_sampling.html#抽样与样本"><i class="fa fa-check"></i><b>11.2</b> 抽样与样本</a></li>
+<li class="chapter" data-level="11.3" data-path="11-tidystats_sampling.html"><a href="11-tidystats_sampling.html#让统计分析透明-重现infer基于模拟的假设检验"><i class="fa fa-check"></i><b>11.3</b> 让统计分析透明-重现infer基于模拟的假设检验</a>
 <ul>
-<li class="chapter" data-level="12.3.1" data-path="11-tidystats_sampling.html"><a href="11-tidystats_sampling.html#使用tidyverse重复infer的过程"><i class="fa fa-check"></i><b>12.3.1</b> 使用tidyverse重复infer的过程</a></li>
+<li class="chapter" data-level="11.3.1" data-path="11-tidystats_sampling.html"><a href="11-tidystats_sampling.html#使用tidyverse重复infer的过程"><i class="fa fa-check"></i><b>11.3.1</b> 使用tidyverse重复infer的过程</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="tidyverse-purrr.html"><a href="tidyverse-purrr.html"><i class="fa fa-check"></i><b>12</b> 函数式编程</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="tidyverse-purrr.html"><a href="tidyverse-purrr.html#purrr"><i class="fa fa-check"></i><b>12.1</b> `purrr</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="tidyverse-purrr.html"><a href="tidyverse-purrr.html#map系列函数"><i class="fa fa-check"></i><b>12.1.1</b> map()系列函数</a></li>
+<li class="chapter" data-level="12.1.2" data-path="tidyverse-purrr.html"><a href="tidyverse-purrr.html#匿名函数"><i class="fa fa-check"></i><b>12.1.2</b> 匿名函数</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html"><i class="fa fa-check"></i><b>13</b> 线性回归</a>
@@ -447,27 +469,26 @@ div.csl-indent {
 <li class="chapter" data-level="43.4" data-path="50-R-practise.html"><a href="50-R-practise.html#按条件分组"><i class="fa fa-check"></i><b>43.4</b> 4-按条件分组</a></li>
 <li class="chapter" data-level="43.5" data-path="50-R-practise.html"><a href="50-R-practise.html#section-1"><i class="fa fa-check"></i><b>43.5</b> </a></li>
 </ul></li>
-<li class="appendix"><span><b>附录</b></span></li>
-<li class="chapter" data-level="A" data-path="999-appendix.html"><a href="999-appendix.html"><i class="fa fa-check"></i><b>A</b> 附录-有趣的“懒人”包</a>
+<li class="chapter" data-level="" data-path=""><a href="#appendix"><i class="fa fa-check"></i>(APPENDIX) 附录</a>
 <ul>
-<li class="chapter" data-level="A.1" data-path="999-appendix.html"><a href="999-appendix.html#自动生成正则表达式"><i class="fa fa-check"></i><b>A.1</b> 自动生成正则表达式</a></li>
-<li class="chapter" data-level="A.2" data-path="999-appendix.html"><a href="999-appendix.html#janitor包"><i class="fa fa-check"></i><b>A.2</b> <span>janitor包</span></a>
+<li class="chapter" data-level="43.6" data-path="999-appendix.html"><a href="999-appendix.html"><i class="fa fa-check"></i><b>43.6</b> 自动生成正则表达式</a></li>
+<li class="chapter" data-level="43.7" data-path="999-appendix.html"><a href="999-appendix.html#janitor包"><i class="fa fa-check"></i><b>43.7</b> <span>janitor包</span></a>
 <ul>
-<li class="chapter" data-level="A.2.1" data-path="999-appendix.html"><a href="999-appendix.html#整理列名"><i class="fa fa-check"></i><b>A.2.1</b> 整理列名</a></li>
-<li class="chapter" data-level="A.2.2" data-path="999-appendix.html"><a href="999-appendix.html#统计分析"><i class="fa fa-check"></i><b>A.2.2</b> 统计分析</a></li>
-<li class="chapter" data-level="A.2.3" data-path="999-appendix.html"><a href="999-appendix.html#查看指定列有重复的行"><i class="fa fa-check"></i><b>A.2.3</b> 查看指定列有重复的行</a></li>
+<li class="chapter" data-level="43.7.1" data-path="999-appendix.html"><a href="999-appendix.html#整理列名"><i class="fa fa-check"></i><b>43.7.1</b> 整理列名</a></li>
+<li class="chapter" data-level="43.7.2" data-path="999-appendix.html"><a href="999-appendix.html#统计分析"><i class="fa fa-check"></i><b>43.7.2</b> 统计分析</a></li>
+<li class="chapter" data-level="43.7.3" data-path="999-appendix.html"><a href="999-appendix.html#查看指定列有重复的行"><i class="fa fa-check"></i><b>43.7.3</b> 查看指定列有重复的行</a></li>
 </ul></li>
-<li class="chapter" data-level="A.3" data-path="999-appendix.html"><a href="999-appendix.html#自动生成模型公式"><i class="fa fa-check"></i><b>A.3</b> <span>自动生成模型公式</span></a></li>
-<li class="chapter" data-level="A.4" data-path="999-appendix.html"><a href="999-appendix.html#自动生成论文报告"><i class="fa fa-check"></i><b>A.4</b> <span>自动生成论文报告</span></a></li>
-<li class="chapter" data-level="A.5" data-path="999-appendix.html"><a href="999-appendix.html#自动评估模型"><i class="fa fa-check"></i><b>A.5</b> <span>自动评估模型</span></a></li>
-<li class="chapter" data-level="A.6" data-path="999-appendix.html"><a href="999-appendix.html#自动生成统计表格"><i class="fa fa-check"></i><b>A.6</b> <span>自动生成统计表格</span></a></li>
-<li class="chapter" data-level="A.7" data-path="999-appendix.html"><a href="999-appendix.html#把统计结果写在图上"><i class="fa fa-check"></i><b>A.7</b> <span>把统计结果写在图上</span></a></li>
-<li class="chapter" data-level="A.8" data-path="999-appendix.html"><a href="999-appendix.html#画图配色"><i class="fa fa-check"></i><b>A.8</b> 画图配色</a>
+<li class="chapter" data-level="43.8" data-path="999-appendix.html"><a href="999-appendix.html#自动生成模型公式"><i class="fa fa-check"></i><b>43.8</b> <span>自动生成模型公式</span></a></li>
+<li class="chapter" data-level="43.9" data-path="999-appendix.html"><a href="999-appendix.html#自动生成论文报告"><i class="fa fa-check"></i><b>43.9</b> <span>自动生成论文报告</span></a></li>
+<li class="chapter" data-level="43.10" data-path="999-appendix.html"><a href="999-appendix.html#自动评估模型"><i class="fa fa-check"></i><b>43.10</b> <span>自动评估模型</span></a></li>
+<li class="chapter" data-level="43.11" data-path="999-appendix.html"><a href="999-appendix.html#自动生成统计表格"><i class="fa fa-check"></i><b>43.11</b> <span>自动生成统计表格</span></a></li>
+<li class="chapter" data-level="43.12" data-path="999-appendix.html"><a href="999-appendix.html#把统计结果写在图上"><i class="fa fa-check"></i><b>43.12</b> <span>把统计结果写在图上</span></a></li>
+<li class="chapter" data-level="43.13" data-path="999-appendix.html"><a href="999-appendix.html#画图配色"><i class="fa fa-check"></i><b>43.13</b> 画图配色</a>
 <ul>
-<li class="chapter" data-level="A.8.1" data-path="999-appendix.html"><a href="999-appendix.html#第三方主题-ggthem"><i class="fa fa-check"></i><b>A.8.1</b> 第三方主题-<span>ggthem</span></a></li>
-<li class="chapter" data-level="A.8.2" data-path="999-appendix.html"><a href="999-appendix.html#画图颜色-scales"><i class="fa fa-check"></i><b>A.8.2</b> 画图颜色-<span>scales</span></a></li>
+<li class="chapter" data-level="43.13.1" data-path="999-appendix.html"><a href="999-appendix.html#第三方主题-ggthem"><i class="fa fa-check"></i><b>43.13.1</b> 第三方主题-<span>ggthem</span></a></li>
+<li class="chapter" data-level="43.13.2" data-path="999-appendix.html"><a href="999-appendix.html#画图颜色-scales"><i class="fa fa-check"></i><b>43.13.2</b> 画图颜色-<span>scales</span></a></li>
 </ul></li>
-<li class="chapter" data-level="A.9" data-path="999-appendix.html"><a href="999-appendix.html#其它有用的包"><i class="fa fa-check"></i><b>A.9</b> 其它有用的包</a></li>
+<li class="chapter" data-level="43.14" data-path="999-appendix.html"><a href="999-appendix.html#其它有用的包"><i class="fa fa-check"></i><b>43.14</b> 其它有用的包</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="998-references.html"><a href="998-references.html"><i class="fa fa-check"></i>参考文献</a></li>
 <li class="divider"></li>
@@ -556,20 +577,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>
