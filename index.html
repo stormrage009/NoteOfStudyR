@@ -4,26 +4,26 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>基于tidyverse的R语言学习笔记</title>
+  <title>R基础及提高-读书笔记</title>
   <meta name="description" content="最初看到 elegantbook 做的书籍样式很漂亮，就想把它引入到 bookdown 中，遂定制了此模版。在此基础上，做了迁移和扩展的工作，融合了 LaTeX (精美)、Pandoc (简洁) 和 R (强大) 的特性。This is a bookdown template based on ElegantBook. The output format for this template is bookdown::gitbook and bookdown::pdf_book." />
   <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="基于tidyverse的R语言学习笔记" />
+  <meta property="og:title" content="R基础及提高-读书笔记" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="最初看到 elegantbook 做的书籍样式很漂亮，就想把它引入到 bookdown 中，遂定制了此模版。在此基础上，做了迁移和扩展的工作，融合了 LaTeX (精美)、Pandoc (简洁) 和 R (强大) 的特性。This is a bookdown template based on ElegantBook. The output format for this template is bookdown::gitbook and bookdown::pdf_book." />
   <meta name="github-repo" content="XiangyunHuang/ElegantBookdown" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="基于tidyverse的R语言学习笔记" />
+  <meta name="twitter:title" content="R基础及提高-读书笔记" />
   
   <meta name="twitter:description" content="最初看到 elegantbook 做的书籍样式很漂亮，就想把它引入到 bookdown 中，遂定制了此模版。在此基础上，做了迁移和扩展的工作，融合了 LaTeX (精美)、Pandoc (简洁) 和 R (强大) 的特性。This is a bookdown template based on ElegantBook. The output format for this template is bookdown::gitbook and bookdown::pdf_book." />
   
 
-<meta name="author" content="李凯" />
+<meta name="author" content="Lee" />
 
 
-<meta name="date" content="2022-04-17" />
+<meta name="date" content="2022-04-22" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -31,7 +31,7 @@
   
   
 
-<link rel="next" href="1-intro.html"/>
+<link rel="next" href="01-data-structrue.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -52,9 +52,6 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
-<link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
-<script src="libs/str_view-binding-1.4.0/str_view.js"></script>
 <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
       TeX: {
@@ -65,6 +62,72 @@
       }
     });
 </script>
+
+<!-- add line break after theorem title -->
+<script>
+  document.addEventListener("DOMContentLoaded", (event) => {
+    for (let s of document.querySelectorAll("span.theorem, span.lemma, span.proposition, span.corollary")) {
+      s.insertAdjacentHTML('afterend', '<br style="line-height:2px;"/>');
+    }
+  });
+</script>
+
+<!-- check if --themcolor in style.css matches one of elegantbook theme colors. If so, generates the color palette  -->
+<script>
+  document.addEventListener("DOMContentLoaded", (event) => {
+    const cssroot = document.querySelector(':root');
+    let theme_color = getComputedStyle(document.documentElement).getPropertyValue('--themecolor').trim();
+  
+    // blue is the default option
+
+    switch (theme_color) {
+      case 'green': 
+        cssroot.style.setProperty('--structurecolor', 'rgb(0,120,2)');
+        cssroot.style.setProperty('--main', 'rgb(70,70,70)');
+        cssroot.style.setProperty('--mainbg', 'rgba(0,166,82,0.05)');
+        cssroot.style.setProperty('--second', 'rgb(115,45,2)');
+        cssroot.style.setProperty('--secondbg', 'rgba(115,45,2,0.05)');
+        cssroot.style.setProperty('--third', 'rgb(0,80,80)');
+        cssroot.style.setProperty('--thirdbg', 'rgba(0,80,80,0.05)');
+      break;
+      case 'cyan':
+        cssroot.style.setProperty('--structurecolor', 'rgb(31,186,190)');
+        cssroot.style.setProperty('--main', 'rgb(59,180,5)');
+        cssroot.style.setProperty('--mainbg', 'rgba(59,180,5,0.05)');
+        cssroot.style.setProperty('--second', 'rgb(175,153,8)');
+        cssroot.style.setProperty('--secondbg', 'rgba(175,153,8,0.05)');
+        cssroot.style.setProperty('--third', 'rgb(244,105,102)');
+        cssroot.style.setProperty('--thirdbg', 'rgba(244,105,102,0.05)');
+      break;
+      case 'gray':
+        cssroot.style.setProperty('--structurecolor', 'rgb(150,150,150)');
+        cssroot.style.setProperty('--main', 'rgb(150,150,150)');
+        cssroot.style.setProperty('--mainbg', 'rgba(150,150,150,0.05)');
+        cssroot.style.setProperty('--second', 'rgb(150,150,150)');
+        cssroot.style.setProperty('--secondbg', 'rgba(150,150,150,0.05)');
+        cssroot.style.setProperty('--third', 'rgb(150,150,150)');
+        cssroot.style.setProperty('--thirdbg', 'rgba(150,150,150,0.05)');
+      break;
+      case 'black':
+        cssroot.style.setProperty('--structurecolor', 'rgb(0,0,0)');
+        cssroot.style.setProperty('--main', 'rgb(0,0,0)');
+        cssroot.style.setProperty('--mainbg', 'rgba(0,0,0,0.05)');
+        cssroot.style.setProperty('--second', 'rgb(0,0,0)');
+        cssroot.style.setProperty('--secondbg', 'rgba(0,0,0,0.05)');
+        cssroot.style.setProperty('--third', 'rgb(0,0,0)');
+        cssroot.style.setProperty('--thirdbg', 'rgba(0,0,0,0.05)');
+      break;
+    default:
+        cssroot.style.setProperty('--structurecolor', 'rgb(60,113,183)');
+        cssroot.style.setProperty('--main', 'rgb(0,166,82)');
+        cssroot.style.setProperty('--mainbg', 'rgba(0,166,82,0.05)');
+        cssroot.style.setProperty('--second', 'rgb(255,134,24)');
+        cssroot.style.setProperty('--secondbg', 'rgba(255,134,24,0.05)');
+        cssroot.style.setProperty('--third', 'rgb(0,174,247)');
+        cssroot.style.setProperty('--thirdbg', 'rgba(0,174,247,0.05)');
+    }
+  });
+  </script>
 
 
 <style type="text/css">
@@ -168,323 +231,33 @@ div.csl-indent {
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">基于tidyverse的R语言学习笔记</a></li>
+<li><a href="./">Elegant Bookdown Template</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>简介</a>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> 欢迎</a></li>
+<li class="chapter" data-level="2" data-path="index.html"><a href="index.html#theorem-block"><i class="fa fa-check"></i><b>2</b> 已有 Block</a>
 <ul>
-<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#custom-block"><i class="fa fa-check"></i><b>0.1</b> 自定义 block</a></li>
-<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#sec:example"><i class="fa fa-check"></i><b>0.2</b> 简单实例</a>
+<li class="chapter" data-level="2.1" data-path="index.html"><a href="index.html#math-formular"><i class="fa fa-check"></i><b>2.1</b> 数学公式</a></li>
+<li class="chapter" data-level="2.2" data-path="index.html"><a href="index.html#custom-block"><i class="fa fa-check"></i><b>2.2</b> 自定义 block</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="index.html"><a href="index.html#index:example"><i class="fa fa-check"></i><b>3</b> 简单实例</a>
 <ul>
-<li class="chapter" data-level="0.2.1" data-path="index.html"><a href="index.html#例0.1-计算并绘制roc曲线"><i class="fa fa-check"></i><b>0.2.1</b> 例0.1 计算并绘制ROC曲线</a></li>
+<li class="chapter" data-level="3.0.1" data-path="index.html"><a href="index.html#例0.1-计算并绘制roc曲线"><i class="fa fa-check"></i><b>3.0.1</b> 例0.1 计算并绘制ROC曲线</a></li>
 </ul></li>
-</ul></li>
-<li class="part"><span><b>I 基础</b></span></li>
-<li class="chapter" data-level="1" data-path="1-intro.html"><a href="1-intro.html"><i class="fa fa-check"></i><b>1</b> R语言基础语法</a>
-<ul>
-<li class="chapter" data-level="1.1" data-path="1-intro.html"><a href="1-intro.html#函数"><i class="fa fa-check"></i><b>1.1</b> 函数</a>
-<ul>
-<li class="chapter" data-level="1.1.1" data-path="1-intro.html"><a href="1-intro.html#向量的函数"><i class="fa fa-check"></i><b>1.1.1</b> 向量的函数</a></li>
-<li class="chapter" data-level="1.1.2" data-path="1-intro.html"><a href="1-intro.html#自定义函数"><i class="fa fa-check"></i><b>1.1.2</b> 自定义函数</a></li>
-<li class="chapter" data-level="1.1.3" data-path="1-intro.html"><a href="1-intro.html#条件语句"><i class="fa fa-check"></i><b>1.1.3</b> 条件语句</a></li>
-<li class="chapter" data-level="1.1.4" data-path="1-intro.html"><a href="1-intro.html#返回多个结果"><i class="fa fa-check"></i><b>1.1.4</b> 返回多个结果</a></li>
-</ul></li>
-<li class="chapter" data-level="1.2" data-path="1-intro.html"><a href="1-intro.html#增强型数据框"><i class="fa fa-check"></i><b>1.2</b> 增强型数据框</a></li>
-</ul></li>
-<li class="chapter" data-level="2" data-path="2-factor.html"><a href="2-factor.html"><i class="fa fa-check"></i><b>2</b> 因子</a>
-<ul>
-<li class="chapter" data-level="2.1" data-path="2-factor.html"><a href="2-factor.html#创建因子"><i class="fa fa-check"></i><b>2.1</b> 创建因子</a></li>
-<li class="chapter" data-level="2.2" data-path="2-factor.html"><a href="2-factor.html#有用函数"><i class="fa fa-check"></i><b>2.2</b> 有用函数</a></li>
-<li class="chapter" data-level="2.3" data-path="2-factor.html"><a href="2-factor.html#练习"><i class="fa fa-check"></i><b>2.3</b> 练习</a></li>
-</ul></li>
-<li class="chapter" data-level="3" data-path="3-str-date.html"><a href="3-str-date.html"><i class="fa fa-check"></i><b>3</b> 字符串和时间日期</a></li>
-<li class="chapter" data-level="4" data-path="4-re.html"><a href="4-re.html"><i class="fa fa-check"></i><b>4</b> 正则表达式</a>
-<ul>
-<li class="chapter" data-level="4.1" data-path="4-re.html"><a href="4-re.html#使用正则表达式进行模式匹配"><i class="fa fa-check"></i><b>4.1</b> 使用正则表达式进行模式匹配</a>
-<ul>
-<li class="chapter" data-level="4.1.1" data-path="4-re.html"><a href="4-re.html#基础匹配"><i class="fa fa-check"></i><b>4.1.1</b> 基础匹配</a></li>
-<li class="chapter" data-level="4.1.2" data-path="4-re.html"><a href="4-re.html#分组与回溯"><i class="fa fa-check"></i><b>4.1.2</b> 分组与回溯</a></li>
-</ul></li>
-<li class="chapter" data-level="4.2" data-path="4-re.html"><a href="4-re.html#解决实际问题"><i class="fa fa-check"></i><b>4.2</b> 解决实际问题</a></li>
-<li class="chapter" data-level="4.3" data-path="4-re.html"><a href="4-re.html#案例分析"><i class="fa fa-check"></i><b>4.3</b> 案例分析</a>
-<ul>
-<li class="chapter" data-level="4.3.1" data-path="4-re.html"><a href="4-re.html#案例1"><i class="fa fa-check"></i><b>4.3.1</b> 案例1</a></li>
-<li class="chapter" data-level="4.3.2" data-path="4-re.html"><a href="4-re.html#案例2"><i class="fa fa-check"></i><b>4.3.2</b> 案例2</a></li>
-<li class="chapter" data-level="4.3.3" data-path="4-re.html"><a href="4-re.html#案例三"><i class="fa fa-check"></i><b>4.3.3</b> 案例三</a></li>
-<li class="chapter" data-level="4.3.4" data-path="4-re.html"><a href="4-re.html#案例4"><i class="fa fa-check"></i><b>4.3.4</b> 案例4</a></li>
-<li class="chapter" data-level="4.3.5" data-path="4-re.html"><a href="4-re.html#案例5"><i class="fa fa-check"></i><b>4.3.5</b> 案例5</a></li>
-<li class="chapter" data-level="4.3.6" data-path="4-re.html"><a href="4-re.html#案例6"><i class="fa fa-check"></i><b>4.3.6</b> 案例6</a></li>
-<li class="chapter" data-level="4.3.7" data-path="4-re.html"><a href="4-re.html#案例7"><i class="fa fa-check"></i><b>4.3.7</b> 案例7</a></li>
-</ul></li>
-</ul></li>
-<li class="part"><span><b>II 数据操作</b></span></li>
-<li class="chapter" data-level="" data-path="5-tidyverse-readr.html"><a href="5-tidyverse-readr.html"><i class="fa fa-check"></i>tidyverse简介</a></li>
-<li class="chapter" data-level="5" data-path="5-tidyverse-readr.html"><a href="5-tidyverse-readr.html#tidyverse-readr"><i class="fa fa-check"></i><b>5</b> 数据读写</a>
-<ul>
-<li class="chapter" data-level="5.1" data-path="5-tidyverse-readr.html"><a href="5-tidyverse-readr.html#数据读入"><i class="fa fa-check"></i><b>5.1</b> 数据读入</a>
-<ul>
-<li class="chapter" data-level="5.1.1" data-path="5-tidyverse-readr.html"><a href="5-tidyverse-readr.html#例1多个文件数据读取后合并"><i class="fa fa-check"></i><b>5.1.1</b> 例1：多个文件数据读取后合并</a></li>
-<li class="chapter" data-level="5.1.2" data-path="5-tidyverse-readr.html"><a href="5-tidyverse-readr.html#例2一个excel中多个sheet表的读取合并"><i class="fa fa-check"></i><b>5.1.2</b> 例2：一个excel中多个sheet表的读取合并</a></li>
-</ul></li>
-<li class="chapter" data-level="5.2" data-path="5-tidyverse-readr.html"><a href="5-tidyverse-readr.html#数据写出"><i class="fa fa-check"></i><b>5.2</b> 数据写出</a></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="6-tidyverse-join.html"><a href="6-tidyverse-join.html"><i class="fa fa-check"></i><b>6</b> 数据连接</a>
-<ul>
-<li class="chapter" data-level="6.1" data-path="6-tidyverse-join.html"><a href="6-tidyverse-join.html#合并行列"><i class="fa fa-check"></i><b>6.1</b> 合并行/列</a></li>
-<li class="chapter" data-level="6.2" data-path="6-tidyverse-join.html"><a href="6-tidyverse-join.html#多个数据表连接"><i class="fa fa-check"></i><b>6.2</b> 多个数据表连接</a></li>
-<li class="chapter" data-level="6.3" data-path="6-tidyverse-join.html"><a href="6-tidyverse-join.html#集合运算"><i class="fa fa-check"></i><b>6.3</b> 集合运算</a></li>
-</ul></li>
-<li class="chapter" data-level="7" data-path="37-ggplot2.html"><a href="37-ggplot2.html"><i class="fa fa-check"></i><b>7</b> ggplot2</a>
-<ul>
-<li class="chapter" data-level="7.1" data-path="37-ggplot2.html"><a href="37-ggplot2.html#几何形状"><i class="fa fa-check"></i><b>7.1</b> 几何形状</a>
-<ul>
-<li class="chapter" data-level="7.1.1" data-path="37-ggplot2.html"><a href="37-ggplot2.html#图形部件"><i class="fa fa-check"></i><b>7.1.1</b> 图形部件</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="8" data-path="7-tidyverse-reshape.html"><a href="7-tidyverse-reshape.html"><i class="fa fa-check"></i><b>8</b> 数据重塑</a>
-<ul>
-<li class="chapter" data-level="8.1" data-path="7-tidyverse-reshape.html"><a href="7-tidyverse-reshape.html#什么是整洁的数据"><i class="fa fa-check"></i><b>8.1</b> 什么是整洁的数据</a></li>
-<li class="chapter" data-level="8.2" data-path="7-tidyverse-reshape.html"><a href="7-tidyverse-reshape.html#综合实例"><i class="fa fa-check"></i><b>8.2</b> 综合实例</a></li>
-<li class="chapter" data-level="8.3" data-path="7-tidyverse-reshape.html"><a href="7-tidyverse-reshape.html#方形化"><i class="fa fa-check"></i><b>8.3</b> 方形化</a></li>
-</ul></li>
-<li class="chapter" data-level="9" data-path="8-tidyverse-manipulate1.html"><a href="8-tidyverse-manipulate1.html"><i class="fa fa-check"></i><b>9</b> 数据操作-part1</a>
-<ul>
-<li class="chapter" data-level="9.1" data-path="8-tidyverse-manipulate1.html"><a href="8-tidyverse-manipulate1.html#基本数据操作"><i class="fa fa-check"></i><b>9.1</b> 基本数据操作</a></li>
-<li class="chapter" data-level="9.2" data-path="8-tidyverse-manipulate1.html"><a href="8-tidyverse-manipulate1.html#其它数据操作"><i class="fa fa-check"></i><b>9.2</b> 其它数据操作</a>
-<ul>
-<li class="chapter" data-level="9.2.1" data-path="8-tidyverse-manipulate1.html"><a href="8-tidyverse-manipulate1.html#按行汇总"><i class="fa fa-check"></i><b>9.2.1</b> 按行汇总</a></li>
-<li class="chapter" data-level="9.2.2" data-path="8-tidyverse-manipulate1.html"><a href="8-tidyverse-manipulate1.html#整洁计算"><i class="fa fa-check"></i><b>9.2.2</b> 整洁计算</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="10" data-path="9-tidyverse-manipulate2.html"><a href="9-tidyverse-manipulate2.html"><i class="fa fa-check"></i><b>10</b> 数据操作-part2</a></li>
-<li class="chapter" data-level="11" data-path="10-tidyverse-extra.html"><a href="10-tidyverse-extra.html"><i class="fa fa-check"></i><b>11</b> 其它数据操作</a></li>
-<li class="part"><span><b>III 建模</b></span></li>
-<li class="chapter" data-level="12" data-path="11-tidystats_sampling.html"><a href="11-tidystats_sampling.html"><i class="fa fa-check"></i><b>12</b> 模拟与抽样1</a>
-<ul>
-<li class="chapter" data-level="12.1" data-path="11-tidystats_sampling.html"><a href="11-tidystats_sampling.html#模拟"><i class="fa fa-check"></i><b>12.1</b> 模拟</a>
-<ul>
-<li class="chapter" data-level="12.1.1" data-path="11-tidystats_sampling.html"><a href="11-tidystats_sampling.html#生成随机数"><i class="fa fa-check"></i><b>12.1.1</b> 生成随机数</a></li>
-<li class="chapter" data-level="12.1.2" data-path="11-tidystats_sampling.html"><a href="11-tidystats_sampling.html#生成多元正态分布"><i class="fa fa-check"></i><b>12.1.2</b> 生成多元正态分布[^]</a></li>
-</ul></li>
-<li class="chapter" data-level="12.2" data-path="11-tidystats_sampling.html"><a href="11-tidystats_sampling.html#抽样与样本"><i class="fa fa-check"></i><b>12.2</b> 抽样与样本</a></li>
-<li class="chapter" data-level="12.3" data-path="11-tidystats_sampling.html"><a href="11-tidystats_sampling.html#让统计分析透明-重现infer基于模拟的假设检验"><i class="fa fa-check"></i><b>12.3</b> 让统计分析透明-重现infer基于模拟的假设检验</a>
-<ul>
-<li class="chapter" data-level="12.3.1" data-path="11-tidystats_sampling.html"><a href="11-tidystats_sampling.html#使用tidyverse重复infer的过程"><i class="fa fa-check"></i><b>12.3.1</b> 使用tidyverse重复infer的过程</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="13" data-path="tidyverse-purrr.html"><a href="tidyverse-purrr.html"><i class="fa fa-check"></i><b>13</b> 函数式编程</a>
-<ul>
-<li class="chapter" data-level="13.1" data-path="tidyverse-purrr.html"><a href="tidyverse-purrr.html#purrr"><i class="fa fa-check"></i><b>13.1</b> `purrr</a>
-<ul>
-<li class="chapter" data-level="13.1.1" data-path="tidyverse-purrr.html"><a href="tidyverse-purrr.html#map系列函数"><i class="fa fa-check"></i><b>13.1.1</b> map()系列函数</a></li>
-<li class="chapter" data-level="13.1.2" data-path="tidyverse-purrr.html"><a href="tidyverse-purrr.html#匿名函数"><i class="fa fa-check"></i><b>13.1.2</b> 匿名函数</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="14" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html"><i class="fa fa-check"></i><b>14</b> 线性回归</a>
-<ul>
-<li class="chapter" data-level="14.1" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#从案例开始"><i class="fa fa-check"></i><b>14.1</b> 从案例开始</a>
-<ul>
-<li class="chapter" data-level="14.1.1" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#缺失值检查"><i class="fa fa-check"></i><b>14.1.1</b> 缺失值检查</a></li>
-<li class="chapter" data-level="14.1.2" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#简单变量统计"><i class="fa fa-check"></i><b>14.1.2</b> 简单变量统计</a></li>
-</ul></li>
-<li class="chapter" data-level="14.2" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#线性归回模型"><i class="fa fa-check"></i><b>14.2</b> 线性归回模型</a>
-<ul>
-<li class="chapter" data-level="14.2.1" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#长得高挣得多"><i class="fa fa-check"></i><b>14.2.1</b> 长得高挣得多</a></li>
-<li class="chapter" data-level="14.2.2" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#使用lm函数拟合线性回归模型"><i class="fa fa-check"></i><b>14.2.2</b> 使用lm()函数拟合线性回归模型</a></li>
-<li class="chapter" data-level="14.2.3" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#模型的解释"><i class="fa fa-check"></i><b>14.2.3</b> 模型的解释</a></li>
-</ul></li>
-<li class="chapter" data-level="14.3" data-path="12-tidymodel-linear-regression.html"><a href="12-tidymodel-linear-regression.html#多元线性回归"><i class="fa fa-check"></i><b>14.3</b> 多元线性回归</a></li>
-</ul></li>
-<li class="chapter" data-level="15" data-path="13-tidymodel-broom.html"><a href="13-tidymodel-broom.html"><i class="fa fa-check"></i><b>15</b> 结果整合</a>
-<ul>
-<li class="chapter" data-level="15.1" data-path="13-tidymodel-broom.html"><a href="13-tidymodel-broom.html#案例"><i class="fa fa-check"></i><b>15.1</b> 案例</a>
-<ul>
-<li class="chapter" data-level="15.1.1" data-path="13-tidymodel-broom.html"><a href="13-tidymodel-broom.html#可视化探索"><i class="fa fa-check"></i><b>15.1.1</b> 可视化探索</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="16" data-path="14-tidymodel-t-test.html"><a href="14-tidymodel-t-test.html"><i class="fa fa-check"></i><b>16</b> 双样本t检验</a>
-<ul>
-<li class="chapter" data-level="16.1" data-path="14-tidymodel-t-test.html"><a href="14-tidymodel-t-test.html#实验设计"><i class="fa fa-check"></i><b>16.1</b> 实验设计</a></li>
-<li class="chapter" data-level="16.2" data-path="14-tidymodel-t-test.html"><a href="14-tidymodel-t-test.html#提问"><i class="fa fa-check"></i><b>16.2</b> 提问</a>
-<ul>
-<li class="chapter" data-level="16.2.1" data-path="14-tidymodel-t-test.html"><a href="14-tidymodel-t-test.html#不同性别企鹅的bill_length_mm嘴峰长度是否相同"><i class="fa fa-check"></i><b>16.2.1</b> 不同性别企鹅的bill_length_mm（嘴峰长度）是否相同？</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="17" data-path="15-tidymodel-avo.html"><a href="15-tidymodel-avo.html"><i class="fa fa-check"></i><b>17</b> avo-方差分析</a></li>
-<li class="chapter" data-level="18" data-path="16-tidymodel-as-linear.html"><a href="16-tidymodel-as-linear.html"><i class="fa fa-check"></i><b>18</b> 统计检验与线性模型</a></li>
-<li class="chapter" data-level="19" data-path="17-tidymodel-lmm.html"><a href="17-tidymodel-lmm.html"><i class="fa fa-check"></i><b>19</b> 多层线性模型</a></li>
-<li class="chapter" data-level="20" data-path="18-tidymodel-poisson-regression.html"><a href="18-tidymodel-poisson-regression.html"><i class="fa fa-check"></i><b>20</b> 广义线性模型</a></li>
-<li class="chapter" data-level="21" data-path="19-tidymodel-logistic-regression.html"><a href="19-tidymodel-logistic-regression.html"><i class="fa fa-check"></i><b>21</b> logistic回归模型</a></li>
-<li class="chapter" data-level="22" data-path="20-tidymodel-ordinal.html"><a href="20-tidymodel-ordinal.html"><i class="fa fa-check"></i><b>22</b> 有序logistic回归</a></li>
-<li class="part"><span><b>IV tidymodels包篇</b></span></li>
-<li class="chapter" data-level="23" data-path="21-meching-leanrning-tidymodels.html"><a href="21-meching-leanrning-tidymodels.html"><i class="fa fa-check"></i><b>23</b> 机器学习</a>
-<ul>
-<li class="chapter" data-level="23.1" data-path="21-meching-leanrning-tidymodels.html"><a href="21-meching-leanrning-tidymodels.html#数据"><i class="fa fa-check"></i><b>23.1</b> 数据</a></li>
-<li class="chapter" data-level="23.2" data-path="21-meching-leanrning-tidymodels.html"><a href="21-meching-leanrning-tidymodels.html#机器学习"><i class="fa fa-check"></i><b>23.2</b> 机器学习</a></li>
-</ul></li>
-<li class="part"><span><b>V bayesian篇</b></span></li>
-<li class="chapter" data-level="24" data-path="22-bayesian-inference.html"><a href="22-bayesian-inference.html"><i class="fa fa-check"></i><b>24</b> 贝叶斯推断</a>
-<ul>
-<li class="chapter" data-level="24.1" data-path="22-bayesian-inference.html"><a href="22-bayesian-inference.html#一个简单的贝叶斯推断实例-学生身高分布"><i class="fa fa-check"></i><b>24.1</b> 一个简单的贝叶斯推断实例-学生身高分布</a></li>
-<li class="chapter" data-level="24.2" data-path="22-bayesian-inference.html"><a href="22-bayesian-inference.html#一个简单的贝叶斯推断实例-推断"><i class="fa fa-check"></i><b>24.2</b> 一个简单的贝叶斯推断实例-推断</a></li>
-</ul></li>
-<li class="chapter" data-level="25" data-path="23-bayesian-intro-stan.html"><a href="23-bayesian-intro-stan.html"><i class="fa fa-check"></i><b>25</b> stan入门</a></li>
-<li class="chapter" data-level="26" data-path="24-bayesian-intro-lm.html"><a href="24-bayesian-intro-lm.html"><i class="fa fa-check"></i><b>26</b> 贝叶斯线性回归</a></li>
-<li class="chapter" data-level="27" data-path="25-bayesian-t-test.html"><a href="25-bayesian-t-test.html"><i class="fa fa-check"></i><b>27</b> 贝叶斯假设检验</a></li>
-<li class="chapter" data-level="28" data-path="26-bayesian-glm.html"><a href="26-bayesian-glm.html"><i class="fa fa-check"></i><b>28</b> 贝叶斯广义线性模型</a></li>
-<li class="chapter" data-level="29" data-path="27-bayesian-hierarchical.html"><a href="27-bayesian-hierarchical.html"><i class="fa fa-check"></i><b>29</b> 贝叶斯层级模型</a></li>
-<li class="chapter" data-level="30" data-path="28-bayesian-mixtures.html"><a href="28-bayesian-mixtures.html"><i class="fa fa-check"></i><b>30</b> 贝叶斯混合模型</a></li>
-<li class="chapter" data-level="31" data-path="29-bayesian-categorical.html"><a href="29-bayesian-categorical.html"><i class="fa fa-check"></i><b>31</b> 贝叶斯分类模型</a></li>
-<li class="chapter" data-level="32" data-path="30-bayesian-workflow.html"><a href="30-bayesian-workflow.html"><i class="fa fa-check"></i><b>32</b> 贝叶斯工作流程</a></li>
-<li class="chapter" data-level="33" data-path="31-bayesian-vaccine-effectiveness.html"><a href="31-bayesian-vaccine-effectiveness.html"><i class="fa fa-check"></i><b>33</b> 贝叶斯分析案例-新冠疫苗有效率的计算</a></li>
-<li class="chapter" data-level="34" data-path="32-bayesian-tokyo-olympics-100m.html"><a href="32-bayesian-tokyo-olympics-100m.html"><i class="fa fa-check"></i><b>34</b> 贝叶斯分析案例-预测奥运会男子100米短跑成绩</a></li>
-<li class="part"><span><b>VI 应用篇</b></span></li>
-<li class="chapter" data-level="35" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html"><i class="fa fa-check"></i><b>35</b> 探索性数据分析-诺奖获得者</a>
-<ul>
-<li class="chapter" data-level="35.1" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#探索性"><i class="fa fa-check"></i><b>35.1</b> 探索性</a></li>
-<li class="chapter" data-level="35.2" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#数据集"><i class="fa fa-check"></i><b>35.2</b> 数据集</a></li>
-<li class="chapter" data-level="35.3" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#导入数据"><i class="fa fa-check"></i><b>35.3</b> 导入数据</a></li>
-<li class="chapter" data-level="35.4" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#数据结构"><i class="fa fa-check"></i><b>35.4</b> 数据结构</a></li>
-<li class="chapter" data-level="35.5" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#确定想探索的问题"><i class="fa fa-check"></i><b>35.5</b> 确定想探索的问题</a>
-<ul>
-<li class="chapter" data-level="35.5.1" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#每个学科获奖次数"><i class="fa fa-check"></i><b>35.5.1</b> 每个学科获奖次数</a></li>
-<li class="chapter" data-level="35.5.2" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#我国科学家获奖情况"><i class="fa fa-check"></i><b>35.5.2</b> 我国科学家获奖情况</a></li>
-<li class="chapter" data-level="35.5.3" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#哪些人多次获奖"><i class="fa fa-check"></i><b>35.5.3</b> 哪些人多次获奖</a></li>
-<li class="chapter" data-level="35.5.4" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#获奖人年龄"><i class="fa fa-check"></i><b>35.5.4</b> 获奖人年龄</a></li>
-<li class="chapter" data-level="35.5.5" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#性别比例"><i class="fa fa-check"></i><b>35.5.5</b> 性别比例</a></li>
-<li class="chapter" data-level="35.5.6" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#获奖人出生年代"><i class="fa fa-check"></i><b>35.5.6</b> 获奖人出生年代</a></li>
-<li class="chapter" data-level="35.5.7" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#最年轻的诺奖获得者"><i class="fa fa-check"></i><b>35.5.7</b> 最年轻的诺奖获得者</a></li>
-<li class="chapter" data-level="35.5.8" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#平均年龄和各领域获奖数量"><i class="fa fa-check"></i><b>35.5.8</b> 平均年龄和各领域获奖数量</a></li>
-</ul></li>
-<li class="chapter" data-level="35.6" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#地图"><i class="fa fa-check"></i><b>35.6</b> 地图</a>
-<ul>
-<li class="chapter" data-level="35.6.1" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#出生地和工作地不一样的占比"><i class="fa fa-check"></i><b>35.6.1</b> 出生地和工作地不一样的占比</a></li>
-<li class="chapter" data-level="35.6.2" data-path="33-eda-nobel.html"><a href="33-eda-nobel.html#共同获奖人"><i class="fa fa-check"></i><b>35.6.2</b> 共同获奖人</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="36" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html"><i class="fa fa-check"></i><b>36</b> 探索性数据分析-奥林匹克</a>
-<ul>
-<li class="chapter" data-level="36.1" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#导入数据-1"><i class="fa fa-check"></i><b>36.1</b> 导入数据</a></li>
-<li class="chapter" data-level="36.2" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#可视化"><i class="fa fa-check"></i><b>36.2</b> 可视化</a></li>
-<li class="chapter" data-level="36.3" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#回归分析"><i class="fa fa-check"></i><b>36.3</b> 回归分析</a></li>
-<li class="chapter" data-level="36.4" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#预测"><i class="fa fa-check"></i><b>36.4</b> 预测</a></li>
-<li class="chapter" data-level="36.5" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#再次可视化"><i class="fa fa-check"></i><b>36.5</b> 再次可视化</a></li>
-<li class="chapter" data-level="36.6" data-path="34-eda-olympics.html"><a href="34-eda-olympics.html#section"><i class="fa fa-check"></i><b>36.6</b> </a></li>
-</ul></li>
-<li class="chapter" data-level="37" data-path="35-eda-covid2019.html"><a href="35-eda-covid2019.html"><i class="fa fa-check"></i><b>37</b> 探索性数据分析-新冠疫情</a>
-<ul>
-<li class="chapter" data-level="37.1" data-path="35-eda-covid2019.html"><a href="35-eda-covid2019.html#数据来源"><i class="fa fa-check"></i><b>37.1</b> 数据来源</a></li>
-<li class="chapter" data-level="37.2" data-path="35-eda-covid2019.html"><a href="35-eda-covid2019.html#读取数据"><i class="fa fa-check"></i><b>37.2</b> 读取数据</a></li>
-<li class="chapter" data-level="37.3" data-path="35-eda-covid2019.html"><a href="35-eda-covid2019.html#数据清洗规整"><i class="fa fa-check"></i><b>37.3</b> 数据清洗规整</a></li>
-<li class="chapter" data-level="37.4" data-path="35-eda-covid2019.html"><a href="35-eda-covid2019.html#可视化探索-1"><i class="fa fa-check"></i><b>37.4</b> 可视化探索</a></li>
-</ul></li>
-<li class="chapter" data-level="38" data-path="36-eda-anscombe.html"><a href="36-eda-anscombe.html"><i class="fa fa-check"></i><b>38</b> 探索性数据分析-anscombe数据集</a>
-<ul>
-<li class="chapter" data-level="38.1" data-path="36-eda-anscombe.html"><a href="36-eda-anscombe.html#规整数据"><i class="fa fa-check"></i><b>38.1</b> 规整数据</a></li>
-<li class="chapter" data-level="38.2" data-path="36-eda-anscombe.html"><a href="36-eda-anscombe.html#统计"><i class="fa fa-check"></i><b>38.2</b> 统计</a></li>
-<li class="chapter" data-level="38.3" data-path="36-eda-anscombe.html"><a href="36-eda-anscombe.html#建模"><i class="fa fa-check"></i><b>38.3</b> 建模</a></li>
-<li class="chapter" data-level="38.4" data-path="36-eda-anscombe.html"><a href="36-eda-anscombe.html#可视化-1"><i class="fa fa-check"></i><b>38.4</b> 可视化</a></li>
-</ul></li>
-<li class="chapter" data-level="39" data-path="38-eda-height.html"><a href="38-eda-height.html"><i class="fa fa-check"></i><b>39</b> 探索性数据分析-身高体重关系</a>
-<ul>
-<li class="chapter" data-level="39.1" data-path="38-eda-height.html"><a href="38-eda-height.html#可视化-2"><i class="fa fa-check"></i><b>39.1</b> 可视化</a>
-<ul>
-<li class="chapter" data-level="39.1.1" data-path="38-eda-height.html"><a href="38-eda-height.html#不同性别的身高分布-普通方法"><i class="fa fa-check"></i><b>39.1.1</b> 不同性别的身高分布-普通方法</a></li>
-<li class="chapter" data-level="39.1.2" data-path="38-eda-height.html"><a href="38-eda-height.html#不同性别的身高分布-高级方法"><i class="fa fa-check"></i><b>39.1.2</b> 不同性别的身高分布-高级方法</a></li>
-<li class="chapter" data-level="39.1.3" data-path="38-eda-height.html"><a href="38-eda-height.html#不同性别的体重分布"><i class="fa fa-check"></i><b>39.1.3</b> 不同性别的体重分布</a></li>
-</ul></li>
-<li class="chapter" data-level="39.2" data-path="38-eda-height.html"><a href="38-eda-height.html#建模-1"><i class="fa fa-check"></i><b>39.2</b> 建模</a>
-<ul>
-<li class="chapter" data-level="39.2.1" data-path="38-eda-height.html"><a href="38-eda-height.html#身高体重的散点图"><i class="fa fa-check"></i><b>39.2.1</b> 身高体重的散点图</a></li>
-<li class="chapter" data-level="39.2.2" data-path="38-eda-height.html"><a href="38-eda-height.html#建立身高体重线性模型"><i class="fa fa-check"></i><b>39.2.2</b> 建立身高体重线性模型</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="40" data-path="39-eda-caribou.html"><a href="39-eda-caribou.html"><i class="fa fa-check"></i><b>40</b> 探索性数据分析-驯鹿迁移</a>
-<ul>
-<li class="chapter" data-level="40.1" data-path="39-eda-caribou.html"><a href="39-eda-caribou.html#数据录入"><i class="fa fa-check"></i><b>40.1</b> 数据录入</a></li>
-<li class="chapter" data-level="40.2" data-path="39-eda-caribou.html"><a href="39-eda-caribou.html#驯鹿身份信息"><i class="fa fa-check"></i><b>40.2</b> 驯鹿身份信息</a></li>
-</ul></li>
-<li class="chapter" data-level="41" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html"><i class="fa fa-check"></i><b>41</b> 探索性数据分析-企鹅的故事</a>
-<ul>
-<li class="chapter" data-level="41.1" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#数据录入-1"><i class="fa fa-check"></i><b>41.1</b> 数据录入</a>
-<ul>
-<li class="chapter" data-level="41.1.1" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#变量含义"><i class="fa fa-check"></i><b>41.1.1</b> 变量含义</a></li>
-</ul></li>
-<li class="chapter" data-level="41.2" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#数据清洗"><i class="fa fa-check"></i><b>41.2</b> 数据清洗</a></li>
-<li class="chapter" data-level="41.3" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#探索性分析"><i class="fa fa-check"></i><b>41.3</b> 探索性分析</a>
-<ul>
-<li class="chapter" data-level="41.3.1" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#每种类型的企鹅有多少只"><i class="fa fa-check"></i><b>41.3.1</b> 每种类型的企鹅有多少只</a></li>
-<li class="chapter" data-level="41.3.2" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#每种类型企鹅各种属性的均值和分布"><i class="fa fa-check"></i><b>41.3.2</b> 每种类型企鹅各种属性的均值和分布</a></li>
-<li class="chapter" data-level="41.3.3" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#嘴峰长度和深度的关联"><i class="fa fa-check"></i><b>41.3.3</b> 嘴峰长度和深度的关联</a></li>
-<li class="chapter" data-level="41.3.4" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#体重与翅膀长度的关联"><i class="fa fa-check"></i><b>41.3.4</b> 体重与翅膀长度的关联？</a></li>
-<li class="chapter" data-level="41.3.5" data-path="40-eda-penguins.html"><a href="40-eda-penguins.html#性别与不同体征信息的关系-建立模型"><i class="fa fa-check"></i><b>41.3.5</b> 性别与不同体征信息的关系-建立模型</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="42" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html"><i class="fa fa-check"></i><b>42</b> 探索性数据分析-大学生职业决策</a>
-<ul>
-<li class="chapter" data-level="42.1" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#预备知识"><i class="fa fa-check"></i><b>42.1</b> 预备知识</a></li>
-<li class="chapter" data-level="42.2" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#正式开始"><i class="fa fa-check"></i><b>42.2</b> 正式开始</a>
-<ul>
-<li class="chapter" data-level="42.2.1" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#检查缺失值"><i class="fa fa-check"></i><b>42.2.1</b> 检查缺失值</a></li>
-<li class="chapter" data-level="42.2.2" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#数据预处理"><i class="fa fa-check"></i><b>42.2.2</b> 数据预处理</a></li>
-<li class="chapter" data-level="42.2.3" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#标准化数据"><i class="fa fa-check"></i><b>42.2.3</b> 标准化数据</a></li>
-</ul></li>
-<li class="chapter" data-level="42.3" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#探索数据"><i class="fa fa-check"></i><b>42.3</b> 探索数据</a>
-<ul>
-<li class="chapter" data-level="42.3.1" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#想探索的问题"><i class="fa fa-check"></i><b>42.3.1</b> 想探索的问题</a></li>
-<li class="chapter" data-level="42.3.2" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#不同性别年纪生源地专业下各指标的分布差异"><i class="fa fa-check"></i><b>42.3.2</b> 不同性别、年纪、生源地、专业下，各指标的分布差异</a></li>
-<li class="chapter" data-level="42.3.3" data-path="41-eda-career-decision.html"><a href="41-eda-career-decision.html#来自不同地方的学生在职业探索上的不同"><i class="fa fa-check"></i><b>42.3.3</b> 来自不同地方的学生在职业探索上的不同</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="43" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html"><i class="fa fa-check"></i><b>43</b> 探索性数据分析-ames房价预测</a>
-<ul>
-<li class="chapter" data-level="43.1" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#探索设想"><i class="fa fa-check"></i><b>43.1</b> 探索设想</a></li>
-<li class="chapter" data-level="43.2" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#变量选取"><i class="fa fa-check"></i><b>43.2</b> 变量选取</a></li>
-<li class="chapter" data-level="43.3" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#缺失值处理"><i class="fa fa-check"></i><b>43.3</b> 缺失值处理</a></li>
-<li class="chapter" data-level="43.4" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#数据预处理-1"><i class="fa fa-check"></i><b>43.4</b> 数据预处理</a>
-<ul>
-<li class="chapter" data-level="43.4.1" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#标准化vs对数化"><i class="fa fa-check"></i><b>43.4.1</b> 标准化vs对数化</a></li>
-</ul></li>
-<li class="chapter" data-level="43.5" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#正式开始探索"><i class="fa fa-check"></i><b>43.5</b> 正式开始探索</a>
-<ul>
-<li class="chapter" data-level="43.5.1" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#各地区房屋价格均值"><i class="fa fa-check"></i><b>43.5.1</b> 各地区房屋价格均值</a></li>
-<li class="chapter" data-level="43.5.2" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#房屋价格与占地面积"><i class="fa fa-check"></i><b>43.5.2</b> 房屋价格与占地面积</a></li>
-<li class="chapter" data-level="43.5.3" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#房屋价格与房屋居住面积"><i class="fa fa-check"></i><b>43.5.3</b> 房屋价格与房屋居住面积</a></li>
-<li class="chapter" data-level="43.5.4" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#车库与房屋价格"><i class="fa fa-check"></i><b>43.5.4</b> 车库与房屋价格</a></li>
-</ul></li>
-<li class="chapter" data-level="43.6" data-path="42-eda-ames-houseprice.html"><a href="42-eda-ames-houseprice.html#建模-2"><i class="fa fa-check"></i><b>43.6</b> 建模</a></li>
-</ul></li>
-<li class="chapter" data-level="44" data-path="50-R-practise.html"><a href="50-R-practise.html"><i class="fa fa-check"></i><b>44</b> 练习</a>
-<ul>
-<li class="chapter" data-level="44.1" data-path="50-R-practise.html"><a href="50-R-practise.html#旋转数据框"><i class="fa fa-check"></i><b>44.1</b> 1-旋转数据框</a></li>
-<li class="chapter" data-level="44.2" data-path="50-R-practise.html"><a href="50-R-practise.html#排序"><i class="fa fa-check"></i><b>44.2</b> 2-排序</a></li>
-<li class="chapter" data-level="44.3" data-path="50-R-practise.html"><a href="50-R-practise.html#统计并筛选"><i class="fa fa-check"></i><b>44.3</b> 3-统计并筛选</a></li>
-<li class="chapter" data-level="44.4" data-path="50-R-practise.html"><a href="50-R-practise.html#按条件分组"><i class="fa fa-check"></i><b>44.4</b> 4-按条件分组</a></li>
-<li class="chapter" data-level="44.5" data-path="50-R-practise.html"><a href="50-R-practise.html#section-1"><i class="fa fa-check"></i><b>44.5</b> </a></li>
-</ul></li>
+<li class="chapter" data-level="4" data-path="01-data-structrue.html"><a href="01-data-structrue.html"><i class="fa fa-check"></i><b>4</b> 数据结构</a></li>
+<li class="chapter" data-level="5" data-path="02-loop-purrr.html"><a href="02-loop-purrr.html"><i class="fa fa-check"></i><b>5</b> 循环和<code>purrr</code></a></li>
+<li class="chapter" data-level="6" data-path="03-function.html"><a href="03-function.html"><i class="fa fa-check"></i><b>6</b> 函数</a></li>
+<li class="chapter" data-level="7" data-path="04-data-manipulation.html"><a href="04-data-manipulation.html"><i class="fa fa-check"></i><b>7</b> 数据操作</a></li>
+<li class="chapter" data-level="8" data-path="05-ggplot2.html"><a href="05-ggplot2.html"><i class="fa fa-check"></i><b>8</b> ggolot2绘图</a></li>
+<li class="chapter" data-level="9" data-path="06-Statistical-modeling.html"><a href="06-Statistical-modeling.html"><i class="fa fa-check"></i><b>9</b> 统计建模</a></li>
+<li class="chapter" data-level="10" data-path="07-data-cleaning-feature.html"><a href="07-data-cleaning-feature.html"><i class="fa fa-check"></i><b>10</b> 数据清洗和特征工程</a></li>
+<li class="chapter" data-level="11" data-path="08-rmarkdown-package.html"><a href="08-rmarkdown-package.html"><i class="fa fa-check"></i><b>11</b> 文档交流、R包开发及其他</a></li>
 <li class="appendix"><span><b>附录</b></span></li>
-<li class="chapter" data-level="A" data-path="999-appendix.html"><a href="999-appendix.html"><i class="fa fa-check"></i><b>A</b> 附录-有趣的“懒人”包</a>
+<li class="chapter" data-level="A" data-path="22-appendix.html"><a href="22-appendix.html"><i class="fa fa-check"></i><b>A</b> R Markdown</a>
 <ul>
-<li class="chapter" data-level="A.1" data-path="999-appendix.html"><a href="999-appendix.html#自动生成正则表达式"><i class="fa fa-check"></i><b>A.1</b> 自动生成正则表达式</a></li>
-<li class="chapter" data-level="A.2" data-path="999-appendix.html"><a href="999-appendix.html#janitor包"><i class="fa fa-check"></i><b>A.2</b> <span>janitor包</span></a>
-<ul>
-<li class="chapter" data-level="A.2.1" data-path="999-appendix.html"><a href="999-appendix.html#整理列名"><i class="fa fa-check"></i><b>A.2.1</b> 整理列名</a></li>
-<li class="chapter" data-level="A.2.2" data-path="999-appendix.html"><a href="999-appendix.html#统计分析"><i class="fa fa-check"></i><b>A.2.2</b> 统计分析</a></li>
-<li class="chapter" data-level="A.2.3" data-path="999-appendix.html"><a href="999-appendix.html#查看指定列有重复的行"><i class="fa fa-check"></i><b>A.2.3</b> 查看指定列有重复的行</a></li>
+<li class="chapter" data-level="A.1" data-path="22-appendix.html"><a href="22-appendix.html#including-plots"><i class="fa fa-check"></i><b>A.1</b> Including Plots</a></li>
 </ul></li>
-<li class="chapter" data-level="A.3" data-path="999-appendix.html"><a href="999-appendix.html#自动生成模型公式"><i class="fa fa-check"></i><b>A.3</b> <span>自动生成模型公式</span></a></li>
-<li class="chapter" data-level="A.4" data-path="999-appendix.html"><a href="999-appendix.html#自动生成论文报告"><i class="fa fa-check"></i><b>A.4</b> <span>自动生成论文报告</span></a></li>
-<li class="chapter" data-level="A.5" data-path="999-appendix.html"><a href="999-appendix.html#自动评估模型"><i class="fa fa-check"></i><b>A.5</b> <span>自动评估模型</span></a></li>
-<li class="chapter" data-level="A.6" data-path="999-appendix.html"><a href="999-appendix.html#自动生成统计表格"><i class="fa fa-check"></i><b>A.6</b> <span>自动生成统计表格</span></a></li>
-<li class="chapter" data-level="A.7" data-path="999-appendix.html"><a href="999-appendix.html#把统计结果写在图上"><i class="fa fa-check"></i><b>A.7</b> <span>把统计结果写在图上</span></a></li>
-<li class="chapter" data-level="A.8" data-path="999-appendix.html"><a href="999-appendix.html#画图配色"><i class="fa fa-check"></i><b>A.8</b> 画图配色</a>
-<ul>
-<li class="chapter" data-level="A.8.1" data-path="999-appendix.html"><a href="999-appendix.html#第三方主题-ggthem"><i class="fa fa-check"></i><b>A.8.1</b> 第三方主题-<span>ggthem</span></a></li>
-<li class="chapter" data-level="A.8.2" data-path="999-appendix.html"><a href="999-appendix.html#画图颜色-scales"><i class="fa fa-check"></i><b>A.8.2</b> 画图颜色-<span>scales</span></a></li>
-</ul></li>
-<li class="chapter" data-level="A.9" data-path="999-appendix.html"><a href="999-appendix.html#其它有用的包"><i class="fa fa-check"></i><b>A.9</b> 其它有用的包</a></li>
-</ul></li>
-<li class="chapter" data-level="" data-path="998-references.html"><a href="998-references.html"><i class="fa fa-check"></i>参考文献</a></li>
+<li class="chapter" data-level="" data-path="21-references.html"><a href="21-references.html"><i class="fa fa-check"></i>参考文献</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -497,7 +270,7 @@ div.csl-indent {
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">基于tidyverse的R语言学习笔记</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R基础及提高-读书笔记</a>
           </h1>
         </div>
 
@@ -506,16 +279,69 @@ div.csl-indent {
 
             <section class="normal" id="section-">
 <div id="header">
-<h1 class="title">基于tidyverse的R语言学习笔记</h1>
-<h2 class="subtitle"><em>用R实现机器学习</em></h2>
-<p class="author"><em>李凯</em></p>
-<p class="date"><em>2022-04-17</em></p>
+<h1 class="title">R基础及提高-读书笔记</h1>
+<h2 class="subtitle"><em>优雅的 Bookdown 书籍模版</em></h2>
+<p class="author"><em>Lee</em></p>
+<p class="date"><em>2022-04-22</em></p>
 </div>
-<div id="简介" class="section level1 unnumbered hasAnchor">
-<h1>简介<a href="index.html#简介" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>在学习mlr3前，需要了解R的基本操作，尤其是tidyverse包。</p>
-<div id="custom-block" class="section level2 hasAnchor" number="0.1">
-<h2><span class="header-section-number">0.1</span> 自定义 block<a href="index.html#custom-block" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="welcome" class="section level1 hasAnchor" number="1">
+<h1><span class="header-section-number">第 1 章</span> 欢迎<a href="index.html#welcome" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<blockquote>
+<p>A Markdown-formatted document should be publishable as-is, as plain text, without looking like it’s been marked up with tags or formatting instructions.</p>
+<p>— John Gruber</p>
+</blockquote>
+<p>这是一份 R Markodwn 文档。 Markdown 提供一种简洁的格式语法，用来生成 HTML、PDF 和 MS Word 文档。</p>
+<p>当你点击 <strong>Knit</strong> 按钮时，就会生成一份包含正文和代码执行结果的文档。你可以像这样嵌入 R 代码块：</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="index.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cars)</span></code></pre></div>
+<pre><code>##      speed           dist       
+##  Min.   : 4.0   Min.   :  2.00  
+##  1st Qu.:12.0   1st Qu.: 26.00  
+##  Median :15.0   Median : 36.00  
+##  Mean   :15.4   Mean   : 42.98  
+##  3rd Qu.:19.0   3rd Qu.: 56.00  
+##  Max.   :25.0   Max.   :120.00</code></pre>
+</div>
+<div id="theorem-block" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">第 2 章</span> 已有 Block<a href="index.html#theorem-block" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div class="lemma">
+<p><span id="lem:chf-pdf" class="lemma"><strong>引理 2.1  </strong></span>For any two random variables <span class="math inline">\(X_1\)</span>, <span class="math inline">\(X_2\)</span>, they both have the same probability distribution if and only if
+<span class="math display">\[\varphi _{X_1}(t)=\varphi _{X_2}(t)\]</span></p>
+</div>
+<div class="theorem">
+<p><span id="thm:chf-sum" class="theorem"><strong>定理 2.1  </strong></span>If <span class="math inline">\(X_1\)</span>, …, <span class="math inline">\(X_n\)</span> are independent random variables, and <span class="math inline">\(a_1\)</span>, …, <span class="math inline">\(a_n\)</span> are some constants, then the characteristic function of the linear combination <span class="math inline">\(S_n=\sum_{i=1}^na_iX_i\)</span> is
+<span class="math display">\[\varphi _{S_{n}}(t)=\prod_{i=1}^n\varphi _{X_i}(a_{i}t)=\varphi _{X_{1}}(a_{1}t)\cdots \varphi _{X_{n}}(a_{n}t)\]</span></p>
+</div>
+<div class="proposition">
+<p><span id="prp:unnamed-chunk-1" class="proposition"><strong>命题 2.1  </strong></span>The distribution of the sum of independent Poisson random variables <span class="math inline">\(X_i \sim \mathrm{Pois}(\lambda_i),\: i=1,2,\cdots,n\)</span> is <span class="math inline">\(\mathrm{Pois}(\sum_{i=1}^n\lambda_i)\)</span>.</p>
+</div>
+<div id="math-formular" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> 数学公式<a href="index.html#math-formular" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>数学公式加粗可能是最常见的需求之一， <strong>elegantbook</strong> 宏包提供的文类 <code>elegantbook.cls</code> 已经调用了 <strong>bm</strong> 宏包 <a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>。有了 <strong>bm</strong> 宏包，就可以使用 <strong>bm</strong> 宏包提供的 <code>\bm{}</code> 命令，而不需要调 <code>\boldsymbol{}</code> 加粗希腊字母，如将 <span class="math inline">\(\alpha\)</span> （正常）加粗为 <span class="math inline">\(\bm{\alpha}\)</span>（粗体）。为了在 HTML 网页中显示加粗效果，则还不够，默认情况下， MathJax 是不认识 <code>\bm{}</code> 命令的，所以需要在 <code>header.html</code> 自定义 <code>\bm{}</code> 命令：</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb3-1"><a href="index.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;script</span><span class="ot"> type=</span><span class="st">&quot;text/x-mathjax-config&quot;</span><span class="kw">&gt;</span></span>
+<span id="cb3-2"><a href="index.html#cb3-2" aria-hidden="true" tabindex="-1"></a>    MathJax<span class="op">.</span><span class="at">Hub</span><span class="op">.</span><span class="fu">Config</span>({</span>
+<span id="cb3-3"><a href="index.html#cb3-3" aria-hidden="true" tabindex="-1"></a>      <span class="dt">TeX</span><span class="op">:</span> {</span>
+<span id="cb3-4"><a href="index.html#cb3-4" aria-hidden="true" tabindex="-1"></a>        <span class="dt">Macros</span><span class="op">:</span> {</span>
+<span id="cb3-5"><a href="index.html#cb3-5" aria-hidden="true" tabindex="-1"></a>          <span class="dt">bm</span><span class="op">:</span> [<span class="st">&quot;{</span><span class="sc">\\</span><span class="st">boldsymbol #1}&quot;</span><span class="op">,</span><span class="dv">1</span>]<span class="op">,</span></span>
+<span id="cb3-6"><a href="index.html#cb3-6" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb3-7"><a href="index.html#cb3-7" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb3-8"><a href="index.html#cb3-8" aria-hidden="true" tabindex="-1"></a>    })<span class="op">;</span></span>
+<span id="cb3-9"><a href="index.html#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/script&gt;</span></span></code></pre></div>
+<p>进一步地，使用常用的 3 个取消符号 <span class="math inline">\(\bcancel{///}\)</span> 需要在 <code>header.html</code> 添加 JS 库 <code>cancel.js</code>，</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb4-1"><a href="index.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;script</span><span class="ot"> type=</span><span class="st">&quot;text/x-mathjax-config&quot;</span><span class="kw">&gt;</span></span>
+<span id="cb4-2"><a href="index.html#cb4-2" aria-hidden="true" tabindex="-1"></a>    MathJax<span class="op">.</span><span class="at">Hub</span><span class="op">.</span><span class="fu">Config</span>({</span>
+<span id="cb4-3"><a href="index.html#cb4-3" aria-hidden="true" tabindex="-1"></a>      <span class="dt">TeX</span><span class="op">:</span> {</span>
+<span id="cb4-4"><a href="index.html#cb4-4" aria-hidden="true" tabindex="-1"></a>        <span class="dt">Macros</span><span class="op">:</span> {</span>
+<span id="cb4-5"><a href="index.html#cb4-5" aria-hidden="true" tabindex="-1"></a>          <span class="dt">bm</span><span class="op">:</span> [<span class="st">&quot;{</span><span class="sc">\\</span><span class="st">boldsymbol #1}&quot;</span><span class="op">,</span><span class="dv">1</span>]<span class="op">,</span></span>
+<span id="cb4-6"><a href="index.html#cb4-6" aria-hidden="true" tabindex="-1"></a>        }<span class="op">,</span></span>
+<span id="cb4-7"><a href="index.html#cb4-7" aria-hidden="true" tabindex="-1"></a>        <span class="dt">extensions</span><span class="op">:</span> [<span class="st">&quot;cancel.js&quot;</span>]</span>
+<span id="cb4-8"><a href="index.html#cb4-8" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb4-9"><a href="index.html#cb4-9" aria-hidden="true" tabindex="-1"></a>    })<span class="op">;</span></span>
+<span id="cb4-10"><a href="index.html#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/script&gt;</span></span></code></pre></div>
+<p>并在 preamble.tex 文件中添加一行代码加载 <strong>cancel</strong> 宏包</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode latex"><code class="sourceCode latex"><span id="cb5-1"><a href="index.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">\usepackage</span>[makeroom]{<span class="ex">cancel</span>}</span></code></pre></div>
+</div>
+<div id="custom-block" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> 自定义 block<a href="index.html#custom-block" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>基于 Pandoc 自定义 block 是一件很有意思的事情，目前不想让模版过于复杂，仅给出几个最常用的例子。如何自定义可以去看谢益辉的新书 <a href="https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html" class="uri">https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html</a>。</p>
 <p><span class="todo">要做的还有很多</span></p>
 <div class="rmdwarn">
@@ -531,8 +357,9 @@ div.csl-indent {
 <p>普通说明</p>
 </div>
 </div>
-<div id="sec:example" class="section level2 hasAnchor" number="0.2">
-<h2><span class="header-section-number">0.2</span> 简单实例<a href="index.html#sec:example" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="index:example" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">第 3 章</span> 简单实例<a href="index.html#index:example" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <div class="rmdtip">
 <ol style="list-style-type: decimal">
 <li><p>如何完成从“<strong>看懂别人代码</strong>”到“<strong>自己写代码</strong>”的鸿沟？答案是<strong>分解问题</strong>。</p>
@@ -547,12 +374,12 @@ div.csl-indent {
 </ol>
 <p>我们通过一个简单的例子来说明如何执行以上步骤。</p>
 </div>
-<div id="例0.1-计算并绘制roc曲线" class="section level3 hasAnchor" number="0.2.1">
-<h3><span class="header-section-number">0.2.1</span> 例0.1 计算并绘制ROC曲线<a href="index.html#例0.1-计算并绘制roc曲线" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="例0.1-计算并绘制roc曲线" class="section level3 hasAnchor" number="3.0.1">
+<h3><span class="header-section-number">3.0.1</span> 例0.1 计算并绘制ROC曲线<a href="index.html#例0.1-计算并绘制roc曲线" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>ROC曲线是二分类机器学习模型的性能评价指标，已知测试集或验证集每个样本的真实类别及其模型预测概率值，就可以计算并绘制ROC曲线。</p>
 <p>ROC曲线是不同分类阈值上对比真正率（TPR）与假正率（FPR）的曲线，可以通过下图的步骤进行计算。</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="index.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
-<span id="cb1-2"><a href="index.html#cb1-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">&quot;images/eg0-1.jpg&quot;</span>, <span class="at">dpi =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="index.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb6-2"><a href="index.html#cb6-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">&quot;images/eg0-1.jpg&quot;</span>, <span class="at">dpi =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <p><img src="images/eg0-1.jpg" /><!-- --></p>
 <p>通过以上定义，我们梳理执行第一步：对问题进行梳理。本例的问题可以分解为如小问题：</p>
 <ul>
@@ -567,7 +394,7 @@ div.csl-indent {
 <li>绘制ROC曲线。</li>
 </ul>
 <p>根据以上步骤，我们生成一个小数据集进行演示。</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="index.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="index.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <pre><code>## -- Attaching packages ---------------------------- tidyverse 1.3.1 --</code></pre>
 <pre><code>## v ggplot2 3.3.5     v purrr   0.3.4
 ## v tibble  3.1.6     v dplyr   1.0.8
@@ -576,12 +403,12 @@ div.csl-indent {
 <pre><code>## -- Conflicts ------------------------------- tidyverse_conflicts() --
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()</code></pre>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="index.html#cb6-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb6-2"><a href="index.html#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">ID =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,</span>
-<span id="cb6-3"><a href="index.html#cb6-3" aria-hidden="true" tabindex="-1"></a>  真实类别 <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;Pos&quot;</span>,<span class="st">&quot;Pos&quot;</span>,<span class="st">&quot;Pos&quot;</span>,<span class="st">&quot;Neg&quot;</span>,<span class="st">&quot;Pos&quot;</span>,<span class="st">&quot;Neg&quot;</span>,<span class="st">&quot;Neg&quot;</span>,<span class="st">&quot;Neg&quot;</span>,<span class="st">&quot;Pos&quot;</span>,<span class="st">&quot;Neg&quot;</span>),</span>
-<span id="cb6-4"><a href="index.html#cb6-4" aria-hidden="true" tabindex="-1"></a>  预测概率 <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">0.95</span>,<span class="fl">0.86</span>,<span class="fl">0.69</span>,<span class="fl">0.65</span>,<span class="fl">0.59</span>,<span class="fl">0.52</span>,<span class="fl">0.39</span>,<span class="fl">0.28</span>,<span class="fl">0.15</span>,<span class="fl">0.06</span>)</span>
-<span id="cb6-5"><a href="index.html#cb6-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-6"><a href="index.html#cb6-6" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="index.html#cb11-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb11-2"><a href="index.html#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">ID =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,</span>
+<span id="cb11-3"><a href="index.html#cb11-3" aria-hidden="true" tabindex="-1"></a>  真实类别 <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;Pos&quot;</span>,<span class="st">&quot;Pos&quot;</span>,<span class="st">&quot;Pos&quot;</span>,<span class="st">&quot;Neg&quot;</span>,<span class="st">&quot;Pos&quot;</span>,<span class="st">&quot;Neg&quot;</span>,<span class="st">&quot;Neg&quot;</span>,<span class="st">&quot;Neg&quot;</span>,<span class="st">&quot;Pos&quot;</span>,<span class="st">&quot;Neg&quot;</span>),</span>
+<span id="cb11-4"><a href="index.html#cb11-4" aria-hidden="true" tabindex="-1"></a>  预测概率 <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">0.95</span>,<span class="fl">0.86</span>,<span class="fl">0.69</span>,<span class="fl">0.65</span>,<span class="fl">0.59</span>,<span class="fl">0.52</span>,<span class="fl">0.39</span>,<span class="fl">0.28</span>,<span class="fl">0.15</span>,<span class="fl">0.06</span>)</span>
+<span id="cb11-5"><a href="index.html#cb11-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-6"><a href="index.html#cb11-6" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
 <pre><code>## # A tibble: 10 x 3
 ##       ID 真实类别 预测概率
 ##    &lt;int&gt; &lt;chr&gt;       &lt;dbl&gt;
@@ -598,15 +425,15 @@ div.csl-indent {
 <ol style="list-style-type: decimal">
 <li>先解决某一个阈值的问题，以0.85为例</li>
 </ol>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="index.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 在使用tidyverse时，注意要将“真实类别”转化为因子型数据</span></span>
-<span id="cb8-2"><a href="index.html#cb8-2" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="fl">0.85</span></span>
-<span id="cb8-3"><a href="index.html#cb8-3" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> </span>
-<span id="cb8-4"><a href="index.html#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb8-5"><a href="index.html#cb8-5" aria-hidden="true" tabindex="-1"></a>    预测类别 <span class="ot">=</span> <span class="fu">ifelse</span>(预测概率 <span class="sc">&gt;=</span> c, <span class="st">&quot;Pos&quot;</span>, <span class="st">&quot;Neg&quot;</span>),</span>
-<span id="cb8-6"><a href="index.html#cb8-6" aria-hidden="true" tabindex="-1"></a>    预测类别 <span class="ot">=</span> <span class="fu">factor</span>(预测类别, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;Pos&quot;</span>, <span class="st">&quot;Neg&quot;</span>)),</span>
-<span id="cb8-7"><a href="index.html#cb8-7" aria-hidden="true" tabindex="-1"></a>    真实类别 <span class="ot">=</span> <span class="fu">factor</span>(真实类别, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;Pos&quot;</span>, <span class="st">&quot;Neg&quot;</span>))</span>
-<span id="cb8-8"><a href="index.html#cb8-8" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb8-9"><a href="index.html#cb8-9" aria-hidden="true" tabindex="-1"></a>df1</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="index.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 在使用tidyverse时，注意要将“真实类别”转化为因子型数据</span></span>
+<span id="cb13-2"><a href="index.html#cb13-2" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="fl">0.85</span></span>
+<span id="cb13-3"><a href="index.html#cb13-3" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> </span>
+<span id="cb13-4"><a href="index.html#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb13-5"><a href="index.html#cb13-5" aria-hidden="true" tabindex="-1"></a>    预测类别 <span class="ot">=</span> <span class="fu">ifelse</span>(预测概率 <span class="sc">&gt;=</span> c, <span class="st">&quot;Pos&quot;</span>, <span class="st">&quot;Neg&quot;</span>),</span>
+<span id="cb13-6"><a href="index.html#cb13-6" aria-hidden="true" tabindex="-1"></a>    预测类别 <span class="ot">=</span> <span class="fu">factor</span>(预测类别, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;Pos&quot;</span>, <span class="st">&quot;Neg&quot;</span>)),</span>
+<span id="cb13-7"><a href="index.html#cb13-7" aria-hidden="true" tabindex="-1"></a>    真实类别 <span class="ot">=</span> <span class="fu">factor</span>(真实类别, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;Pos&quot;</span>, <span class="st">&quot;Neg&quot;</span>))</span>
+<span id="cb13-8"><a href="index.html#cb13-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb13-9"><a href="index.html#cb13-9" aria-hidden="true" tabindex="-1"></a>df1</span></code></pre></div>
 <pre><code>## # A tibble: 10 x 4
 ##       ID 真实类别 预测概率 预测类别
 ##    &lt;int&gt; &lt;fct&gt;       &lt;dbl&gt; &lt;fct&gt;   
@@ -623,9 +450,9 @@ div.csl-indent {
 <ol start="2" style="list-style-type: decimal">
 <li>针对c=0.85的情况计算混淆矩阵</li>
 </ol>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="index.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 即统计本来统计为“Pos”预测为“Pos”的有多少，等等</span></span>
-<span id="cb10-2"><a href="index.html#cb10-2" aria-hidden="true" tabindex="-1"></a>cm <span class="ot">&lt;-</span> <span class="fu">table</span>(df1<span class="sc">$</span>预测类别, df1<span class="sc">$</span>真实类别)</span>
-<span id="cb10-3"><a href="index.html#cb10-3" aria-hidden="true" tabindex="-1"></a>cm  </span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="index.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 即统计本来统计为“Pos”预测为“Pos”的有多少，等等</span></span>
+<span id="cb15-2"><a href="index.html#cb15-2" aria-hidden="true" tabindex="-1"></a>cm <span class="ot">&lt;-</span> <span class="fu">table</span>(df1<span class="sc">$</span>预测类别, df1<span class="sc">$</span>真实类别)</span>
+<span id="cb15-3"><a href="index.html#cb15-3" aria-hidden="true" tabindex="-1"></a>cm  </span></code></pre></div>
 <pre><code>##      
 ##       Pos Neg
 ##   Pos   2   0
@@ -633,23 +460,23 @@ div.csl-indent {
 <ol start="3" style="list-style-type: decimal">
 <li>计算真正率和假正率。这里我们采用R语言的特长，<strong>向量化编程</strong>来计算实现。</li>
 </ol>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="index.html#cb12-1" aria-hidden="true" tabindex="-1"></a>cm[<span class="st">&quot;Pos&quot;</span>, ]<span class="sc">/</span><span class="fu">colSums</span>(cm)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="index.html#cb17-1" aria-hidden="true" tabindex="-1"></a>cm[<span class="st">&quot;Pos&quot;</span>, ]<span class="sc">/</span><span class="fu">colSums</span>(cm)</span></code></pre></div>
 <pre><code>## Pos Neg 
 ## 0.4 0.0</code></pre>
 <p>到此，我们完成了本例的核心部分，下一步就是要通过迭代，套用以上算法，计算每个阈值的真正率和假正率。同样采用R语言的特性，<strong>泛函式编程</strong>进行迭代。</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="index.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 将上述计算封装为一个函数</span></span>
-<span id="cb14-2"><a href="index.html#cb14-2" aria-hidden="true" tabindex="-1"></a>cal_ROC <span class="ot">&lt;-</span> <span class="cf">function</span>(df, c){</span>
-<span id="cb14-3"><a href="index.html#cb14-3" aria-hidden="true" tabindex="-1"></a>  df <span class="ot">=</span> df <span class="sc">%&gt;%</span> </span>
-<span id="cb14-4"><a href="index.html#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb14-5"><a href="index.html#cb14-5" aria-hidden="true" tabindex="-1"></a>    预测类别 <span class="ot">=</span> <span class="fu">ifelse</span>(预测概率 <span class="sc">&gt;=</span> c, <span class="st">&quot;Pos&quot;</span>, <span class="st">&quot;Neg&quot;</span>),</span>
-<span id="cb14-6"><a href="index.html#cb14-6" aria-hidden="true" tabindex="-1"></a>    预测类别 <span class="ot">=</span> <span class="fu">factor</span>(预测类别, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;Pos&quot;</span>, <span class="st">&quot;Neg&quot;</span>)),</span>
-<span id="cb14-7"><a href="index.html#cb14-7" aria-hidden="true" tabindex="-1"></a>    真实类别 <span class="ot">=</span> <span class="fu">factor</span>(真实类别, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;Pos&quot;</span>, <span class="st">&quot;Neg&quot;</span>)))</span>
-<span id="cb14-8"><a href="index.html#cb14-8" aria-hidden="true" tabindex="-1"></a>  cm <span class="ot">=</span> <span class="fu">table</span>(df<span class="sc">$</span>预测类别, df<span class="sc">$</span>真实类别)</span>
-<span id="cb14-9"><a href="index.html#cb14-9" aria-hidden="true" tabindex="-1"></a>  t <span class="ot">=</span> cm[<span class="st">&quot;Pos&quot;</span>,] <span class="sc">/</span> <span class="fu">colSums</span>(cm)</span>
-<span id="cb14-10"><a href="index.html#cb14-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">TPR =</span> t[[<span class="dv">1</span>]], <span class="at">FPR =</span> t[[<span class="dv">2</span>]])</span>
-<span id="cb14-11"><a href="index.html#cb14-11" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb14-12"><a href="index.html#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 测试自定义函数计算结果-结果没问题</span></span>
-<span id="cb14-13"><a href="index.html#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="fu">cal_ROC</span>(df, <span class="fl">0.85</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="index.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 将上述计算封装为一个函数</span></span>
+<span id="cb19-2"><a href="index.html#cb19-2" aria-hidden="true" tabindex="-1"></a>cal_ROC <span class="ot">&lt;-</span> <span class="cf">function</span>(df, c){</span>
+<span id="cb19-3"><a href="index.html#cb19-3" aria-hidden="true" tabindex="-1"></a>  df <span class="ot">=</span> df <span class="sc">%&gt;%</span> </span>
+<span id="cb19-4"><a href="index.html#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb19-5"><a href="index.html#cb19-5" aria-hidden="true" tabindex="-1"></a>    预测类别 <span class="ot">=</span> <span class="fu">ifelse</span>(预测概率 <span class="sc">&gt;=</span> c, <span class="st">&quot;Pos&quot;</span>, <span class="st">&quot;Neg&quot;</span>),</span>
+<span id="cb19-6"><a href="index.html#cb19-6" aria-hidden="true" tabindex="-1"></a>    预测类别 <span class="ot">=</span> <span class="fu">factor</span>(预测类别, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;Pos&quot;</span>, <span class="st">&quot;Neg&quot;</span>)),</span>
+<span id="cb19-7"><a href="index.html#cb19-7" aria-hidden="true" tabindex="-1"></a>    真实类别 <span class="ot">=</span> <span class="fu">factor</span>(真实类别, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;Pos&quot;</span>, <span class="st">&quot;Neg&quot;</span>)))</span>
+<span id="cb19-8"><a href="index.html#cb19-8" aria-hidden="true" tabindex="-1"></a>  cm <span class="ot">=</span> <span class="fu">table</span>(df<span class="sc">$</span>预测类别, df<span class="sc">$</span>真实类别)</span>
+<span id="cb19-9"><a href="index.html#cb19-9" aria-hidden="true" tabindex="-1"></a>  t <span class="ot">=</span> cm[<span class="st">&quot;Pos&quot;</span>,] <span class="sc">/</span> <span class="fu">colSums</span>(cm)</span>
+<span id="cb19-10"><a href="index.html#cb19-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">TPR =</span> t[[<span class="dv">1</span>]], <span class="at">FPR =</span> t[[<span class="dv">2</span>]])</span>
+<span id="cb19-11"><a href="index.html#cb19-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb19-12"><a href="index.html#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 测试自定义函数计算结果-结果没问题</span></span>
+<span id="cb19-13"><a href="index.html#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="fu">cal_ROC</span>(df, <span class="fl">0.85</span>)</span></code></pre></div>
 <pre><code>## $TPR
 ## [1] 0.4
 ## 
@@ -658,9 +485,9 @@ div.csl-indent {
 <ol start="3" style="list-style-type: decimal">
 <li>将自定义函数应用到每一个阈值，并一步到位的将结果合并，完成绘图所需的数据计算。</li>
 </ol>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="index.html#cb16-1" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="fl">0.02</span>)</span>
-<span id="cb16-2"><a href="index.html#cb16-2" aria-hidden="true" tabindex="-1"></a>rocs <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(c, cal_ROC, <span class="at">df =</span> df)</span>
-<span id="cb16-3"><a href="index.html#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(rocs)</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="index.html#cb21-1" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="fl">0.02</span>)</span>
+<span id="cb21-2"><a href="index.html#cb21-2" aria-hidden="true" tabindex="-1"></a>rocs <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(c, cal_ROC, <span class="at">df =</span> df)</span>
+<span id="cb21-3"><a href="index.html#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(rocs)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 2
 ##     TPR   FPR
 ##   &lt;dbl&gt; &lt;dbl&gt;
@@ -673,29 +500,31 @@ div.csl-indent {
 <ol start="4" style="list-style-type: decimal">
 <li>使用ggplot2包绘图。</li>
 </ol>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="index.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(rocs, <span class="fu">aes</span>(FPR, TPR)) <span class="sc">+</span></span>
-<span id="cb18-2"><a href="index.html#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">&quot;steelblue&quot;</span>) <span class="sc">+</span></span>
-<span id="cb18-3"><a href="index.html#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="st">&quot;diamond&quot;</span>, <span class="at">size =</span> <span class="dv">4</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
-<span id="cb18-4"><a href="index.html#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
-<p><img src="index_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="index.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(rocs, <span class="fu">aes</span>(FPR, TPR)) <span class="sc">+</span></span>
+<span id="cb23-2"><a href="index.html#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">&quot;steelblue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb23-3"><a href="index.html#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="st">&quot;diamond&quot;</span>, <span class="at">size =</span> <span class="dv">4</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb23-4"><a href="index.html#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<p><img src="index_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <p>根据以上的步骤，我们可以知道在R中使用tidyverse进行数据科学的工作流程如下图。</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="index.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
-<span id="cb19-2"><a href="index.html#cb19-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">&quot;images/flow.jpg&quot;</span>, <span class="at">dpi =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="index.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb24-2"><a href="index.html#cb24-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">&quot;images/flow.jpg&quot;</span>, <span class="at">dpi =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <p><img src="images/flow.jpg" /><!-- --></p>
 
 </div>
 </div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p><a href="https://github.com/ElegantLaTeX/ElegantBook/blob/6ab10beda81252f0b478e05fa926199301347e4a/elegantbook.cls#L884" class="uri">https://github.com/ElegantLaTeX/ElegantBook/blob/6ab10beda81252f0b478e05fa926199301347e4a/elegantbook.cls#L884</a><a href="index.html#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
-
-
-
             </section>
 
           </div>
         </div>
       </div>
 
-<a href="1-intro.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="01-data-structrue.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
