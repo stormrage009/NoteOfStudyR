@@ -37,32 +37,7 @@ classoption:
 description: "最初看到 elegantbook 做的书籍样式很漂亮，就想把它引入到 bookdown 中，遂定制了此模版。在此基础上，做了迁移和扩展的工作，融合了 LaTeX (精美)、Pandoc (简洁) 和 R (强大) 的特性。This is a bookdown template based on ElegantBook. The output format for this template is bookdown::gitbook and bookdown::pdf_book."
 ---
 
-# 欢迎 {#welcome}
-
-> A Markdown-formatted document should be publishable as-is, as plain text, without looking like it’s been marked up with tags or formatting instructions.  
-> 
-> --- John Gruber
-
-这是一份 R Markodwn 文档。 Markdown 提供一种简洁的格式语法，用来生成 HTML、PDF 和 MS Word 文档。
-
-当你点击 **Knit** 按钮时，就会生成一份包含正文和代码执行结果的文档。你可以像这样嵌入 R 代码块：
-
-
-```r
-summary(cars)
-```
-
-```
-##      speed           dist       
-##  Min.   : 4.0   Min.   :  2.00  
-##  1st Qu.:12.0   1st Qu.: 26.00  
-##  Median :15.0   Median : 36.00  
-##  Mean   :15.4   Mean   : 42.98  
-##  3rd Qu.:19.0   3rd Qu.: 56.00  
-##  Max.   :25.0   Max.   :120.00
-```
-
-# 已有 Block {#theorem-block}
+# 已有 Block {-}
 
 ::: {.lemma #chf-pdf}
 For any two random variables $X_1$, $X_2$, they both have the same probability distribution if and only if
@@ -77,9 +52,6 @@ $$\varphi _{S_{n}}(t)=\prod_{i=1}^n\varphi _{X_i}(a_{i}t)=\varphi _{X_{1}}(a_{1}
 ::: {.proposition #unnamed-chunk-1}
 The distribution of the sum of independent Poisson random variables $X_i \sim \mathrm{Pois}(\lambda_i),\: i=1,2,\cdots,n$ is $\mathrm{Pois}(\sum_{i=1}^n\lambda_i)$.
 :::
-
-
-
 ## 数学公式 {#math-formular}
 
 [^load-bm]: <https://github.com/ElegantLaTeX/ElegantBook/blob/6ab10beda81252f0b478e05fa926199301347e4a/elegantbook.cls#L884>
@@ -143,7 +115,7 @@ The distribution of the sum of independent Poisson random variables $X_i \sim \m
 
 
 
-# 简单实例 {#index:example}
+# 简单实例 {-}
 
 ::: {.rmdtip data-latex="{提示}"}
 1. 如何完成从“**看懂别人代码**”到“**自己写代码**”的鸿沟？答案是**分解问题**。

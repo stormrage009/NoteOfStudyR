@@ -4,11 +4,8 @@ prp:unnamed-chunk-1
 fig:nice-fig
 tab:nice-tab
 fig:nice-fig-02
-welcome
-theorem-block
 math-formular
 custom-block
-index:example
 例0.1-计算并绘制roc曲线
 data-structrue
 loop-purrr
