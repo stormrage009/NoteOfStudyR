@@ -270,7 +270,7 @@
     "href": "12-regression.html#回归建模的数学描述",
     "title": "13  回归分析",
     "section": "13.1 回归建模的数学描述",
-    "text": "13.1 回归建模的数学描述\n设y为因变量数据，x为自变量数据，假设两者间的真实（精确）关系为：\ny=f(x)\ny=f(x)\n\n但在实际情况下，回归模型只能试图找到一种近似的关系代替它：\nf̂(x)≈f(x)\n\\hat{f}(x) \\approx f(x)\n\n两者之差就是模型的残差：\nξ=f(x)−f̂(x)\n\\xi = f(x)-\\hat{f}(x)\n\n我们总是希望把y和x的关系都留在模型部分，让残差部分最好只是白噪声（完全是随机误差，0均值，微小标准差的正态分布）：\nξN(0,θξ2)\n\\xi {~} N(0,\\theta_\\xi^2)\n\n此时说明回归模型建模成功，否则，就是模型尚未提取出充分的模型关系（欠拟合）。"
+    "text": "13.1 回归建模的数学描述\n设y为因变量数据，x为自变量数据，假设两者间的真实（精确）关系为：\ny=f(x)\ny=f(x)\n\n但在实际情况下，回归模型只能试图找到一种近似的关系代替它：\nf̂(x)≈f(x)\n\\hat{f}(x) \\approx f(x)\n\n两者之差就是模型的残差：\nξ=f(x)−f̂(x)\n\\xi = f(x)-\\hat{f}(x)\n\n我们总是希望把y和x的关系都留在模型部分，让残差部分最好只是白噪声（完全是随机误差，0均值，微小标准差的正态分布）：\nξN(0,θξ2)\n\\xi {~} N(0,\\theta_\\xi^2)\n\n此时说明回归模型建模成功，否则，就是模型尚未提取出充分的模型关系（欠拟合）。\n\n\n\n\n\n\nNote\n\n\n\n回归模型的基本原则是：在没有显著差异的情况下，优先选择更简单的模型。如果更简单的模型已经足已充分建模，强行使用复杂模型会产生过拟合，反而降低模型的泛化（预测）能力"
   },
   {
     "objectID": "22-appendix.html",
@@ -285,5 +285,33 @@
     "title": "Appendix B — R Markdown",
     "section": "B.1 Including Plots",
     "text": "B.1 Including Plots\nYou can also embed plots, for example:\n\npar(mar = c(4, 4, .1, .1))\nplot(pressure)\n\n\n\n\nHere is another nice figure!\n\n\n\n\nNote that the echo = FALSE parameter was added to the code chunk to prevent printing of the R code that generated the plot."
+  },
+  {
+    "objectID": "12-regression.html#回归诊断",
+    "href": "12-regression.html#回归诊断",
+    "title": "13  回归分析",
+    "section": "13.2 回归诊断",
+    "text": "13.2 回归诊断\n\n13.2.1 拟合优度检验\n即 R2R^2，也成为可决系数（决定系数），反映了自变量能解释的方差占总方差的百分比。R2R^2 值越大，说明模型拟合的结果越好。R2R^2 的计算未考虑自由度的问题，为避免增加自变量而高估 R2R^2，对 R2R^2 进行调整是更合理的：Radj2=1−n−1n−p−1×(1−R2)R^2_{adj}=1-\\frac{n-1}{n-p-1} \\times (1-R^2), n为样本数，p为自变量个数。\n\n\n13.2.2 均方误差和均方根误差\n均方误差：\nMSE=1n∑i=1n(yi−yî)2\nMSE = \\frac{1}{n}\\sum_{i=1}^n(y_i-\\hat{y_i})^2\n\n均方根误差：刻画预测值与真实值平均偏离情况，是所有回归模型（包括机器学习中的回归算法）中最常用的性能评估指标。\nRMSE=1n∑i=1n(yi−yî)2\nRMSE = \\sqrt{\\frac{1}{n}\\sum_{i=1}^n(y_i-\\hat{y_i})^2}\n\n\n\n13.2.3 残差检验\n\nknitr::include_graphics(\"images/residual.jpg\", dpi = FALSE)\n\n\n\n\nFigure 13.1: 残差分类图\n\n\n\n\n\n只有图 Figure 13.1 （a）可以说明模型拟合成功，将模型的所有部分有均提取出来。\n（e）和（f）说明模型有问题，没有把模型部分提取完全。\n（b）说明数据有异常点，应剔除后重新建模。\n（c）的残差随x的增加而增加，（d）残差随x显增加后减小，都属于异方差。\n\n\n13.2.3.1 残差正态性检验、残差独立性、检验异方差检验\n\n\n参看第22讲 回归分析部分\n\n\n\n13.2.4 共线性回归\n多元线性回归建模，若自变量数据之间存在较强的线性相关性，即存在多重共线性。此现象会导致回归模型不稳定，得到的模型被称为伪回归模型，并不能反映自变量与因变量之间的真实关系。\n多元线性回归建模，需要做共线性诊断，识别出多重共线性，并处理多重共线性再建模。\n多重共线性的解决办法（任选其一）：\n\n若两个自变量线性相关系数较大，则只用其中一个。\n使用逐步回归，剔除冗余自变量。\n使用主成分回归，相当于对自变量进行重组，在做回归。\n使用正则化回归：岭回归、Lasso回归、弹性网模型（前两组合）。\n\n\n\n13.2.5 回归系数的检验\n\n13.2.5.1 回归系数的显著性检验\n\n\n13.2.5.2 回归标准误与回归系数标准误\n\n\n\n13.2.6 回归模型预测"
+  },
+  {
+    "objectID": "22-R-workflow.html",
+    "href": "22-R-workflow.html",
+    "title": "Appendix A — R Markdown",
+    "section": "",
+    "text": "This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.\nWhen you click the Knit button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:"
+  },
+  {
+    "objectID": "22-R-workflow.html#including-plots",
+    "href": "22-R-workflow.html#including-plots",
+    "title": "Appendix A — R Markdown",
+    "section": "A.1 Including Plots",
+    "text": "A.1 Including Plots\nYou can also embed plots, for example:\n\npar(mar = c(4, 4, .1, .1))\nplot(pressure)\n\n\n\n\nHere is another nice figure!\n\n\n\n\nNote that the echo = FALSE parameter was added to the code chunk to prevent printing of the R code that generated the plot."
+  },
+  {
+    "objectID": "12-regression.html#多元线性回归实例",
+    "href": "12-regression.html#多元线性回归实例",
+    "title": "13  回归分析",
+    "section": "13.3 多元线性回归实例",
+    "text": "13.3 多元线性回归实例\n\n13.3.1 准备数据与简单探索\n\n# 企鹅的数据集 penguins，包含 333 个样本，是有关企鹅的特征信息，包括种类、岛屿、嘴长、嘴宽、鳍长、性别。\n# 探索企鹅的体重与这些特征间的关系\nlibrary(tidyverse)\npenguins <- read_csv(\"datas/penguins.csv\")  %>% \n  mutate(species = factor(species))\npenguins\n\n# A tibble: 333 × 7\n   species island    bill_length bill_depth flipper_length body_mass sex   \n   <fct>   <chr>           <dbl>      <dbl>          <dbl>     <dbl> <chr> \n 1 Adelie  Torgersen        39.1       18.7            181      3750 male  \n 2 Adelie  Torgersen        39.5       17.4            186      3800 female\n 3 Adelie  Torgersen        40.3       18              195      3250 female\n 4 Adelie  Torgersen        36.7       19.3            193      3450 female\n 5 Adelie  Torgersen        39.3       20.6            190      3650 male  \n 6 Adelie  Torgersen        38.9       17.8            181      3625 female\n 7 Adelie  Torgersen        39.2       19.6            195      4675 male  \n 8 Adelie  Torgersen        41.1       17.6            182      3200 female\n 9 Adelie  Torgersen        38.6       21.2            191      3800 male  \n10 Adelie  Torgersen        34.6       21.1            198      4400 male  \n# … with 323 more rows\n\n\n\n探索因变量body_mass(体重)的分布：\n\n如果因变量是右偏分布，可以尝试做对数变换变成近似正态分布，此处不做变换\nggplot(penguins, aes(body_mass)) +\n  geom_histogram(bin = 20, \n  fill = \"steelblue\",\n  color = \"black\")\n\n\n\n\n\n\n13.3.2 构建多元线性回归模型\nlm(formula, data, …)：拟合多元线性回归模型。\n\nformula设定模型公式，遵从Wilkinson表示规则，这里列举一些常用的写法：\n\ny ~ .：包含所有自变量。\nx1 : x2：交互效应，即 x1x2x_1x_2 项。\nx1 * x2：包括主效应和交互效应，即 x1+x2+x1x2x_1+x_2+x_1x_2 的简写。\nI()：打包式子作为整体。\ny ~ ploy(x, 2, raw = TRUE)： 一元二次多项式回归，同 y ~ x + I(x^2)。\ny ~ ploym(x1, x2, degree = 2, raw = TRUE)： 二元二次多项式回归。\nlog(y) ~ x： 对y做对数变换。\n\n\n这里我们先将所有自变量都用上，构建初始的多元线性回归模型（往往不是成功的模型）\n\nmdl0 <- lm(body_mass ~ ., penguins)\n\n\n\n13.3.3 共线性针对与逐步回归\n\n使用car::vif()诊断回归模型的多重共线性：\n\nmctest::imcdiag() 诊断回归模型的多重共线性更全面，除了计算 VIF 值外，还计算其他诊断指标值。\ncar::vif(mdl0)\n\n                    GVIF Df GVIF^(1/(2*Df))\nspecies        63.523199  2        2.823144\nisland          3.731695  2        1.389878\nbill_length     6.099673  1        2.469752\nbill_depth      6.101621  1        2.470146\nflipper_length  6.797579  1        2.607217\nsex             2.326898  1        1.525417\n\n\n只有分类变量的species的VIF值较大，其余均小于10，说明不存在共线性。\n\n使用step()函数做逐步回归，剔除不显著的和共线性的自变量。逐步回归是以 AIC 值（越小越好）作为加入和剔除变量的判别条件，参数direction 设置逐步选择的方法： “both”, “backward”（逐步剔除）,“forward”（逐步加入）。\n\nAkaike 信息准则（AIC）常用来比较不同回归模型的拟合效果，优点是既考虑模型的拟合效果又对模型参数过多施加一定惩罚。\nmdl1 <- step(mdl0, direction = \"backward\", trace = 0)\nsummary(mdl1)\n\n\nCall:\nlm(formula = body_mass ~ species + bill_length + bill_depth + \n    flipper_length + sex, data = penguins)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-779.65 -173.18   -9.05  186.61  914.11 \n\nCoefficients:\n                  Estimate Std. Error t value Pr(>|t|)    \n(Intercept)      -1460.995    571.308  -2.557 0.011002 *  \nspeciesChinstrap  -251.477     81.079  -3.102 0.002093 ** \nspeciesGentoo     1014.627    129.561   7.831 6.85e-14 ***\nbill_length         18.204      7.106   2.562 0.010864 *  \nbill_depth          67.218     19.742   3.405 0.000745 ***\nflipper_length      15.950      2.910   5.482 8.44e-08 ***\nsexmale            389.892     47.848   8.148 7.97e-15 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 287.3 on 326 degrees of freedom\nMultiple R-squared:  0.875, Adjusted R-squared:  0.8727 \nF-statistic: 380.2 on 6 and 326 DF,  p-value: < 2.2e-16\n\n\n结果给出了回归系数的标准误、显著性、回归模型的标准误等信息，基于理论的回归系数的置信区间，可以使用confint()提取。\n\nconfint(mdl1)\n\n                        2.5 %     97.5 %\n(Intercept)      -2584.910585 -337.07867\nspeciesChinstrap  -410.980430  -91.97296\nspeciesGentoo      759.746330 1269.50699\nbill_length          4.224516   32.18434\nbill_depth          28.380131  106.05513\nflipper_length      10.226261   21.67423\nsexmale            295.761031  484.02202\n\n\n由结果看出，该模型基本拟合成功，回归系数是显著的，模型的调整 R2R_2 为0.873。\n\n# 计算模型均方根误差\nlibrary(modelr)\nrmse(mdl1, penguins)\n\n[1] 284.3022"
   }
 ]
