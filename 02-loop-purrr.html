@@ -1,141 +1,26 @@
 <!DOCTYPE html>
-<html lang="" xml:lang="">
-<head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>第 2 章 循环和purrr | R基础及提高-读书笔记</title>
-  <meta name="description" content="最初看到 elegantbook 做的书籍样式很漂亮，就想把它引入到 bookdown 中，遂定制了此模版。在此基础上，做了迁移和扩展的工作，融合了 LaTeX (精美)、Pandoc (简洁) 和 R (强大) 的特性。This is a bookdown template based on ElegantBook. The output format for this template is bookdown::gitbook and bookdown::pdf_book." />
-  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
+<meta charset="utf-8">
+<meta name="generator" content="quarto-0.9.436">
 
-  <meta property="og:title" content="第 2 章 循环和purrr | R基础及提高-读书笔记" />
-  <meta property="og:type" content="book" />
-  
-  <meta property="og:description" content="最初看到 elegantbook 做的书籍样式很漂亮，就想把它引入到 bookdown 中，遂定制了此模版。在此基础上，做了迁移和扩展的工作，融合了 LaTeX (精美)、Pandoc (简洁) 和 R (强大) 的特性。This is a bookdown template based on ElegantBook. The output format for this template is bookdown::gitbook and bookdown::pdf_book." />
-  <meta name="github-repo" content="XiangyunHuang/ElegantBookdown" />
-
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="第 2 章 循环和purrr | R基础及提高-读书笔记" />
-  
-  <meta name="twitter:description" content="最初看到 elegantbook 做的书籍样式很漂亮，就想把它引入到 bookdown 中，遂定制了此模版。在此基础上，做了迁移和扩展的工作，融合了 LaTeX (精美)、Pandoc (简洁) 和 R (强大) 的特性。This is a bookdown template based on ElegantBook. The output format for this template is bookdown::gitbook and bookdown::pdf_book." />
-  
-
-<meta name="author" content="Lee" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<meta name="date" content="2022-04-22" />
-
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-  
-  
-<link rel="prev" href="01-data-structrue.html"/>
-<link rel="next" href="03-function.html"/>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
-<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
-
-
-
-
-
-
-
-<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
-<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-      TeX: {
-        Macros: {
-          bm: ["{\\boldsymbol #1}",1],
-        },
-        extensions: ["cancel.js"]
-      }
-    });
-</script>
-
-<!-- add line break after theorem title -->
-<script>
-  document.addEventListener("DOMContentLoaded", (event) => {
-    for (let s of document.querySelectorAll("span.theorem, span.lemma, span.proposition, span.corollary")) {
-      s.insertAdjacentHTML('afterend', '<br style="line-height:2px;"/>');
-    }
-  });
-</script>
-
-<!-- check if --themcolor in style.css matches one of elegantbook theme colors. If so, generates the color palette  -->
-<script>
-  document.addEventListener("DOMContentLoaded", (event) => {
-    const cssroot = document.querySelector(':root');
-    let theme_color = getComputedStyle(document.documentElement).getPropertyValue('--themecolor').trim();
-  
-    // blue is the default option
-
-    switch (theme_color) {
-      case 'green': 
-        cssroot.style.setProperty('--structurecolor', 'rgb(0,120,2)');
-        cssroot.style.setProperty('--main', 'rgb(70,70,70)');
-        cssroot.style.setProperty('--mainbg', 'rgba(0,166,82,0.05)');
-        cssroot.style.setProperty('--second', 'rgb(115,45,2)');
-        cssroot.style.setProperty('--secondbg', 'rgba(115,45,2,0.05)');
-        cssroot.style.setProperty('--third', 'rgb(0,80,80)');
-        cssroot.style.setProperty('--thirdbg', 'rgba(0,80,80,0.05)');
-      break;
-      case 'cyan':
-        cssroot.style.setProperty('--structurecolor', 'rgb(31,186,190)');
-        cssroot.style.setProperty('--main', 'rgb(59,180,5)');
-        cssroot.style.setProperty('--mainbg', 'rgba(59,180,5,0.05)');
-        cssroot.style.setProperty('--second', 'rgb(175,153,8)');
-        cssroot.style.setProperty('--secondbg', 'rgba(175,153,8,0.05)');
-        cssroot.style.setProperty('--third', 'rgb(244,105,102)');
-        cssroot.style.setProperty('--thirdbg', 'rgba(244,105,102,0.05)');
-      break;
-      case 'gray':
-        cssroot.style.setProperty('--structurecolor', 'rgb(150,150,150)');
-        cssroot.style.setProperty('--main', 'rgb(150,150,150)');
-        cssroot.style.setProperty('--mainbg', 'rgba(150,150,150,0.05)');
-        cssroot.style.setProperty('--second', 'rgb(150,150,150)');
-        cssroot.style.setProperty('--secondbg', 'rgba(150,150,150,0.05)');
-        cssroot.style.setProperty('--third', 'rgb(150,150,150)');
-        cssroot.style.setProperty('--thirdbg', 'rgba(150,150,150,0.05)');
-      break;
-      case 'black':
-        cssroot.style.setProperty('--structurecolor', 'rgb(0,0,0)');
-        cssroot.style.setProperty('--main', 'rgb(0,0,0)');
-        cssroot.style.setProperty('--mainbg', 'rgba(0,0,0,0.05)');
-        cssroot.style.setProperty('--second', 'rgb(0,0,0)');
-        cssroot.style.setProperty('--secondbg', 'rgba(0,0,0,0.05)');
-        cssroot.style.setProperty('--third', 'rgb(0,0,0)');
-        cssroot.style.setProperty('--thirdbg', 'rgba(0,0,0,0.05)');
-      break;
-    default:
-        cssroot.style.setProperty('--structurecolor', 'rgb(60,113,183)');
-        cssroot.style.setProperty('--main', 'rgb(0,166,82)');
-        cssroot.style.setProperty('--mainbg', 'rgba(0,166,82,0.05)');
-        cssroot.style.setProperty('--second', 'rgb(255,134,24)');
-        cssroot.style.setProperty('--secondbg', 'rgba(255,134,24,0.05)');
-        cssroot.style.setProperty('--third', 'rgb(0,174,247)');
-        cssroot.style.setProperty('--thirdbg', 'rgba(0,174,247,0.05)');
-    }
-  });
-  </script>
-
-
-<style type="text/css">
+<title>R语言学习笔记-IntroR - 3&nbsp; 循环和purrr</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
@@ -195,166 +80,814 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<style type="text/css">
-/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}
-</style>
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<link href="./03-function.html" rel="next">
+<link href="./01-rex.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link id="quarto-text-highlighting-styles" href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
 
-<link rel="stylesheet" href="style.css" type="text/css" />
+
 </head>
 
-<body>
+<body class="nav-sidebar floating">
 
-
-
-  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
-
-    <div class="book-summary">
-      <nav role="navigation">
-
-<ul class="summary">
-<li><a href="./">R基础及提高-读书笔记</a></li>
-
-<li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>已有 Block</a>
-<ul>
-<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#math-formular"><i class="fa fa-check"></i><b>0.1</b> 数学公式</a></li>
-<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#custom-block"><i class="fa fa-check"></i><b>0.2</b> 自定义 block</a></li>
-</ul></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#简单实例"><i class="fa fa-check"></i>简单实例</a>
-<ul>
-<li class="chapter" data-level="0.2.1" data-path="index.html"><a href="index.html#例0.1-计算并绘制roc曲线"><i class="fa fa-check"></i><b>0.2.1</b> 例0.1 计算并绘制ROC曲线</a></li>
-</ul></li>
-<li class="chapter" data-level="1" data-path="01-data-structrue.html"><a href="01-data-structrue.html"><i class="fa fa-check"></i><b>1</b> 数据结构</a></li>
-<li class="chapter" data-level="2" data-path="02-loop-purrr.html"><a href="02-loop-purrr.html"><i class="fa fa-check"></i><b>2</b> 循环和purrr</a></li>
-<li class="chapter" data-level="3" data-path="03-function.html"><a href="03-function.html"><i class="fa fa-check"></i><b>3</b> 函数</a></li>
-<li class="chapter" data-level="4" data-path="04-data-manipulation.html"><a href="04-data-manipulation.html"><i class="fa fa-check"></i><b>4</b> 数据操作</a></li>
-<li class="chapter" data-level="5" data-path="05-ggplot2.html"><a href="05-ggplot2.html"><i class="fa fa-check"></i><b>5</b> ggolot2绘图</a></li>
-<li class="chapter" data-level="6" data-path="06-Statistical-modeling.html"><a href="06-Statistical-modeling.html"><i class="fa fa-check"></i><b>6</b> 统计建模</a></li>
-<li class="chapter" data-level="7" data-path="07-data-cleaning-feature.html"><a href="07-data-cleaning-feature.html"><i class="fa fa-check"></i><b>7</b> 数据清洗和特征工程</a></li>
-<li class="chapter" data-level="8" data-path="08-rmarkdown-package.html"><a href="08-rmarkdown-package.html"><i class="fa fa-check"></i><b>8</b> 文档交流、R包开发及其他</a></li>
-<li class="appendix"><span><b>附录</b></span></li>
-<li class="chapter" data-level="A" data-path="22-appendix.html"><a href="22-appendix.html"><i class="fa fa-check"></i><b>A</b> R Markdown</a>
-<ul>
-<li class="chapter" data-level="A.1" data-path="22-appendix.html"><a href="22-appendix.html#including-plots"><i class="fa fa-check"></i><b>A.1</b> Including Plots</a></li>
-</ul></li>
-<li class="chapter" data-level="" data-path="21-references.html"><a href="21-references.html"><i class="fa fa-check"></i>参考文献</a></li>
-<li class="divider"></li>
-<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-
-</ul>
-
-      </nav>
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">循环和purrr</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
     </div>
-
-    <div class="book-body">
-      <div class="body-inner">
-        <div class="book-header" role="navigation">
-          <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R基础及提高-读书笔记</a>
-          </h1>
-        </div>
-
-        <div class="page-wrapper" tabindex="-1" role="main">
-          <div class="page-inner">
-
-            <section class="normal" id="section-">
-<div id="loop-purrr" class="section level1 hasAnchor" number="2">
-<h1><span class="header-section-number">第 2 章</span> 循环和purrr<a href="02-loop-purrr.html#loop-purrr" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-
-</div>
-            </section>
-
-          </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">R语言学习笔记-IntroR</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
         </div>
       </div>
-<a href="01-data-structrue.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="03-function.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
-    </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">前言</a>
   </div>
-<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
-<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
-<script>
-gitbook.require(["gitbook"], function(gitbook) {
-gitbook.start({
-"sharing": {
-"github": true,
-"facebook": false,
-"twitter": false,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": {}
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": "https://github.com/XiangyunHuang/masr/edit/master/02-loop-purrr.Rmd",
-"text": "编辑"
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": "https://github.com/XiangyunHuang/masr/blob/master/02-loop-purrr.Rmd",
-"text": "查看"
-},
-"download": ["elegantbookdown.pdf", "elegantbookdown.epub"],
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "subsection"
-}
-});
+</li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">basic</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-data-structrue.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">数据结构</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-rex.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">数据结构-时间序列+正则表达式</span></a>
+  </div>
+</li>
+    </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">funciton&amp;loop</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-loop-purrr.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">循环和purrr</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-function.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">自定义函数</span></a>
+  </div>
+</li>
+    </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">advanced</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-data-manipulation.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">数据操作</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-ggplot2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">ggolot2绘图</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-Statistical-modeling.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">统计建模</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-data-cleaning-feature.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">数据清洗和特征工程</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-rmarkdown-package.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">文档交流、R包开发及其他</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-descriptive-statistics.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">描述性统计</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-parameter-estimation.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">参数估计</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-Hypothesis-testing.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">假设检验</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-regression.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">回归分析</span></a>
+  </div>
+</li>
+    </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./21-references.html" class="sidebar-item-text sidebar-link">参考文献</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">Appendices</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./20-other-packages.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">其它有趣的包</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./22-appendix.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">R Markdown</span></a>
+  </div>
+</li>
+    </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#例1-对数据框逐列迭代" id="toc-例1-对数据框逐列迭代" class="nav-link active" data-scroll-target="#例1-对数据框逐列迭代"> <span class="header-section-number">3.1</span> 例1 对数据框逐列迭代</a></li>
+  <li><a href="#例2-对数据框逐行迭代" id="toc-例2-对数据框逐行迭代" class="nav-link" data-scroll-target="#例2-对数据框逐行迭代"> <span class="header-section-number">3.2</span> 例2 对数据框逐行迭代</a></li>
+  <li><a href="#例3-批量读取数据并按行合并" id="toc-例3-批量读取数据并按行合并" class="nav-link" data-scroll-target="#例3-批量读取数据并按行合并"> <span class="header-section-number">3.3</span> 例3 批量读取数据并按行合并</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span id="loop-purrr" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">循环和purrr</span></span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<p>R循环更建议使用<code>purrr</code>的泛函式循环迭代。</p>
+<div class="{callout-caution}">
+<p>当匿名函数的引用参数.x不是第一个参数时，需要使用~。</p>
+</div>
+<ul>
+<li><p>数学上，<strong>函数的函数</strong>成为泛函；编程语言中，泛函表示一个函数作用在另一个函数上，通俗的讲就是一个函数作为另一个函数的参数传入。</p></li>
+<li><p>循环迭代，本质上就是将一个函数依次应用（映射）到<strong>序列</strong>的每一个元素上，表示出来即<code>purrr::map_*(x, f)</code>：序列（用x表示）：由一系列可以根据位置索引的元素构成。通俗的讲，向量、列表、数据框都是序列。</p></li>
+<li><p><strong><code>purrr</code>泛函式编程解决循环迭代问题的逻辑</strong>：</p>
+<ul>
+<li>针对序列每个单独的元素的处理，定义为函数</li>
+<li>在使用<code>map_*()</code>系列函数将定义的函数映射到序列每一个元素上</li>
+<li>将得到的结果打包一起返回，通过<code>map()</code>函数的后缀控制</li>
+</ul></li>
+<li><p><strong><code>purrr</code>风格公式（匿名函数）</strong>：函数参数<code>.f</code>的一种简写，<strong>只需要写清楚他是如何操作序列参数<code>.x</code>的即可</strong>：</p>
+<ul>
+<li>一元函数，例如<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">f(x) = x^2+1</annotation></semantics></math>可以简写为<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>.</mi><mi>f</mi><mo>=</mo><mspace width="0.222em"></mspace><mi>.</mi><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">.f= ~.x^2+1</annotation></semantics></math>。式中的<code>~</code>可视为function(x)的简写。</li>
+<li>二元函数，序列参数为<code>.x</code>和<code>.y</code>，例如<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo>,</mo><mi>y</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mn>3</mn><mi>y</mi></mrow><annotation encoding="application/x-tex">f(x,y)=x^2-3y</annotation></semantics></math>可以简写为<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>.</mi><mi>f</mi><mo>=</mo><mspace width="0.222em"></mspace><mi>.</mi><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mn>2</mn><mo>*</mo><mi>.</mi><mi>y</mi></mrow><annotation encoding="application/x-tex">.f=~.x^2-2*.y</annotation></semantics></math></li>
+<li>三元函数，序列参数用两个点<code>..</code>表示，如<code>..1</code>，<code>..2</code>，<code>..3</code>，所有序列参数使用<code>...</code>代替</li>
+</ul></li>
+</ul>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>.x</code>是序列中的一个元素（或称为代表）。<strong>分解</strong>问题的思维，即循环迭代要一次对序列中每个元素做某操作，只需要把对一个元素做的操作写清楚（定义函数），剩余的工作交给<code>map_*()</code>函数即可。</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="images/map_function3.png" class="img-fluid"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="images/map_function.jpg" class="img-fluid"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="images/map2-funtion.jpg" class="img-fluid"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="images/pmap-funcion.jpg" class="img-fluid"></p>
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li><p>其它<code>purrr</code>函数：</p>
+<ul>
+<li><code>walk_*()</code>系列：只循环迭代，不返回结果。例如用在批量保存数据/图形到文件</li>
+<li><code>imap_*()</code>系列：元素与索引一起迭代</li>
+<li><code>modify_*()</code>系列：原地依次修改序列对象</li>
+<li><code>reduce()/accumlate()</code>：可以先对序列的前两个元素应用函数，在对结果与第三个元素应用函数，在对结果与第四个元素应用函数，……，前者只返回最终结果，后者会返回中间的所有结果</li>
+</ul></li>
+</ul>
+<section id="例1-对数据框逐列迭代" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="例1-对数据框逐列迭代"><span class="header-section-number">3.1</span> 例1 对数据框逐列迭代</h2>
+<p>数据框是序列，第1个元素是第1列<code>df[[1]]</code>，第2个元素是第二列<code>df[[2]]</code>：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ ggplot2 3.3.6     ✔ purrr   0.3.4
+✔ tibble  3.1.7     ✔ dplyr   1.0.9
+✔ tidyr   1.2.0     ✔ stringr 1.4.0
+✔ readr   2.1.2     ✔ forcats 0.5.1</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 提取</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> iris[, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Sepal.Length Sepal.Width Petal.Length Petal.Width
+1            5.1         3.5          1.4         0.2
+2            4.9         3.0          1.4         0.2
+3            4.7         3.2          1.3         0.2
+4            4.6         3.1          1.5         0.2
+5            5.0         3.6          1.4         0.2
+6            5.4         3.9          1.7         0.4
+7            4.6         3.4          1.4         0.3
+8            5.0         3.4          1.5         0.2
+9            4.4         2.9          1.4         0.2
+10           4.9         3.1          1.5         0.1
+11           5.4         3.7          1.5         0.2
+12           4.8         3.4          1.6         0.2
+13           4.8         3.0          1.4         0.1
+14           4.3         3.0          1.1         0.1
+15           5.8         4.0          1.2         0.2
+16           5.7         4.4          1.5         0.4
+17           5.4         3.9          1.3         0.4
+18           5.1         3.5          1.4         0.3
+19           5.7         3.8          1.7         0.3
+20           5.1         3.8          1.5         0.3
+21           5.4         3.4          1.7         0.2
+22           5.1         3.7          1.5         0.4
+23           4.6         3.6          1.0         0.2
+24           5.1         3.3          1.7         0.5
+25           4.8         3.4          1.9         0.2
+26           5.0         3.0          1.6         0.2
+27           5.0         3.4          1.6         0.4
+28           5.2         3.5          1.5         0.2
+29           5.2         3.4          1.4         0.2
+30           4.7         3.2          1.6         0.2
+31           4.8         3.1          1.6         0.2
+32           5.4         3.4          1.5         0.4
+33           5.2         4.1          1.5         0.1
+34           5.5         4.2          1.4         0.2
+35           4.9         3.1          1.5         0.2
+36           5.0         3.2          1.2         0.2
+37           5.5         3.5          1.3         0.2
+38           4.9         3.6          1.4         0.1
+39           4.4         3.0          1.3         0.2
+40           5.1         3.4          1.5         0.2
+41           5.0         3.5          1.3         0.3
+42           4.5         2.3          1.3         0.3
+43           4.4         3.2          1.3         0.2
+44           5.0         3.5          1.6         0.6
+45           5.1         3.8          1.9         0.4
+46           4.8         3.0          1.4         0.3
+47           5.1         3.8          1.6         0.2
+48           4.6         3.2          1.4         0.2
+49           5.3         3.7          1.5         0.2
+50           5.0         3.3          1.4         0.2
+51           7.0         3.2          4.7         1.4
+52           6.4         3.2          4.5         1.5
+53           6.9         3.1          4.9         1.5
+54           5.5         2.3          4.0         1.3
+55           6.5         2.8          4.6         1.5
+56           5.7         2.8          4.5         1.3
+57           6.3         3.3          4.7         1.6
+58           4.9         2.4          3.3         1.0
+59           6.6         2.9          4.6         1.3
+60           5.2         2.7          3.9         1.4
+61           5.0         2.0          3.5         1.0
+62           5.9         3.0          4.2         1.5
+63           6.0         2.2          4.0         1.0
+64           6.1         2.9          4.7         1.4
+65           5.6         2.9          3.6         1.3
+66           6.7         3.1          4.4         1.4
+67           5.6         3.0          4.5         1.5
+68           5.8         2.7          4.1         1.0
+69           6.2         2.2          4.5         1.5
+70           5.6         2.5          3.9         1.1
+71           5.9         3.2          4.8         1.8
+72           6.1         2.8          4.0         1.3
+73           6.3         2.5          4.9         1.5
+74           6.1         2.8          4.7         1.2
+75           6.4         2.9          4.3         1.3
+76           6.6         3.0          4.4         1.4
+77           6.8         2.8          4.8         1.4
+78           6.7         3.0          5.0         1.7
+79           6.0         2.9          4.5         1.5
+80           5.7         2.6          3.5         1.0
+81           5.5         2.4          3.8         1.1
+82           5.5         2.4          3.7         1.0
+83           5.8         2.7          3.9         1.2
+84           6.0         2.7          5.1         1.6
+85           5.4         3.0          4.5         1.5
+86           6.0         3.4          4.5         1.6
+87           6.7         3.1          4.7         1.5
+88           6.3         2.3          4.4         1.3
+89           5.6         3.0          4.1         1.3
+90           5.5         2.5          4.0         1.3
+91           5.5         2.6          4.4         1.2
+92           6.1         3.0          4.6         1.4
+93           5.8         2.6          4.0         1.2
+94           5.0         2.3          3.3         1.0
+95           5.6         2.7          4.2         1.3
+96           5.7         3.0          4.2         1.2
+97           5.7         2.9          4.2         1.3
+98           6.2         2.9          4.3         1.3
+99           5.1         2.5          3.0         1.1
+100          5.7         2.8          4.1         1.3
+101          6.3         3.3          6.0         2.5
+102          5.8         2.7          5.1         1.9
+103          7.1         3.0          5.9         2.1
+104          6.3         2.9          5.6         1.8
+105          6.5         3.0          5.8         2.2
+106          7.6         3.0          6.6         2.1
+107          4.9         2.5          4.5         1.7
+108          7.3         2.9          6.3         1.8
+109          6.7         2.5          5.8         1.8
+110          7.2         3.6          6.1         2.5
+111          6.5         3.2          5.1         2.0
+112          6.4         2.7          5.3         1.9
+113          6.8         3.0          5.5         2.1
+114          5.7         2.5          5.0         2.0
+115          5.8         2.8          5.1         2.4
+116          6.4         3.2          5.3         2.3
+117          6.5         3.0          5.5         1.8
+118          7.7         3.8          6.7         2.2
+119          7.7         2.6          6.9         2.3
+120          6.0         2.2          5.0         1.5
+121          6.9         3.2          5.7         2.3
+122          5.6         2.8          4.9         2.0
+123          7.7         2.8          6.7         2.0
+124          6.3         2.7          4.9         1.8
+125          6.7         3.3          5.7         2.1
+126          7.2         3.2          6.0         1.8
+127          6.2         2.8          4.8         1.8
+128          6.1         3.0          4.9         1.8
+129          6.4         2.8          5.6         2.1
+130          7.2         3.0          5.8         1.6
+131          7.4         2.8          6.1         1.9
+132          7.9         3.8          6.4         2.0
+133          6.4         2.8          5.6         2.2
+134          6.3         2.8          5.1         1.5
+135          6.1         2.6          5.6         1.4
+136          7.7         3.0          6.1         2.3
+137          6.3         3.4          5.6         2.4
+138          6.4         3.1          5.5         1.8
+139          6.0         3.0          4.8         1.8
+140          6.9         3.1          5.4         2.1
+141          6.7         3.1          5.6         2.4
+142          6.9         3.1          5.1         2.3
+143          5.8         2.7          5.1         1.9
+144          6.8         3.2          5.9         2.3
+145          6.7         3.3          5.7         2.5
+146          6.7         3.0          5.2         2.3
+147          6.3         2.5          5.0         1.9
+148          6.5         3.0          5.2         2.0
+149          6.2         3.4          5.4         2.3
+150          5.9         3.0          5.1         1.8</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 求各列平均值</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">map_dbl</span>(df, mean)  <span class="co"># dbl返回浮点数。</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Sepal.Length  Sepal.Width Petal.Length  Petal.Width 
+    5.843333     3.057333     3.758000     1.199333 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 各列归一化</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>rescale <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">type =</span> <span class="st">"pos"</span>){</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  rng <span class="ot">=</span> <span class="fu">range</span>(x, <span class="at">na.rm =</span>  <span class="cn">TRUE</span>)  <span class="co"># 提取最小值和最大值</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(type <span class="sc">==</span> <span class="st">"pos"</span>){</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    (x <span class="sc">-</span> rng[<span class="dv">1</span>]) <span class="sc">/</span> (rng[<span class="dv">2</span>] <span class="sc">-</span> rng[<span class="dv">1</span>])</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    (rng[<span class="dv">2</span>] <span class="sc">-</span> x) <span class="sc">/</span> (rng[<span class="dv">2</span>] <span class="sc">-</span> rng[<span class="dv">1</span>])</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="fu">map_dfc</span>(df, rescale)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 150 × 4
+   Sepal.Length Sepal.Width Petal.Length Petal.Width
+          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;
+ 1       0.222        0.625       0.0678      0.0417
+ 2       0.167        0.417       0.0678      0.0417
+ 3       0.111        0.5         0.0508      0.0417
+ 4       0.0833       0.458       0.0847      0.0417
+ 5       0.194        0.667       0.0678      0.0417
+ 6       0.306        0.792       0.119       0.125 
+ 7       0.0833       0.583       0.0678      0.0833
+ 8       0.194        0.583       0.0847      0.0417
+ 9       0.0278       0.375       0.0678      0.0417
+10       0.167        0.458       0.0847      0     
+# … with 140 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="例2-对数据框逐行迭代" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="例2-对数据框逐行迭代"><span class="header-section-number">3.2</span> 例2 对数据框逐行迭代</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pmap_dbl</span>(df[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, ], <span class="sc">~</span> <span class="fu">mean</span>(<span class="fu">c</span>(...)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 2.550 2.375 2.350 2.350 2.550 2.850 2.425 2.525 2.225 2.400</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">map_dbl</span>(<span class="fu">asplit</span>(df[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, ], <span class="dv">1</span>), mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    1     2     3     4     5     6     7     8     9    10 
+2.550 2.375 2.350 2.350 2.550 2.850 2.425 2.525 2.225 2.400 </code></pre>
+</div>
+</div>
+</section>
+<section id="例3-批量读取数据并按行合并" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="例3-批量读取数据并按行合并"><span class="header-section-number">3.3</span> 例3 批量读取数据并按行合并</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 来自多个文件</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">"datas/read_datas"</span>, <span class="at">pattern =</span> <span class="st">"xlsx"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(<span class="fu">set_names</span>(files), read_excel, <span class="at">.id =</span> <span class="st">"from"</span>)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>df2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 16 × 7
+   from                                班级  姓名   性别   语文  数学  英语
+   &lt;chr&gt;                               &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1 datas/read_datas/六1班学生成绩.xlsx 六1班 何娜   女       87    92    79
+ 2 datas/read_datas/六1班学生成绩.xlsx 六1班 黄才菊 女       95    77    75
+ 3 datas/read_datas/六1班学生成绩.xlsx 六1班 陈芳妹 女       79    87    66
+ 4 datas/read_datas/六1班学生成绩.xlsx 六1班 陈学勤 男       82    79    66
+ 5 datas/read_datas/六3班学生成绩.xlsx 六3班 江佳欣 女       80    69    75
+ 6 datas/read_datas/六3班学生成绩.xlsx 六3班 何诗婷 女       76    53    72
+ 7 datas/read_datas/六3班学生成绩.xlsx 六3班 林可莉 女       72    52    72
+ 8 datas/read_datas/六3班学生成绩.xlsx 六3班 雷帆   男       78    56    66
+ 9 datas/read_datas/六4班学生成绩.xlsx 六4班 周婵   女       92    94    77
+10 datas/read_datas/六4班学生成绩.xlsx 六4班 李小龄 男       90    87    69
+11 datas/read_datas/六4班学生成绩.xlsx 六4班 陈丽丽 女       87    93    61
+12 datas/read_datas/六4班学生成绩.xlsx 六4班 杨昌晟 男       84    85    64
+13 datas/read_datas/六5班学生成绩.xlsx 六5班 符苡榕 女       85    89    76
+14 datas/read_datas/六5班学生成绩.xlsx 六5班 陆曼   女       88    84    69
+15 datas/read_datas/六5班学生成绩.xlsx 六5班 容唐   女       83    71    56
+16 datas/read_datas/六5班学生成绩.xlsx 六5班 蒙丽梅 女       72    72    64</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 来自同一个文件的多个sheet</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>path <span class="ot">&lt;-</span> <span class="st">"datas/学生成绩.xlsx"</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>df3 <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(<span class="fu">excel_sheets</span>(path), <span class="sc">~</span> <span class="fu">read_excel</span>(path, <span class="at">sheet =</span> .x), <span class="at">.id =</span> <span class="st">"from"</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>df3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 20 × 7
+   from  班级  姓名   性别   语文  数学  英语
+   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1 1     六1班 何娜   女       87    92    79
+ 2 1     六1班 黄才菊 女       95    77    75
+ 3 1     六1班 陈芳妹 女       79    87    66
+ 4 1     六1班 陈学勤 男       82    79    66
+ 5 2     六2班 黄祖娜 女       94    88    75
+ 6 2     六2班 徐雅琦 女       92    86    72
+ 7 2     六2班 徐达政 男       90    86    72
+ 8 2     六2班 陈华健 男       92    84    70
+ 9 3     六3班 江佳欣 女       80    69    75
+10 3     六3班 何诗婷 女       76    53    72
+11 3     六3班 林可莉 女       72    52    72
+12 3     六3班 雷帆   男       78    56    66
+13 4     六4班 周婵   女       92    94    77
+14 4     六4班 李小龄 男       90    87    69
+15 4     六4班 陈丽丽 女       87    93    61
+16 4     六4班 杨昌晟 男       84    85    64
+17 5     六5班 符苡榕 女       85    89    76
+18 5     六5班 陆曼   女       88    84    69
+19 5     六5班 容唐   女       83    71    56
+20 5     六5班 蒙丽梅 女       72    72    64</code></pre>
+</div>
+</div>
+
+
+<!-- -->
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
 });
 </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./01-rex.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">数据结构-时间序列+正则表达式</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./03-function.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">自定义函数</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb19" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># 循环和purrr {#loop-purrr}</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>R循环更建议使用<span class="in">`purrr`</span>的泛函式循环迭代。</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>::: {callout-caution}</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>当匿名函数的引用参数.x不是第一个参数时，需要使用\~。</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>数学上，**函数的函数**成为泛函；编程语言中，泛函表示一个函数作用在另一个函数上，通俗的讲就是一个函数作为另一个函数的参数传入。</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>循环迭代，本质上就是将一个函数依次应用（映射）到**序列**的每一个元素上，表示出来即<span class="in">`purrr::map_*(x, f)`</span>：序列（用x表示）：由一系列可以根据位置索引的元素构成。通俗的讲，向量、列表、数据框都是序列。</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**`purrr`泛函式编程解决循环迭代问题的逻辑**：</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>针对序列每个单独的元素的处理，定义为函数</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>在使用<span class="in">`map_*()`</span>系列函数将定义的函数映射到序列每一个元素上</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>将得到的结果打包一起返回，通过<span class="in">`map()`</span>函数的后缀控制</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**`purrr`风格公式（匿名函数）**：函数参数`.f`的一种简写，**只需要写清楚他是如何操作序列参数`.x`的即可**：</span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>一元函数，例如$f(x) = x^2+1$可以简写为$.f= ~.x^2+1$。式中的<span class="in">`~`</span>可视为function(x)的简写。</span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>二元函数，序列参数为<span class="in">`.x`</span>和<span class="in">`.y`</span>，例如$f(x,y)=x^2-3y$可以简写为$.f=~.x^2-2*.y$</span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>三元函数，序列参数用两个点<span class="in">`..`</span>表示，如<span class="in">`..1`</span>，<span class="in">`..2`</span>，<span class="in">`..3`</span>，所有序列参数使用<span class="in">`...`</span>代替</span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a><span class="in">`.x`</span>是序列中的一个元素（或称为代表）。**分解**问题的思维，即循环迭代要一次对序列中每个元素做某操作，只需要把对一个元素做的操作写清楚（定义函数），剩余的工作交给<span class="in">`map_*()`</span>函数即可。</span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a><span class="in">```{r echo = FALSE}</span></span>
+<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"images/map_function3.png"</span>, <span class="at">dpi =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"images/map_function.jpg"</span>, <span class="at">dpi =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"images/map2-funtion.jpg"</span>, <span class="at">dpi =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"images/pmap-funcion.jpg"</span>, <span class="at">dpi =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb19-35"><a href="#cb19-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-36"><a href="#cb19-36" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>其它<span class="in">`purrr`</span>函数：</span>
+<span id="cb19-37"><a href="#cb19-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-38"><a href="#cb19-38" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span><span class="in">`walk_*()`</span>系列：只循环迭代，不返回结果。例如用在批量保存数据/图形到文件</span>
+<span id="cb19-39"><a href="#cb19-39" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span><span class="in">`imap_*()`</span>系列：元素与索引一起迭代</span>
+<span id="cb19-40"><a href="#cb19-40" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span><span class="in">`modify_*()`</span>系列：原地依次修改序列对象</span>
+<span id="cb19-41"><a href="#cb19-41" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span><span class="in">`reduce()/accumlate()`</span>：可以先对序列的前两个元素应用函数，在对结果与第三个元素应用函数，在对结果与第四个元素应用函数，......，前者只返回最终结果，后者会返回中间的所有结果</span>
+<span id="cb19-42"><a href="#cb19-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-43"><a href="#cb19-43" aria-hidden="true" tabindex="-1"></a><span class="fu">## 例1 对数据框逐列迭代</span></span>
+<span id="cb19-44"><a href="#cb19-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-45"><a href="#cb19-45" aria-hidden="true" tabindex="-1"></a>数据框是序列，第1个元素是第1列<span class="in">`df[[1]]`</span>，第2个元素是第二列<span class="in">`df[[2]]`</span>：</span>
+<span id="cb19-46"><a href="#cb19-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-49"><a href="#cb19-49" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb19-50"><a href="#cb19-50" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb19-51"><a href="#cb19-51" aria-hidden="true" tabindex="-1"></a><span class="co"># 提取</span></span>
+<span id="cb19-52"><a href="#cb19-52" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> iris[, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]</span>
+<span id="cb19-53"><a href="#cb19-53" aria-hidden="true" tabindex="-1"></a>df</span>
+<span id="cb19-54"><a href="#cb19-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-55"><a href="#cb19-55" aria-hidden="true" tabindex="-1"></a><span class="co"># 求各列平均值</span></span>
+<span id="cb19-56"><a href="#cb19-56" aria-hidden="true" tabindex="-1"></a><span class="fu">map_dbl</span>(df, mean)  <span class="co"># dbl返回浮点数。</span></span>
+<span id="cb19-57"><a href="#cb19-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-58"><a href="#cb19-58" aria-hidden="true" tabindex="-1"></a><span class="co"># 各列归一化</span></span>
+<span id="cb19-59"><a href="#cb19-59" aria-hidden="true" tabindex="-1"></a>rescale <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">type =</span> <span class="st">"pos"</span>){</span>
+<span id="cb19-60"><a href="#cb19-60" aria-hidden="true" tabindex="-1"></a>  rng <span class="ot">=</span> <span class="fu">range</span>(x, <span class="at">na.rm =</span>  <span class="cn">TRUE</span>)  <span class="co"># 提取最小值和最大值</span></span>
+<span id="cb19-61"><a href="#cb19-61" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(type <span class="sc">==</span> <span class="st">"pos"</span>){</span>
+<span id="cb19-62"><a href="#cb19-62" aria-hidden="true" tabindex="-1"></a>    (x <span class="sc">-</span> rng[<span class="dv">1</span>]) <span class="sc">/</span> (rng[<span class="dv">2</span>] <span class="sc">-</span> rng[<span class="dv">1</span>])</span>
+<span id="cb19-63"><a href="#cb19-63" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb19-64"><a href="#cb19-64" aria-hidden="true" tabindex="-1"></a>    (rng[<span class="dv">2</span>] <span class="sc">-</span> x) <span class="sc">/</span> (rng[<span class="dv">2</span>] <span class="sc">-</span> rng[<span class="dv">1</span>])</span>
+<span id="cb19-65"><a href="#cb19-65" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb19-66"><a href="#cb19-66" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb19-67"><a href="#cb19-67" aria-hidden="true" tabindex="-1"></a><span class="fu">map_dfc</span>(df, rescale)</span>
+<span id="cb19-68"><a href="#cb19-68" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-69"><a href="#cb19-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-70"><a href="#cb19-70" aria-hidden="true" tabindex="-1"></a><span class="fu">## 例2 对数据框逐行迭代</span></span>
+<span id="cb19-71"><a href="#cb19-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-74"><a href="#cb19-74" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb19-75"><a href="#cb19-75" aria-hidden="true" tabindex="-1"></a><span class="fu">pmap_dbl</span>(df[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, ], <span class="sc">~</span> <span class="fu">mean</span>(<span class="fu">c</span>(...)))</span>
+<span id="cb19-76"><a href="#cb19-76" aria-hidden="true" tabindex="-1"></a><span class="fu">map_dbl</span>(<span class="fu">asplit</span>(df[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, ], <span class="dv">1</span>), mean)</span>
+<span id="cb19-77"><a href="#cb19-77" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-78"><a href="#cb19-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-79"><a href="#cb19-79" aria-hidden="true" tabindex="-1"></a><span class="fu">## 例3 批量读取数据并按行合并</span></span>
+<span id="cb19-80"><a href="#cb19-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-83"><a href="#cb19-83" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb19-84"><a href="#cb19-84" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb19-85"><a href="#cb19-85" aria-hidden="true" tabindex="-1"></a><span class="co"># 来自多个文件</span></span>
+<span id="cb19-86"><a href="#cb19-86" aria-hidden="true" tabindex="-1"></a>files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">"datas/read_datas"</span>, <span class="at">pattern =</span> <span class="st">"xlsx"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb19-87"><a href="#cb19-87" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(<span class="fu">set_names</span>(files), read_excel, <span class="at">.id =</span> <span class="st">"from"</span>)</span>
+<span id="cb19-88"><a href="#cb19-88" aria-hidden="true" tabindex="-1"></a>df2</span>
+<span id="cb19-89"><a href="#cb19-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-90"><a href="#cb19-90" aria-hidden="true" tabindex="-1"></a><span class="co"># 来自同一个文件的多个sheet</span></span>
+<span id="cb19-91"><a href="#cb19-91" aria-hidden="true" tabindex="-1"></a>path <span class="ot">&lt;-</span> <span class="st">"datas/学生成绩.xlsx"</span></span>
+<span id="cb19-92"><a href="#cb19-92" aria-hidden="true" tabindex="-1"></a>df3 <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(<span class="fu">excel_sheets</span>(path), <span class="sc">~</span> <span class="fu">read_excel</span>(path, <span class="at">sheet =</span> .x), <span class="at">.id =</span> <span class="st">"from"</span>)</span>
+<span id="cb19-93"><a href="#cb19-93" aria-hidden="true" tabindex="-1"></a>df3</span>
+<span id="cb19-94"><a href="#cb19-94" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
-</body>
 
-</html>
+
+</body></html>
