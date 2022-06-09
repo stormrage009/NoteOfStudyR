@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-0.9.436">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>R语言学习笔记-IntroR - 11&nbsp; 参数估计</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<link href="./11-Hypothesis-testing.html" rel="next">
+<link href="./09-descriptive-statistics.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link id="quarto-text-highlighting-styles" href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating slimcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">参数估计</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">R语言学习笔记-IntroR</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">前言</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">basic</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-data-structrue.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">数据结构</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-rex.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">数据结构-时间序列+正则表达式</span></a>
+  </div>
+</li>
+    </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">funciton&amp;loop</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-loop-purrr.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">循环和purrr</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-function.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">自定义函数</span></a>
+  </div>
+</li>
+    </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">advanced</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-data-manipulation.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">数据操作</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-ggplot2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">ggolot2绘图</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-Statistical-modeling.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">统计建模</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-data-cleaning-feature.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">数据清洗和特征工程</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-rmarkdown-package.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">文档交流、R包开发及其他</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-descriptive-statistics.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">描述性统计</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-parameter-estimation.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">参数估计</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-Hypothesis-testing.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">假设检验</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-regression.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">回归分析</span></a>
+  </div>
+</li>
+    </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./21-references.html" class="sidebar-item-text sidebar-link">参考文献</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">Appendices</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./20-other-packages.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">其它有趣的包</span></a>
+  </div>
+</li>
+    </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#点估计与区间估计" id="toc-点估计与区间估计" class="nav-link active" data-scroll-target="#点估计与区间估计"> <span class="header-section-number">11.1</span> 点估计与区间估计</a>
+  <ul class="collapse">
+  <li><a href="#使用标准误计算置信区间" id="toc-使用标准误计算置信区间" class="nav-link" data-scroll-target="#使用标准误计算置信区间"> <span class="header-section-number">11.1.1</span> 使用标准误计算置信区间</a></li>
+  <li><a href="#bootstrap法估计置信区间" id="toc-bootstrap法估计置信区间" class="nav-link" data-scroll-target="#bootstrap法估计置信区间"> <span class="header-section-number">11.1.2</span> Bootstrap法估计置信区间</a></li>
+  <li><a href="#案例" id="toc-案例" class="nav-link" data-scroll-target="#案例"> <span class="header-section-number">11.1.3</span> 案例</a></li>
+  </ul></li>
+  <li><a href="#最小二乘估计ols" id="toc-最小二乘估计ols" class="nav-link" data-scroll-target="#最小二乘估计ols"> <span class="header-section-number">11.2</span> 最小二乘估计（OLS）</a>
+  <ul class="collapse">
+  <li><a href="#非线性拟合" id="toc-非线性拟合" class="nav-link" data-scroll-target="#非线性拟合"> <span class="header-section-number">11.2.1</span> 非线性拟合</a></li>
+  </ul></li>
+  <li><a href="#sec:MLE" id="toc-sec:MLE" class="nav-link" data-scroll-target="#sec\:MLE"> <span class="header-section-number">11.3</span> 最大似然估计(MLE)</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span id="parameter-estimation" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">参数估计</span></span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><p>与总体有关的指标<strong>参数</strong>；与样本有关的指标是<strong>统计量</strong>。</p></li>
+<li><p>统计推断的重要内容之一是<strong>参数估计</strong>，即在抽样及抽样分布的基础上，根据样本统计量来推断所关心的总体参数。</p></li>
+</ol>
+</div>
+</div>
+<section id="点估计与区间估计" class="level2 page-columns page-full" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="点估计与区间估计"><span class="header-section-number">11.1</span> 点估计与区间估计</h2>
+<p>参数估计主要有两种：</p>
+<ul>
+<li><p><strong>点估计</strong>（准确，但不一定可靠）：就是样本统计量。比如估计哈尔滨成年男性的平均身高，样本均值175cm就是点估计；有一定把握落在172-178cm之间，就是区间估计。</p></li>
+<li><p><strong>区间估计</strong>（可靠，但不很精确）：通常是指估计其95%置信区间，即有95%的把握认为该区间包含了总体参数，换言之，如果抽样100次，将有95次该区间包含了总体参数。</p></li>
+</ul>
+<div class="page-columns page-full"><p>置信区间越窄反映了参数估计的精度越高，影响它的因素有两个：</p><div class="no-row-height column-margin column-container"><span class="aside"><a href="https://baike.baidu.com/item/%E7%BD%AE%E4%BF%A1%E5%8C%BA%E9%97%B4/7442583?fr=aladdin">置信区间</a>：置信区间是指由样本统计量所构造的总体参数的估计区间。在统计学中，一个概率样本的置信区间（Confidence interval）是对这个样本的某个总体参数的区间估计。置信区间展现的是这个参数的真实值有一定概率落在测量结果的周围的程度，其给出的是被测量参数的测量值的可信程度</span></div></div>
+<ol type="1">
+<li>置信水平，置信水平越高置信宽度越大。</li>
+<li>样本量，样本量越大，置信宽度越小。</li>
+</ol>
+<section id="使用标准误计算置信区间" class="level3 page-columns page-full" data-number="11.1.1">
+<h3 data-number="11.1.1" class="anchored" data-anchor-id="使用标准误计算置信区间"><span class="header-section-number">11.1.1</span> 使用标准误计算置信区间</h3>
+<p>即使一个代表性非常好的样本，也无法完全与总体等同，总会存在一定的<strong>抽样误差</strong>。</p>
+<div class="callout-tip callout callout-style-default callout-captioned page-columns page-full">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body page-columns page-full">
+<ul>
+<li><p>例如用100人的平均身高作为总体参数<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>μ</mi><annotation encoding="application/x-tex">\mu</annotation></semantics></math>的估计，如果在随机抽样100人，又得到另一个平均身高……依次类推做10次抽样，就可以计算出样本统计量：10个平均身高和10个标准差。这10个平均身高也可以计算标准差（即标准误，样本统计量的标准差），它反映了样本统计量之间差别（即抽样误差）的大小。</p></li>
+<li><p>而实际中不可能多次抽样计算每个样本的统计量，再计算各统计量间的差异。通长我们获取一个尽可能大的样本来计算标准误，借助以下公式。式 <a href="#eq-se">Equation&nbsp;<span>11.1</span></a> 中，s为样本标准差，n为样本量。</p></li>
+</ul>
+<div class="no-row-height column-margin column-container"><span class="aside">计算具体标准误时，真正需要的可能是某些真实值或来自总体的值。若无法得到，则通常使用它们所对应的样本估计值来代替，某些估计值要保证能作为代替，可能离不开一些模型假定。</span></div><p><span id="eq-se"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi><mi>e</mi><mo>=</mo><mi>s</mi><msqrt><mi>n</mi></msqrt><mspace width="2.0em"></mspace><mrow><mo stretchy="true" form="prefix">(</mo><mn>11.1</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">
+    se = s\sqrt{n}
+ \qquad(11.1)</annotation></semantics></math></span></p>
+</div>
+</div>
+<p>标误几乎在所有的统计方法中都会出现，因为其大小直接发硬了抽样是否有足够的代表性，进而考察得出的结果是否有可靠性。</p>
+<p>由于抽样误差的存在，如果用样本统计量直接估计总体参数，则肯定会有一定偏差。所以在估计总体参数时，需要考虑到这种偏差大小，即用置信区间（<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>参</mi><mi>数</mi><mi>估</mi><mi>计</mi><mi>值</mi><mo>±</mo><mi>估</mi><mi>计</mi><mi>误</mi><mi>差</mi></mrow><annotation encoding="application/x-tex">参数估计值 \pm 估计误差</annotation></semantics></math>）来估计总体参数。</p>
+<div class="page-columns page-full"><p>根据中心极限定理，从任何分布中抽样，只要样本量足够大，其统计量最终会服从正态分布。因此，估计误差通常用对应一定正态分位数的z值在乘以抽样误差的标准误来表示。例如，95%置信区间一般表示为<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>参</mi><mi>数</mi><mi>估</mi><mi>计</mi><mi>值</mi><mo>±</mo><mn>1.96</mn><mo>×</mo><mi>标</mi><mi>准</mi><mi>误</mi></mrow><annotation encoding="application/x-tex">参数估计值 \pm 1.96 \times 标准误</annotation></semantics></math></p><div class="no-row-height column-margin column-container"><span class="aside"><a href="https://baike.baidu.com/item/%E4%B8%AD%E5%BF%83%E6%9E%81%E9%99%90%E5%AE%9A%E7%90%86/829451">中心极限定理</a>：在自然界与生产中，一些现象受到许多相互独立的随机因素的影响，如果每个因素所产生的影响都很微小时，总的影响可以看作是服从正态分布的。中心极限定理就是从数学上证明了这一现象。</span></div></div>
+</section>
+<section id="bootstrap法估计置信区间" class="level3 page-columns page-full" data-number="11.1.2">
+<h3 data-number="11.1.2" class="anchored" data-anchor-id="bootstrap法估计置信区间"><span class="header-section-number">11.1.2</span> Bootstrap法估计置信区间</h3>
+<p>对于某些抽样分布未知或难以计算的统计量，就需要使用<strong>Bootstrap（自助）重抽样法</strong><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>来研究抽样样本变化所带来的变异。</p>
+<p>Bootstrap 法的基本思想是：样本是从总体中随机抽取的，则包含总体的全部信息，那么不妨就把该样本视为” 总体”，进行多次有放回抽样生成一系列经验样本，再对每个经验样本计算统计量，就可以得到统计量的分布，进而用于统计推断。</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p>tidymodels 系列的 infer 包提供了统一的、tidy 的统计推断工作流，主要函数有：</p>
+<ul>
+<li><p>specify(): 设定感兴趣的变量或变量关系</p></li>
+<li><p>hypothesize(): 设定零假设</p></li>
+<li><p>generate(): 基于零假设生成数据</p></li>
+<li><p>calculate(): 根据上述数据，计算统计量的分布</p></li>
+<li><p>visualize(): 可视化</p></li>
+</ul>
+<p>还有获取/绘制 p 值/置信区间的函数。</p>
+</div></div><p>Bootstrap法估计统计量置信区间的基本步骤如下：</p>
+<ul>
+<li><p>从原始样本中有会放的随机抽取n个个体构成子样本。</p></li>
+<li><p>对子样本计算想要的统计量。</p></li>
+<li><p>重复前两步K次，得到K个统计量的估计值。</p></li>
+<li><p>根据K个估计值获得统计量的分布，并计算置信区间。</p></li>
+</ul>
+</section>
+<section id="案例" class="level3 page-columns page-full" data-number="11.1.3">
+<h3 data-number="11.1.3" class="anchored" data-anchor-id="案例"><span class="header-section-number">11.1.3</span> 案例</h3>
+<div class="page-columns page-full"><p>假设某学校随机抽样了20名学生身高，想要估计该学校所有学生的平均身高。</p><div class="no-row-height column-margin column-container"><span class="aside">更多案例，可参阅infer包Vignettes。</span></div></div>
+<ul>
+<li>计算基于标准误的置信区间</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">height =</span> <span class="fu">c</span>(<span class="dv">167</span>,<span class="dv">155</span>,<span class="dv">166</span>,<span class="dv">161</span>,<span class="dv">168</span>,<span class="dv">163</span>,<span class="dv">179</span>,<span class="dv">164</span>,<span class="dv">178</span>,<span class="dv">156</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>               <span class="dv">161</span>,<span class="dv">163</span>,<span class="dv">168</span>,<span class="dv">163</span>,<span class="dv">163</span>,<span class="dv">169</span>,<span class="dv">162</span>,<span class="dv">174</span>,<span class="dv">172</span>,<span class="dv">172</span>))</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fu">mean</span>(df<span class="sc">$</span>height)  <span class="co"># 点估计：计算样本均值</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>mu</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 166.2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>se <span class="ot">&lt;-</span> <span class="fu">sd</span>(df<span class="sc">$</span>height) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">nrow</span>(df))  <span class="co"># 计算标准误</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(mu <span class="sc">-</span> <span class="fu">qnorm</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.05</span><span class="sc">/</span><span class="dv">2</span>) <span class="sc">*</span> se, mu <span class="sc">+</span> <span class="fu">qnorm</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.05</span><span class="sc">/</span><span class="dv">2</span>) <span class="sc">*</span> se)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 163.3683 169.0317</code></pre>
+</div>
+</div>
+<ul>
+<li>计算基于Bootstrap法的置信区间</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(infer)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>boot_means <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">specify</span>(<span class="at">response =</span> height) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">1000</span>, <span class="at">type =</span> <span class="st">"bootstrap"</span>) <span class="sc">%&gt;%</span>  <span class="co"># 1000次bootstrap</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"mean"</span>)  <span class="co"># 计算统计量，样本均值</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>boot_means</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Response: height (numeric)
+# A tibble: 1,000 × 2
+   replicate  stat
+       &lt;int&gt; &lt;dbl&gt;
+ 1         1  167.
+ 2         2  167.
+ 3         3  165.
+ 4         4  163.
+ 5         5  167.
+ 6         6  166 
+ 7         7  166.
+ 8         8  167.
+ 9         9  168.
+10        10  165.
+# … with 990 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 计算置信区间</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>boot_ci <span class="ot">&lt;-</span> boot_means <span class="sc">%&gt;%</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">get_ci</span>(<span class="at">level =</span> <span class="fl">0.95</span>, <span class="at">type =</span> <span class="st">"percentile"</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>boot_ci</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+  lower_ci upper_ci
+     &lt;dbl&gt;    &lt;dbl&gt;
+1     163.     169.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 可视化</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">visualise</span>(boot_means) <span class="sc">+</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">shade_ci</span>(<span class="at">endpoints =</span> </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    boot_ci)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="10-parameter-estimation_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="最小二乘估计ols" class="level2 page-columns page-full" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="最小二乘估计ols"><span class="header-section-number">11.2</span> 最小二乘估计（OLS）</h2>
+<p>Ordinary Least Squares，最小二乘估计，常用于估计线性回归、曲线拟合的参数。其思想是让实际值与模型之的总偏离达到最小，从而得到最优的模型参数估计值。</p>
+<p>用一元线性回归来阐述，如有10组广告费用与销售的数据。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>sales <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">cost =</span> <span class="fu">c</span>(<span class="dv">30</span>,<span class="dv">40</span>,<span class="dv">40</span>,<span class="dv">50</span>,<span class="dv">60</span>,<span class="dv">70</span>,<span class="dv">70</span>,<span class="dv">70</span>,<span class="dv">80</span>,<span class="dv">90</span>),</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">sale =</span> <span class="fu">c</span>(<span class="fl">143.5</span>,<span class="fl">192.2</span>,<span class="fl">204.7</span>,<span class="dv">266</span>,<span class="fl">318.2</span>,<span class="dv">457</span>,<span class="fl">333.8</span>,<span class="fl">312.1</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>             <span class="fl">386.4</span>,<span class="fl">503.9</span>))</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sales, <span class="fu">aes</span>(cost, sale)) <span class="sc">+</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="10-parameter-estimation_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>图中的散点大致在一条直线上，而一元线性回归就是寻找一条直线，使得这条直线与散掉拟合程度最好（即越接近直线越好）</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">lm</span>(sale <span class="sc">~</span> cost, sales)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>sales1 <span class="ot">&lt;-</span> sales[<span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">9</span>), ] <span class="sc">%&gt;%</span> </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">p =</span> <span class="fu">predict</span>(m, .))</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sales, <span class="fu">aes</span>(cost, sale)) <span class="sc">+</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> cost, <span class="at">y =</span> sale,</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">xend =</span> cost, <span class="at">yend =</span> p), </span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> sales1, <span class="at">linetype =</span> <span class="dv">2</span>,</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="10-parameter-estimation_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>R中，线性回归的最小二乘估计可用<code>lm()</code>实现，非线性回归的最小二乘估计可用<code>nls()</code>函数实现。</p>
+<section id="非线性拟合" class="level3 page-columns page-full" data-number="11.2.1">
+<h3 data-number="11.2.1" class="anchored" data-anchor-id="非线性拟合"><span class="header-section-number">11.2.1</span> 非线性拟合</h3>
+<p>现有我国2003-2019年历年累积电影票房数据</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">"datas/历年累计票房.xlsx"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year =</span> year <span class="sc">-</span> <span class="dv">2002</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 17 × 2
+    year boxoffice
+   &lt;dbl&gt;     &lt;dbl&gt;
+ 1     1       8  
+ 2     2       9.2
+ 3     3      15.1
+ 4     4      20.5
+ 5     5      33.3
+ 6     6      43.4
+ 7     7      62.1
+ 8     8     102. 
+ 9     9     131. 
+10    10     171. 
+11    11     218. 
+12    12     296. 
+13    13     441. 
+14    14     457. 
+15    15     559. 
+16    16     610. 
+17    17     643. </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(year, boxoffice)) <span class="sc">+</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="fl">1.5</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>p</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="10-parameter-estimation_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="page-columns page-full"><p>非线性回归的第一步是找到合适的模型函数。</p><div class="no-row-height column-margin column-container"><span class="aside">这些三点大致服从Logistic分布曲线：$N(t)=</span></div></div>
+<div class="page-columns page-full"><p>我们想用<code>nls()</code>做非线性拟合，即寻找上述公式中的参数<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>ψ</mi><mn>1</mn></msub><mo>,</mo><mi>ψ</mi><mn>2</mn><mo>,</mo><mi>ψ</mi><mn>3</mn></mrow><annotation encoding="application/x-tex">\psi_1, \psi2, \psi3</annotation></semantics></math>的最优解。</p><div class="no-row-height column-margin column-container"><span class="aside">非线性拟合的算法非常依赖于参数初始值的选取，选取适当（离估计值不远），就能很快收敛到最优估计，否则迭代可能无法收敛。</span></div></div>
+<p>参数<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>ψ</mi><mn>1</mn></msub><annotation encoding="application/x-tex">\psi_1</annotation></semantics></math>对应人口容纳量上线，大致为曲线拐点值（目测约为400）的2倍。一旦确定<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>ψ</mi><mn>1</mn></msub><annotation encoding="application/x-tex">\psi_1</annotation></semantics></math>，则可以确定剩余两个参数：</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>l</mi><mi>o</mi><mi>g</mi><mi>i</mi><mi>t</mi><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mrow><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><msub><mi>ψ</mi><mn>1</mn></msub></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><msub><mi>ψ</mi><mn>2</mn></msub><mo>+</mo><msub><mi>ψ</mi><mn>3</mn></msub><mi>t</mi></mrow><annotation encoding="application/x-tex">
+  logit(\frac{N(t)}{\psi_1})=\psi_2+\psi_3t
+</annotation></semantics></math></p>
+<p>其中，<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>l</mi><mi>o</mi><mi>g</mi><mi>i</mi><mi>t</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>p</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mi>l</mi><mi>n</mi><mfrac><mi>p</mi><mrow><mn>1</mn><mo>−</mo><mi>p</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">logit(p)=ln\frac{p}{1-p}</annotation></semantics></math>称为Logit变换。</p>
+<p>接下来使用<code>lm()</code>做线性回归得到<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>ψ</mi><mn>2</mn></msub><mo>,</mo><msub><mi>ψ</mi><mn>3</mn></msub></mrow><annotation encoding="application/x-tex">\psi_2,\psi_3</annotation></semantics></math>的估计值。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>lm.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(car<span class="sc">::</span><span class="fu">logit</span>(boxoffice <span class="sc">/</span> <span class="dv">800</span>) <span class="sc">~</span> year, df)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lm.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)        year 
+ -5.1446518   0.3913851 </code></pre>
+</div>
+</div>
+<p>如此一来，我们得到一组较好的参数初始值：</p>
+<p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>ψ</mi><mn>1</mn></msub><mo>=</mo><mn>800</mn><mo>,</mo><msub><mi>ψ</mi><mn>2</mn></msub><mo>=</mo><mo>−</mo><mn>5.14</mn><mo>,</mo><msub><mi>ψ</mi><mn>3</mn></msub><mo>=</mo><mn>0.39</mn></mrow><annotation encoding="application/x-tex">\psi_1=800,\psi_2=-5.14,\psi_3=0.39</annotation></semantics></math></p>
+<div class="page-columns page-full"><p>使用<code>nls()</code>函数做非线性拟合。</p><div class="no-row-height column-margin column-container"><span class="aside">需要提供模型公式和初始参数值。</span></div></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>log.fit <span class="ot">&lt;-</span> <span class="fu">nls</span>(boxoffice <span class="sc">~</span> phi1 <span class="sc">/</span> (<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(<span class="sc">-</span>(phi2   </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>phi3<span class="sc">*</span>year))),</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> df,</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">start =</span> <span class="fu">list</span>(<span class="at">phi1=</span><span class="dv">800</span>, <span class="at">phi2=</span><span class="sc">-</span><span class="fl">5.14</span>, <span class="at">phi3=</span><span class="fl">0.39</span>))</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>coefs <span class="ot">=</span> <span class="fu">coef</span>(log.fit)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>coefs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       phi1        phi2        phi3 
+760.5771289  -5.4570682   0.4265685 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 绘图看拟合效果</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>LogFit  <span class="ot">&lt;-</span>  <span class="cf">function</span>(x) coefs[<span class="dv">1</span>] <span class="sc">/</span> (<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(<span class="sc">-</span>(coefs[<span class="dv">2</span>]<span class="sc">+</span>coefs[<span class="dv">3</span>]<span class="sc">*</span>x)))</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> </span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_function</span>(<span class="at">fun=</span>LogFit, <span class="at">color=</span><span class="st">"steelblue"</span>, <span class="at">size=</span><span class="fl">1.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="10-parameter-estimation_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p><code>nls()</code>拟合结果依赖于初始值和selfstart设置，容易拟合失败。可以进一步使用<code>glsnls</code>包。</p>
+</div></div></section>
+</section>
+<section id="sec:MLE" class="level2" data-number="11.3">
+<h2 data-number="11.3" class="anchored" data-anchor-id="sec:MLE"><span class="header-section-number">11.3</span> 最大似然估计(MLE)</h2>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>进一步学习补充</p>
+</div>
+</div>
+
+
+<!-- -->
+
+</section>
+<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1" role="doc-endnote"><p>Bootstrap 法手工实现极其麻烦，但特别适合用计算机实现，已广泛用于统计推断（点估计/置信区间/假设检验）、回归模型诊断以及机器学习等。<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./09-descriptive-statistics.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">描述性统计</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./11-Hypothesis-testing.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">假设检验</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb20" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># 参数估计 {#parameter-estimation}</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>与总体有关的指标**参数**；与样本有关的指标是**统计量**。</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>统计推断的重要内容之一是**参数估计**，即在抽样及抽样分布的基础上，根据样本统计量来推断所关心的总体参数。</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="fu">## 点估计与区间估计</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>参数估计主要有两种：</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**点估计**（准确，但不一定可靠）：就是样本统计量。比如估计哈尔滨成年男性的平均身高，样本均值175cm就是点估计；有一定把握落在172-178cm之间，就是区间估计。</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**区间估计**（可靠，但不很精确）：通常是指估计其95%置信区间，即有95%的把握认为该区间包含了总体参数，换言之，如果抽样100次，将有95次该区间包含了总体参数。</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>置信区间越窄反映了参数估计的精度越高，影响它的因素有两个：[<span class="co">[</span><span class="ot">置信区间</span><span class="co">](https://baike.baidu.com/item/%E7%BD%AE%E4%BF%A1%E5%8C%BA%E9%97%B4/7442583?fr=aladdin)</span>：置信区间是指由样本统计量所构造的总体参数的估计区间。在统计学中，一个概率样本的置信区间（Confidence interval）是对这个样本的某个总体参数的区间估计。置信区间展现的是这个参数的真实值有一定概率落在测量结果的周围的程度，其给出的是被测量参数的测量值的可信程度]{.aside}</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>置信水平，置信水平越高置信宽度越大。</span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>样本量，样本量越大，置信宽度越小。</span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a><span class="fu">### 使用标准误计算置信区间</span></span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>即使一个代表性非常好的样本，也无法完全与总体等同，总会存在一定的**抽样误差**。</span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a>:::{.callout-tip}</span>
+<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>例如用100人的平均身高作为总体参数$\mu$的估计，如果在随机抽样100人，又得到另一个平均身高……依次类推做10次抽样，就可以计算出样本统计量：10个平均身高和10个标准差。这10个平均身高也可以计算标准差（即标准误，样本统计量的标准差），它反映了样本统计量之间差别（即抽样误差）的大小。</span>
+<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>而实际中不可能多次抽样计算每个样本的统计量，再计算各统计量间的差异。通长我们获取一个尽可能大的样本来计算标准误，借助以下公式。式 @eq-se 中，s为样本标准差，n为样本量。<span class="co">[</span><span class="ot">计算具体标准误时，真正需要的可能是某些真实值或来自总体的值。若无法得到，则通常使用它们所对应的样本估计值来代替，某些估计值要保证能作为代替，可能离不开一些模型假定。</span><span class="co">]</span>{.aside}</span>
+<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a>    se = s\sqrt{n}</span>
+<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a>$$ {#eq-se}</span>
+<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a>标误几乎在所有的统计方法中都会出现，因为其大小直接发硬了抽样是否有足够的代表性，进而考察得出的结果是否有可靠性。</span>
+<span id="cb20-36"><a href="#cb20-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-37"><a href="#cb20-37" aria-hidden="true" tabindex="-1"></a>由于抽样误差的存在，如果用样本统计量直接估计总体参数，则肯定会有一定偏差。所以在估计总体参数时，需要考虑到这种偏差大小，即用置信区间（$参数估计值 \pm 估计误差$）来估计总体参数。</span>
+<span id="cb20-38"><a href="#cb20-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-39"><a href="#cb20-39" aria-hidden="true" tabindex="-1"></a>根据中心极限定理，从任何分布中抽样，只要样本量足够大，其统计量最终会服从正态分布。因此，估计误差通常用对应一定正态分位数的z值在乘以抽样误差的标准误来表示。例如，95%置信区间一般表示为$参数估计值 \pm 1.96 \times 标准误$[<span class="co">[</span><span class="ot">中心极限定理</span><span class="co">](https://baike.baidu.com/item/%E4%B8%AD%E5%BF%83%E6%9E%81%E9%99%90%E5%AE%9A%E7%90%86/829451)</span>：在自然界与生产中，一些现象受到许多相互独立的随机因素的影响，如果每个因素所产生的影响都很微小时，总的影响可以看作是服从正态分布的。中心极限定理就是从数学上证明了这一现象。]{.aside}</span>
+<span id="cb20-40"><a href="#cb20-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-41"><a href="#cb20-41" aria-hidden="true" tabindex="-1"></a><span class="fu">### Bootstrap法估计置信区间</span></span>
+<span id="cb20-42"><a href="#cb20-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-43"><a href="#cb20-43" aria-hidden="true" tabindex="-1"></a>对于某些抽样分布未知或难以计算的统计量，就需要使用**Bootstrap（自助）重抽样法**<span class="ot">[^自助重抽样]</span>来研究抽样样本变化所带来的变异。</span>
+<span id="cb20-44"><a href="#cb20-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-45"><a href="#cb20-45" aria-hidden="true" tabindex="-1"></a>Bootstrap 法的基本思想是：样本是从总体中随机抽取的，则包含总体的全部信息，那么不妨就把该样本视为” 总体”，进行多次有放回抽样生成一系列经验样本，再对每个经验样本计算统计量，就可以得到统计量的分布，进而用于统计推断。</span>
+<span id="cb20-46"><a href="#cb20-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-47"><a href="#cb20-47" aria-hidden="true" tabindex="-1"></a><span class="ot">[^自助重抽样]</span>:Bootstrap 法手工实现极其麻烦，但特别适合用计算机实现，已广泛用于统计推断（点估计/置信区间/假设检验）、回归模型诊断以及机器学习等。</span>
+<span id="cb20-48"><a href="#cb20-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-49"><a href="#cb20-49" aria-hidden="true" tabindex="-1"></a>:::{.column-margin}</span>
+<span id="cb20-50"><a href="#cb20-50" aria-hidden="true" tabindex="-1"></a>tidymodels 系列的 infer 包提供了统一的、tidy 的统计推断工作流，主要函数有：</span>
+<span id="cb20-51"><a href="#cb20-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-52"><a href="#cb20-52" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>specify(): 设定感兴趣的变量或变量关系</span>
+<span id="cb20-53"><a href="#cb20-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-54"><a href="#cb20-54" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>hypothesize(): 设定零假设</span>
+<span id="cb20-55"><a href="#cb20-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-56"><a href="#cb20-56" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>generate(): 基于零假设生成数据</span>
+<span id="cb20-57"><a href="#cb20-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-58"><a href="#cb20-58" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>calculate(): 根据上述数据，计算统计量的分布</span>
+<span id="cb20-59"><a href="#cb20-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-60"><a href="#cb20-60" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>visualize(): 可视化</span>
+<span id="cb20-61"><a href="#cb20-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-62"><a href="#cb20-62" aria-hidden="true" tabindex="-1"></a>还有获取/绘制 p 值/置信区间的函数。</span>
+<span id="cb20-63"><a href="#cb20-63" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb20-64"><a href="#cb20-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-65"><a href="#cb20-65" aria-hidden="true" tabindex="-1"></a>Bootstrap法估计统计量置信区间的基本步骤如下：</span>
+<span id="cb20-66"><a href="#cb20-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-67"><a href="#cb20-67" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>从原始样本中有会放的随机抽取n个个体构成子样本。</span>
+<span id="cb20-68"><a href="#cb20-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-69"><a href="#cb20-69" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>对子样本计算想要的统计量。</span>
+<span id="cb20-70"><a href="#cb20-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-71"><a href="#cb20-71" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>重复前两步K次，得到K个统计量的估计值。</span>
+<span id="cb20-72"><a href="#cb20-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-73"><a href="#cb20-73" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>根据K个估计值获得统计量的分布，并计算置信区间。</span>
+<span id="cb20-74"><a href="#cb20-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-75"><a href="#cb20-75" aria-hidden="true" tabindex="-1"></a><span class="fu">### 案例</span></span>
+<span id="cb20-76"><a href="#cb20-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-77"><a href="#cb20-77" aria-hidden="true" tabindex="-1"></a>假设某学校随机抽样了20名学生身高，想要估计该学校所有学生的平均身高。<span class="co">[</span><span class="ot">更多案例，可参阅infer包Vignettes。</span><span class="co">]</span>{.aside}</span>
+<span id="cb20-78"><a href="#cb20-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-79"><a href="#cb20-79" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>计算基于标准误的置信区间</span>
+<span id="cb20-80"><a href="#cb20-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-83"><a href="#cb20-83" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-84"><a href="#cb20-84" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb20-85"><a href="#cb20-85" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb20-86"><a href="#cb20-86" aria-hidden="true" tabindex="-1"></a>    <span class="at">height =</span> <span class="fu">c</span>(<span class="dv">167</span>,<span class="dv">155</span>,<span class="dv">166</span>,<span class="dv">161</span>,<span class="dv">168</span>,<span class="dv">163</span>,<span class="dv">179</span>,<span class="dv">164</span>,<span class="dv">178</span>,<span class="dv">156</span>,</span>
+<span id="cb20-87"><a href="#cb20-87" aria-hidden="true" tabindex="-1"></a>               <span class="dv">161</span>,<span class="dv">163</span>,<span class="dv">168</span>,<span class="dv">163</span>,<span class="dv">163</span>,<span class="dv">169</span>,<span class="dv">162</span>,<span class="dv">174</span>,<span class="dv">172</span>,<span class="dv">172</span>))</span>
+<span id="cb20-88"><a href="#cb20-88" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fu">mean</span>(df<span class="sc">$</span>height)  <span class="co"># 点估计：计算样本均值</span></span>
+<span id="cb20-89"><a href="#cb20-89" aria-hidden="true" tabindex="-1"></a>mu</span>
+<span id="cb20-90"><a href="#cb20-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-91"><a href="#cb20-91" aria-hidden="true" tabindex="-1"></a>se <span class="ot">&lt;-</span> <span class="fu">sd</span>(df<span class="sc">$</span>height) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">nrow</span>(df))  <span class="co"># 计算标准误</span></span>
+<span id="cb20-92"><a href="#cb20-92" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(mu <span class="sc">-</span> <span class="fu">qnorm</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.05</span><span class="sc">/</span><span class="dv">2</span>) <span class="sc">*</span> se, mu <span class="sc">+</span> <span class="fu">qnorm</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.05</span><span class="sc">/</span><span class="dv">2</span>) <span class="sc">*</span> se)</span>
+<span id="cb20-93"><a href="#cb20-93" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-94"><a href="#cb20-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-95"><a href="#cb20-95" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>计算基于Bootstrap法的置信区间</span>
+<span id="cb20-96"><a href="#cb20-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-99"><a href="#cb20-99" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-100"><a href="#cb20-100" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(infer)</span>
+<span id="cb20-101"><a href="#cb20-101" aria-hidden="true" tabindex="-1"></a>boot_means <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> </span>
+<span id="cb20-102"><a href="#cb20-102" aria-hidden="true" tabindex="-1"></a>    <span class="fu">specify</span>(<span class="at">response =</span> height) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-103"><a href="#cb20-103" aria-hidden="true" tabindex="-1"></a>    <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">1000</span>, <span class="at">type =</span> <span class="st">"bootstrap"</span>) <span class="sc">%&gt;%</span>  <span class="co"># 1000次bootstrap</span></span>
+<span id="cb20-104"><a href="#cb20-104" aria-hidden="true" tabindex="-1"></a>    <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"mean"</span>)  <span class="co"># 计算统计量，样本均值</span></span>
+<span id="cb20-105"><a href="#cb20-105" aria-hidden="true" tabindex="-1"></a>boot_means</span>
+<span id="cb20-106"><a href="#cb20-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-107"><a href="#cb20-107" aria-hidden="true" tabindex="-1"></a><span class="co"># 计算置信区间</span></span>
+<span id="cb20-108"><a href="#cb20-108" aria-hidden="true" tabindex="-1"></a>boot_ci <span class="ot">&lt;-</span> boot_means <span class="sc">%&gt;%</span> </span>
+<span id="cb20-109"><a href="#cb20-109" aria-hidden="true" tabindex="-1"></a>    <span class="fu">get_ci</span>(<span class="at">level =</span> <span class="fl">0.95</span>, <span class="at">type =</span> <span class="st">"percentile"</span>)</span>
+<span id="cb20-110"><a href="#cb20-110" aria-hidden="true" tabindex="-1"></a>boot_ci</span>
+<span id="cb20-111"><a href="#cb20-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-112"><a href="#cb20-112" aria-hidden="true" tabindex="-1"></a><span class="co"># 可视化</span></span>
+<span id="cb20-113"><a href="#cb20-113" aria-hidden="true" tabindex="-1"></a><span class="fu">visualise</span>(boot_means) <span class="sc">+</span></span>
+<span id="cb20-114"><a href="#cb20-114" aria-hidden="true" tabindex="-1"></a>    <span class="fu">shade_ci</span>(<span class="at">endpoints =</span> </span>
+<span id="cb20-115"><a href="#cb20-115" aria-hidden="true" tabindex="-1"></a>    boot_ci)</span>
+<span id="cb20-116"><a href="#cb20-116" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-117"><a href="#cb20-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-118"><a href="#cb20-118" aria-hidden="true" tabindex="-1"></a><span class="fu">## 最小二乘估计（OLS）</span></span>
+<span id="cb20-119"><a href="#cb20-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-120"><a href="#cb20-120" aria-hidden="true" tabindex="-1"></a>Ordinary Least Squares，最小二乘估计，常用于估计线性回归、曲线拟合的参数。其思想是让实际值与模型之的总偏离达到最小，从而得到最优的模型参数估计值。</span>
+<span id="cb20-121"><a href="#cb20-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-122"><a href="#cb20-122" aria-hidden="true" tabindex="-1"></a>用一元线性回归来阐述，如有10组广告费用与销售的数据。</span>
+<span id="cb20-123"><a href="#cb20-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-126"><a href="#cb20-126" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-127"><a href="#cb20-127" aria-hidden="true" tabindex="-1"></a>sales <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb20-128"><a href="#cb20-128" aria-hidden="true" tabindex="-1"></a>    <span class="at">cost =</span> <span class="fu">c</span>(<span class="dv">30</span>,<span class="dv">40</span>,<span class="dv">40</span>,<span class="dv">50</span>,<span class="dv">60</span>,<span class="dv">70</span>,<span class="dv">70</span>,<span class="dv">70</span>,<span class="dv">80</span>,<span class="dv">90</span>),</span>
+<span id="cb20-129"><a href="#cb20-129" aria-hidden="true" tabindex="-1"></a>    <span class="at">sale =</span> <span class="fu">c</span>(<span class="fl">143.5</span>,<span class="fl">192.2</span>,<span class="fl">204.7</span>,<span class="dv">266</span>,<span class="fl">318.2</span>,<span class="dv">457</span>,<span class="fl">333.8</span>,<span class="fl">312.1</span>,</span>
+<span id="cb20-130"><a href="#cb20-130" aria-hidden="true" tabindex="-1"></a>             <span class="fl">386.4</span>,<span class="fl">503.9</span>))</span>
+<span id="cb20-131"><a href="#cb20-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-132"><a href="#cb20-132" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sales, <span class="fu">aes</span>(cost, sale)) <span class="sc">+</span></span>
+<span id="cb20-133"><a href="#cb20-133" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>()</span>
+<span id="cb20-134"><a href="#cb20-134" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-135"><a href="#cb20-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-136"><a href="#cb20-136" aria-hidden="true" tabindex="-1"></a>图中的散点大致在一条直线上，而一元线性回归就是寻找一条直线，使得这条直线与散掉拟合程度最好（即越接近直线越好）</span>
+<span id="cb20-137"><a href="#cb20-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-140"><a href="#cb20-140" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-141"><a href="#cb20-141" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">lm</span>(sale <span class="sc">~</span> cost, sales)</span>
+<span id="cb20-142"><a href="#cb20-142" aria-hidden="true" tabindex="-1"></a>sales1 <span class="ot">&lt;-</span> sales[<span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">9</span>), ] <span class="sc">%&gt;%</span> </span>
+<span id="cb20-143"><a href="#cb20-143" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">p =</span> <span class="fu">predict</span>(m, .))</span>
+<span id="cb20-144"><a href="#cb20-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-145"><a href="#cb20-145" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sales, <span class="fu">aes</span>(cost, sale)) <span class="sc">+</span></span>
+<span id="cb20-146"><a href="#cb20-146" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb20-147"><a href="#cb20-147" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb20-148"><a href="#cb20-148" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> cost, <span class="at">y =</span> sale,</span>
+<span id="cb20-149"><a href="#cb20-149" aria-hidden="true" tabindex="-1"></a>    <span class="at">xend =</span> cost, <span class="at">yend =</span> p), </span>
+<span id="cb20-150"><a href="#cb20-150" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> sales1, <span class="at">linetype =</span> <span class="dv">2</span>,</span>
+<span id="cb20-151"><a href="#cb20-151" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"red"</span>)</span>
+<span id="cb20-152"><a href="#cb20-152" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-153"><a href="#cb20-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-154"><a href="#cb20-154" aria-hidden="true" tabindex="-1"></a>R中，线性回归的最小二乘估计可用<span class="in">`lm()`</span>实现，非线性回归的最小二乘估计可用<span class="in">`nls()`</span>函数实现。</span>
+<span id="cb20-155"><a href="#cb20-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-156"><a href="#cb20-156" aria-hidden="true" tabindex="-1"></a><span class="fu">### 非线性拟合</span></span>
+<span id="cb20-157"><a href="#cb20-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-158"><a href="#cb20-158" aria-hidden="true" tabindex="-1"></a>现有我国2003-2019年历年累积电影票房数据</span>
+<span id="cb20-159"><a href="#cb20-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-162"><a href="#cb20-162" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-163"><a href="#cb20-163" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">"datas/历年累计票房.xlsx"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-164"><a href="#cb20-164" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year =</span> year <span class="sc">-</span> <span class="dv">2002</span>)</span>
+<span id="cb20-165"><a href="#cb20-165" aria-hidden="true" tabindex="-1"></a>df</span>
+<span id="cb20-166"><a href="#cb20-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-167"><a href="#cb20-167" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(year, boxoffice)) <span class="sc">+</span></span>
+<span id="cb20-168"><a href="#cb20-168" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="fl">1.5</span>)</span>
+<span id="cb20-169"><a href="#cb20-169" aria-hidden="true" tabindex="-1"></a>p</span>
+<span id="cb20-170"><a href="#cb20-170" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-171"><a href="#cb20-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-172"><a href="#cb20-172" aria-hidden="true" tabindex="-1"></a>非线性回归的第一步是找到合适的模型函数。<span class="co">[</span><span class="ot">这些三点大致服从Logistic分布曲线：$N(t)=\frac{\psi_1}{1+e^{-(\psi_2+\psi_3t)}}</span><span class="co">]</span>{.aside}</span>
+<span id="cb20-173"><a href="#cb20-173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-174"><a href="#cb20-174" aria-hidden="true" tabindex="-1"></a>我们想用<span class="in">`nls()`</span>做非线性拟合，即寻找上述公式中的参数$\psi_1, \psi2, \psi3$的最优解。<span class="co">[</span><span class="ot">非线性拟合的算法非常依赖于参数初始值的选取，选取适当（离估计值不远），就能很快收敛到最优估计，否则迭代可能无法收敛。</span><span class="co">]</span>{.aside}</span>
+<span id="cb20-175"><a href="#cb20-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-176"><a href="#cb20-176" aria-hidden="true" tabindex="-1"></a>参数$\psi_1$对应人口容纳量上线，大致为曲线拐点值（目测约为400）的2倍。一旦确定$\psi_1$，则可以确定剩余两个参数：</span>
+<span id="cb20-177"><a href="#cb20-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-178"><a href="#cb20-178" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb20-179"><a href="#cb20-179" aria-hidden="true" tabindex="-1"></a>  logit(\frac{N(t)}{\psi_1})=\psi_2+\psi_3t</span>
+<span id="cb20-180"><a href="#cb20-180" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb20-181"><a href="#cb20-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-182"><a href="#cb20-182" aria-hidden="true" tabindex="-1"></a>其中，$logit(p)=ln\frac{p}{1-p}$称为Logit变换。</span>
+<span id="cb20-183"><a href="#cb20-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-184"><a href="#cb20-184" aria-hidden="true" tabindex="-1"></a>接下来使用<span class="in">`lm()`</span>做线性回归得到$\psi_2,\psi_3$的估计值。</span>
+<span id="cb20-185"><a href="#cb20-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-188"><a href="#cb20-188" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-189"><a href="#cb20-189" aria-hidden="true" tabindex="-1"></a>lm.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(car<span class="sc">::</span><span class="fu">logit</span>(boxoffice <span class="sc">/</span> <span class="dv">800</span>) <span class="sc">~</span> year, df)</span>
+<span id="cb20-190"><a href="#cb20-190" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lm.fit)</span>
+<span id="cb20-191"><a href="#cb20-191" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-192"><a href="#cb20-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-193"><a href="#cb20-193" aria-hidden="true" tabindex="-1"></a>如此一来，我们得到一组较好的参数初始值：</span>
+<span id="cb20-194"><a href="#cb20-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-195"><a href="#cb20-195" aria-hidden="true" tabindex="-1"></a>$\psi_1=800,\psi_2=-5.14,\psi_3=0.39$</span>
+<span id="cb20-196"><a href="#cb20-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-197"><a href="#cb20-197" aria-hidden="true" tabindex="-1"></a>使用<span class="in">`nls()`</span>函数做非线性拟合。<span class="co">[</span><span class="ot">需要提供模型公式和初始参数值。</span><span class="co">]</span>{.aside}</span>
+<span id="cb20-198"><a href="#cb20-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-201"><a href="#cb20-201" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-202"><a href="#cb20-202" aria-hidden="true" tabindex="-1"></a>log.fit <span class="ot">&lt;-</span> <span class="fu">nls</span>(boxoffice <span class="sc">~</span> phi1 <span class="sc">/</span> (<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(<span class="sc">-</span>(phi2   </span>
+<span id="cb20-203"><a href="#cb20-203" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>phi3<span class="sc">*</span>year))),</span>
+<span id="cb20-204"><a href="#cb20-204" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> df,</span>
+<span id="cb20-205"><a href="#cb20-205" aria-hidden="true" tabindex="-1"></a>  <span class="at">start =</span> <span class="fu">list</span>(<span class="at">phi1=</span><span class="dv">800</span>, <span class="at">phi2=</span><span class="sc">-</span><span class="fl">5.14</span>, <span class="at">phi3=</span><span class="fl">0.39</span>))</span>
+<span id="cb20-206"><a href="#cb20-206" aria-hidden="true" tabindex="-1"></a>coefs <span class="ot">=</span> <span class="fu">coef</span>(log.fit)</span>
+<span id="cb20-207"><a href="#cb20-207" aria-hidden="true" tabindex="-1"></a>coefs</span>
+<span id="cb20-208"><a href="#cb20-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-209"><a href="#cb20-209" aria-hidden="true" tabindex="-1"></a><span class="co"># 绘图看拟合效果</span></span>
+<span id="cb20-210"><a href="#cb20-210" aria-hidden="true" tabindex="-1"></a>LogFit  <span class="ot">&lt;-</span>  <span class="cf">function</span>(x) coefs[<span class="dv">1</span>] <span class="sc">/</span> (<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(<span class="sc">-</span>(coefs[<span class="dv">2</span>]<span class="sc">+</span>coefs[<span class="dv">3</span>]<span class="sc">*</span>x)))</span>
+<span id="cb20-211"><a href="#cb20-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-212"><a href="#cb20-212" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> </span>
+<span id="cb20-213"><a href="#cb20-213" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_function</span>(<span class="at">fun=</span>LogFit, <span class="at">color=</span><span class="st">"steelblue"</span>, <span class="at">size=</span><span class="fl">1.2</span>)</span>
+<span id="cb20-214"><a href="#cb20-214" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-215"><a href="#cb20-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-216"><a href="#cb20-216" aria-hidden="true" tabindex="-1"></a>:::{.column-margin}</span>
+<span id="cb20-217"><a href="#cb20-217" aria-hidden="true" tabindex="-1"></a><span class="in">`nls()`</span>拟合结果依赖于初始值和selfstart设置，容易拟合失败。可以进一步使用<span class="in">`glsnls`</span>包。</span>
+<span id="cb20-218"><a href="#cb20-218" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb20-219"><a href="#cb20-219" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-220"><a href="#cb20-220" aria-hidden="true" tabindex="-1"></a><span class="fu">## 最大似然估计(MLE) {#sec:MLE}</span></span>
+<span id="cb20-221"><a href="#cb20-221" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-222"><a href="#cb20-222" aria-hidden="true" tabindex="-1"></a>:::{.callout-warning}</span>
+<span id="cb20-223"><a href="#cb20-223" aria-hidden="true" tabindex="-1"></a>进一步学习补充</span>
+<span id="cb20-224"><a href="#cb20-224" aria-hidden="true" tabindex="-1"></a>:::</span>
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+</body></html>

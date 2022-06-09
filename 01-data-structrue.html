@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-0.9.464">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>R语言学习笔记-IntroR - 1&nbsp; 数据结构</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<script src="site_libs\quarto-nav\quarto-nav.js"></script><script src="site_libs\quarto-nav\headroom.min.js"></script><script src="site_libs\clipboard\clipboard.min.js"></script><script src="site_libs\quarto-search\autocomplete.umd.js"></script><script src="site_libs\quarto-search\fuse.min.js"></script><script src="site_libs\quarto-search\quarto-search.js"></script><meta name="quarto:offset" content="./"><link href="/01-rex.html" rel="next"><link href="/index.html" rel="prev"><script src="site_libs\quarto-html\quarto.js"></script><script src="site_libs\quarto-html\popper.min.js"></script><script src="site_libs\quarto-html\tippy.umd.min.js"></script><script src="site_libs\quarto-html\anchor.min.js"></script><link href="site_libs\quarto-html\tippy.css" rel="stylesheet"><link href="site_libs\quarto-html\quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><script src="site_libs\bootstrap\bootstrap.min.js"></script><link href="site_libs\bootstrap\bootstrap-icons.css" rel="stylesheet"><link href="site_libs\bootstrap\bootstrap.min.css" rel="stylesheet"></head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">数据结构</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">R语言学习笔记-IntroR</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">前言</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Basic</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-data-structrue.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">数据结构</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-rex.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">数据结构-时间序列+正则表达式</span></a>
+  </div>
+</li>
+    </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Funciton&amp;Loop</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-loop-purrr.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">循环和purrr</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-function.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">自定义函数</span></a>
+  </div>
+</li>
+    </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Advanced</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-data-manipulation.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">数据操作</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-ggplot2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">ggolot2绘图</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-Statistical-modeling.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">统计建模</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-data-cleaning-feature.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">数据清洗和特征工程</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-tidyverse.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">tidyverse技巧</span></a>
+  </div>
+</li>
+    </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">Machine Learning</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-descriptive-statistics.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">描述性统计</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-parameter-estimation.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">参数估计</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-Hypothesis-testing.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">假设检验</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-regression.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">回归分析</span></a>
+  </div>
+</li>
+    </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./21-references.html" class="sidebar-item-text sidebar-link">参考文献</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">Appendices</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./20-other-packages.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">其它有趣的包</span></a>
+  </div>
+</li>
+    </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec:list" id="toc-sec:list" class="nav-link active" data-scroll-target="#sec\:list"> <span class="header-section-number">1.1</span> 列表</a></li>
+  <li><a href="#sec:factor" id="toc-sec:factor" class="nav-link" data-scroll-target="#sec\:factor"> <span class="header-section-number">1.2</span> 因子</a></li>
+  <li><a href="#sec:str" id="toc-sec:str" class="nav-link" data-scroll-target="#sec\:str"> <span class="header-section-number">1.3</span> 字符串</a></li>
+  <li><a href="#sec:date" id="toc-sec:date" class="nav-link" data-scroll-target="#sec\:date"> <span class="header-section-number">1.4</span> 日期时间</a>
+  <ul class="collapse">
+  <li><a href="#识别日期时间" id="toc-识别日期时间" class="nav-link" data-scroll-target="#识别日期时间"> <span class="header-section-number">1.4.1</span> 识别日期时间</a></li>
+  <li><a href="#格式化输出日期时间" id="toc-格式化输出日期时间" class="nav-link" data-scroll-target="#格式化输出日期时间"> <span class="header-section-number">1.4.2</span> 格式化输出日期时间</a></li>
+  <li><a href="#提取日期时间数据的组建" id="toc-提取日期时间数据的组建" class="nav-link" data-scroll-target="#提取日期时间数据的组建"> <span class="header-section-number">1.4.3</span> 提取日期时间数据的组建</a></li>
+  <li><a href="#时间段数据" id="toc-时间段数据" class="nav-link" data-scroll-target="#时间段数据"> <span class="header-section-number">1.4.4</span> 时间段数据</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span id="data-structrue" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">数据结构</span></span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<ol type="1">
+<li><code>[[]]</code>和<code>[]</code>：</li>
+</ol>
+<ul>
+<li><p><code>[[]]</code>始终提取一个元素的内容，如提取一个列表某一个成分的内容，结果返回为元素（下一级元素）。</p></li>
+<li><p><code>[]</code>始终提取子集，如提取列表的子集，返回的结果还是列表。</p></li>
+</ul>
+<section id="sec:list" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="sec:list"><span class="header-section-number">1.1</span> 列表</h2>
+<ol type="1">
+<li><code>purrr</code>包中提供了一些系列操作列表的函数：</li>
+</ol>
+<ul>
+<li><p><code>pluck()</code>：同 “[[]]”提取列表中的元素。</p></li>
+<li><p><code>keep()</code>： 保留满足条件的元素。</p></li>
+<li><p><code>discard()</code>： 删除满足条件的元素。</p></li>
+<li><p><code>compact()</code>： 删除列表中的空元素。</p></li>
+<li><p><code>append()</code>：在列表末尾增加元素。</p></li>
+<li><p><code>flatten()</code>： 摊平列表（只摊平一层）。</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">A =</span> <span class="dv">1</span>, <span class="at">B =</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>), <span class="at">C =</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">pluck</span>(a<span class="sc">$</span>A)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">flatten</span>(a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$A
+[1] 1
+
+[[2]]
+[1] TRUE
+
+[[3]]
+[1] FALSE
+
+[[4]]
+[1] "a"
+
+[[5]]
+[1] "b"
+
+[[6]]
+[1] "c"</code></pre>
+</div>
+</div>
+</section>
+<section id="sec:factor" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="sec:factor"><span class="header-section-number">1.2</span> 因子</h2>
+<p>R 提供了因子这一数据结构（容器），专门用来存放名义型和有序型的分类变量。因子本质上是一个带有水平（level）属性的整数向量，其中 “水平” 是指事前确定可能取值的有限集合。例如，性别有两个水平：男、女。</p>
+<p><a href="https://forcats.tidyverse.org/">forcats包</a>是处理因子的强大工具。</p>
+</section>
+<section id="sec:str" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="sec:str"><span class="header-section-number">1.3</span> 字符串</h2>
+<p>字符串是用双引号或单引号括起来的若干字符1，字符串构成的向量，称为字符向量。数据清洗、可视化等操作都会用到字符串处理。</p>
+<p>tidyverse 系列中的 <a href="https://stringr.tidyverse.org/">stringr包</a> 包提供了一系列接口一致的、简单易用的字符串操作函数，足以代替 R 自带字符串函数2。</p>
+<p>两点说明：</p>
+<ul>
+<li>查找匹配的各个函数，只是查找第一个匹配，要想查找所有匹配，各个函 数都有后缀 _all 版本；</li>
+<li>各个函数中的参数 pattern 都支持用正则表达式。</li>
+</ul>
+</section>
+<section id="sec:date" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="sec:date"><span class="header-section-number">1.4</span> 日期时间</h2>
+<p>日期时间通常以字符串的形式传入R中，然后转化为以数值形式储存的日期时间变量。</p>
+<p>R的内部日期是以1970年1月1日<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>至今的天数来储存，内部时间则是以1970年1月1日至今的秒数来储存的。</p>
+<p><a href="https://lubridate.tidyverse.org/">lubridata包</a>提供了一系列更方便的函数用来生成、管理日期。</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>不要直接按字符串处理日期时间，应该先转换为日期对象后在处理。</p>
+</div>
+</div>
+<section id="识别日期时间" class="level3" data-number="1.4.1">
+<h3 data-number="1.4.1" class="anchored" data-anchor-id="识别日期时间"><span class="header-section-number">1.4.1</span> 识别日期时间</h3>
+<ol type="1">
+<li>识别当前时间</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">today</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2022-06-01"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">now</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2022-06-01 09:02:32 CST"</code></pre>
+</div>
+</div>
+<ol start="2" type="1">
+<li>时间日期转换</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 将日期型转换为时间型</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">as_datetime</span>(<span class="fu">today</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2022-06-01 UTC"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 将时间型转换为日期型</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">as_date</span>(<span class="fu">now</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2022-06-01"</code></pre>
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>可根据需要使用 ymd_h/myd_hm/dmy_hms等任意组合识别日期时间值，使用参数tz可以指定时区。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ymd</span>(<span class="st">"20220301"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2022-03-01"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ymd_hms</span>(<span class="st">"20220301-131300"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2022-03-01 13:13:00 UTC"</code></pre>
+</div>
+</div>
+</div>
+</div>
+<ol start="3" type="1">
+<li>创建时间日期</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">make_date</span>(<span class="dv">2020</span>, <span class="dv">8</span>, <span class="dv">27</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2020-08-27"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">make_datetime</span>(<span class="dv">2020</span>, <span class="dv">8</span>, <span class="dv">27</span>, <span class="dv">21</span>, <span class="dv">27</span>, <span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2020-08-27 21:27:15 UTC"</code></pre>
+</div>
+</div>
+</section>
+<section id="格式化输出日期时间" class="level3" data-number="1.4.2">
+<h3 data-number="1.4.2" class="anchored" data-anchor-id="格式化输出日期时间"><span class="header-section-number">1.4.2</span> 格式化输出日期时间</h3>
+<ol type="1">
+<li><code>format()</code>函数</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">make_date</span>(<span class="dv">2022</span>, <span class="dv">4</span>, <span class="dv">22</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span>(d, <span class="st">"%Y/%m/%d"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2022/04/22"</code></pre>
+</div>
+</div>
+<ol start="2" type="1">
+<li><code>stamp()</code>函数，按给定模版的格式输出</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">make_datetime</span>(<span class="dv">2022</span>, <span class="dv">4</span>, <span class="dv">22</span>, <span class="dv">17</span>, <span class="dv">34</span>, <span class="dv">15</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>fmt <span class="ot">&lt;-</span> <span class="fu">stamp</span>(<span class="st">"Created on Sunday, jan 1, 1999 3:34 pm"</span>) <span class="co"># 模版，自动匹配时间组件</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">fmt</span>(t)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Created on Sunday, 04 22, 2022 17:34 下午"</code></pre>
+</div>
+</div>
+</section>
+<section id="提取日期时间数据的组建" class="level3" data-number="1.4.3">
+<h3 data-number="1.4.3" class="anchored" data-anchor-id="提取日期时间数据的组建"><span class="header-section-number">1.4.3</span> 提取日期时间数据的组建</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/datetime.jpg" class="img-fluid figure-img"></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption">时间组件、描述、示例</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">ymd_hms</span>(<span class="st">"2022-04-22 17:41:45"</span>)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 提取年份，类似的还有month()、day()、hour()、minute()、second()</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">year</span>(t)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2022</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 提取季度</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">quarter</span>(t)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 计算时间是当年的第几天</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">yday</span>(t)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 112</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 关于星期</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">weekdays</span>(t)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "星期五"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wday</span>(t)  <span class="co"># 日期是本周的第几天，注意默认周日为第1天</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 6</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wday</span>(t, <span class="at">label =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 周五
+Levels: 周日 &lt; 周一 &lt; 周二 &lt; 周三 &lt; 周四 &lt; 周五 &lt; 周六</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">week</span>(t)  <span class="co"># 本周是当年的第几周</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 16</code></pre>
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>使用**_tz()函数修改时区：</li>
+</ol>
+<ul>
+<li><code>tz()</code>显示当前时区</li>
+<li><code>with_tz()</code>将时间数据转换为另一个时区的同一时间</li>
+<li><code>force_tz()</code>将时间数据的时区强制转换为另一个时区</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tz</span>(t)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "UTC"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with_tz</span>(t, <span class="at">tz =</span> <span class="st">"America/New_York"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2022-04-22 13:41:45 EDT"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">force_tz</span>(t, <span class="at">tz =</span> <span class="st">"America/New_York"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2022-04-22 17:41:45 EDT"</code></pre>
+</div>
+</div>
+<ol start="2" type="1">
+<li>模糊提取到不同的时间单位，以下函数均需设定取整单位，默认为second</li>
+</ol>
+<ul>
+<li>使用<code>round_date()</code>四舍五入时间</li>
+<li>使用<code>floor_date()</code>和<code>ceiling_date()</code>向上或向下取整时间</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round_date</span>(t, <span class="at">unit =</span> <span class="st">"hour"</span>)  <span class="co"># 按小时四舍五入取整</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2022-04-22 18:00:00 UTC"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">floor_date</span>(t, <span class="at">unit =</span> <span class="st">"hour"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2022-04-22 17:00:00 UTC"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ceiling_date</span>(t, <span class="at">unit =</span> <span class="st">"hour"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2022-04-22 18:00:00 UTC"</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="时间段数据" class="level3" data-number="1.4.4">
+<h3 data-number="1.4.4" class="anchored" data-anchor-id="时间段数据"><span class="header-section-number">1.4.4</span> 时间段数据</h3>
+<ol type="1">
+<li><code>interval()</code>函数计算两个时间点的时间间隔，返回时间段数据。通常需要对时间段进行进一步识别。</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>begin <span class="ot">&lt;-</span> <span class="fu">ymd_hm</span>(<span class="st">"2019-08-10, 14:00"</span>)</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>end <span class="ot">&lt;-</span> <span class="fu">ymd_hm</span>(<span class="st">"2022-4-26, 9:10"</span>)</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>gap <span class="ot">&lt;-</span> <span class="fu">interval</span>(begin, end)</span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>gap  <span class="co"># 返回时间段数据</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2019-08-10 14:00:00 UTC--2022-04-26 09:10:00 UTC</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 计算时间段有几天，同理可以计算有几个月、几分钟等</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">time_length</span>(gap, <span class="st">"day"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 989.7986</code></pre>
+</div>
+</div>
+<ol start="2" type="1">
+<li><code>duration()</code>函数和<code>period()</code>函数计算数值+时间单位存储时段的长度。 <code>period()</code>函数考虑到了闰年和闰秒，所以在国内更推荐使用。</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">period</span>(<span class="dv">100</span>, <span class="at">units =</span> <span class="st">"seconds"</span>)  <span class="co"># 100天有多少秒、共几个星期</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "100S"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">period</span>(<span class="fu">c</span>(<span class="dv">90</span>, <span class="dv">5</span>), <span class="fu">c</span>(<span class="st">"second"</span>, <span class="st">"minute"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "5M 90S"</code></pre>
+</div>
+</div>
+<p>(关于<code>period()</code>和<code>durarion()</code>两个函数及其附属函数的更多用法)[.todo]</p>
+<p>(日期/时间的计算)[.todo]</p>
+
+
+<!-- -->
+
+</section>
+</section>
+<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1" role="doc-endnote"><p>可以参考<a href="https://zhuanlan.zhihu.com/p/29748774">这篇文章</a>了解有趣最初时间点设置。<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">前言</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./01-rex.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">数据结构-时间序列+正则表达式</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb59" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># 数据结构 {#data-structrue}</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span><span class="in">`[[]]`</span>和<span class="in">`[]`</span>：</span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`[[]]`</span>始终提取一个元素的内容，如提取一个列表某一个成分的内容，结果返回为元素（下一级元素）。</span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`[]`</span>始终提取子集，如提取列表的子集，返回的结果还是列表。</span>
+<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-9"><a href="#cb59-9" aria-hidden="true" tabindex="-1"></a><span class="fu">## 列表 {#sec:list}</span></span>
+<span id="cb59-10"><a href="#cb59-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-11"><a href="#cb59-11" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span><span class="in">`purrr`</span>包中提供了一些系列操作列表的函数：</span>
+<span id="cb59-12"><a href="#cb59-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-13"><a href="#cb59-13" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`pluck()`</span>：同 "[[]]"提取列表中的元素。</span>
+<span id="cb59-14"><a href="#cb59-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-15"><a href="#cb59-15" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`keep()`</span>： 保留满足条件的元素。</span>
+<span id="cb59-16"><a href="#cb59-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-17"><a href="#cb59-17" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`discard()`</span>： 删除满足条件的元素。</span>
+<span id="cb59-18"><a href="#cb59-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-19"><a href="#cb59-19" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`compact()`</span>： 删除列表中的空元素。</span>
+<span id="cb59-20"><a href="#cb59-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-21"><a href="#cb59-21" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`append()`</span>：在列表末尾增加元素。</span>
+<span id="cb59-22"><a href="#cb59-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-23"><a href="#cb59-23" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`flatten()`</span>： 摊平列表（只摊平一层）。</span>
+<span id="cb59-24"><a href="#cb59-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-27"><a href="#cb59-27" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb59-28"><a href="#cb59-28" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb59-29"><a href="#cb59-29" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">A =</span> <span class="dv">1</span>, <span class="at">B =</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>), <span class="at">C =</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>))</span>
+<span id="cb59-30"><a href="#cb59-30" aria-hidden="true" tabindex="-1"></a><span class="fu">pluck</span>(a<span class="sc">$</span>A)</span>
+<span id="cb59-31"><a href="#cb59-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-32"><a href="#cb59-32" aria-hidden="true" tabindex="-1"></a><span class="fu">flatten</span>(a)</span>
+<span id="cb59-33"><a href="#cb59-33" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb59-34"><a href="#cb59-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-35"><a href="#cb59-35" aria-hidden="true" tabindex="-1"></a><span class="fu">## 因子 {#sec:factor}</span></span>
+<span id="cb59-36"><a href="#cb59-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-37"><a href="#cb59-37" aria-hidden="true" tabindex="-1"></a>R 提供了因子这一数据结构（容器），专门用来存放名义型和有序型的分类变量。因子本质上是一个带有水平（level）属性的整数向量，其中 "水平" 是指事前确定可能取值的有限集合。例如，性别有两个水平：男、女。</span>
+<span id="cb59-38"><a href="#cb59-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-39"><a href="#cb59-39" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">forcats包</span><span class="co">](https://forcats.tidyverse.org/)</span>是处理因子的强大工具。</span>
+<span id="cb59-40"><a href="#cb59-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-41"><a href="#cb59-41" aria-hidden="true" tabindex="-1"></a><span class="fu">## 字符串 {#sec:str}</span></span>
+<span id="cb59-42"><a href="#cb59-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-43"><a href="#cb59-43" aria-hidden="true" tabindex="-1"></a>字符串是用双引号或单引号括起来的若干字符1，字符串构成的向量，称为字符向量。数据清洗、可视化等操作都会用到字符串处理。</span>
+<span id="cb59-44"><a href="#cb59-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-45"><a href="#cb59-45" aria-hidden="true" tabindex="-1"></a>tidyverse 系列中的 <span class="co">[</span><span class="ot">stringr包</span><span class="co">](https://stringr.tidyverse.org/)</span> 包提供了一系列接口一致的、简单易用的字符串操作函数，足以代替 R 自带字符串函数2。</span>
+<span id="cb59-46"><a href="#cb59-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-47"><a href="#cb59-47" aria-hidden="true" tabindex="-1"></a>两点说明：</span>
+<span id="cb59-48"><a href="#cb59-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-49"><a href="#cb59-49" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>查找匹配的各个函数，只是查找第一个匹配，要想查找所有匹配，各个函 数都有后缀 <span class="sc">\_</span>all 版本；</span>
+<span id="cb59-50"><a href="#cb59-50" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>各个函数中的参数 pattern 都支持用正则表达式。</span>
+<span id="cb59-51"><a href="#cb59-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-52"><a href="#cb59-52" aria-hidden="true" tabindex="-1"></a><span class="fu">## 日期时间 {#sec:date}</span></span>
+<span id="cb59-53"><a href="#cb59-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-54"><a href="#cb59-54" aria-hidden="true" tabindex="-1"></a>日期时间通常以字符串的形式传入R中，然后转化为以数值形式储存的日期时间变量。</span>
+<span id="cb59-55"><a href="#cb59-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-56"><a href="#cb59-56" aria-hidden="true" tabindex="-1"></a>R的内部日期是以1970年1月1日<span class="ot">[^data-structrue-1]</span>至今的天数来储存，内部时间则是以1970年1月1日至今的秒数来储存的。</span>
+<span id="cb59-57"><a href="#cb59-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-58"><a href="#cb59-58" aria-hidden="true" tabindex="-1"></a><span class="ot">[^data-structrue-1]: </span>可以参考<span class="co">[</span><span class="ot">这篇文章</span><span class="co">](https://zhuanlan.zhihu.com/p/29748774)</span>了解有趣最初时间点设置。</span>
+<span id="cb59-59"><a href="#cb59-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-60"><a href="#cb59-60" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">lubridata包</span><span class="co">](https://lubridate.tidyverse.org/)</span>提供了一系列更方便的函数用来生成、管理日期。</span>
+<span id="cb59-61"><a href="#cb59-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-62"><a href="#cb59-62" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb59-63"><a href="#cb59-63" aria-hidden="true" tabindex="-1"></a>不要直接按字符串处理日期时间，应该先转换为日期对象后在处理。</span>
+<span id="cb59-64"><a href="#cb59-64" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb59-65"><a href="#cb59-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-66"><a href="#cb59-66" aria-hidden="true" tabindex="-1"></a><span class="fu">### 识别日期时间</span></span>
+<span id="cb59-67"><a href="#cb59-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-68"><a href="#cb59-68" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>识别当前时间</span>
+<span id="cb59-69"><a href="#cb59-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-72"><a href="#cb59-72" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb59-73"><a href="#cb59-73" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb59-74"><a href="#cb59-74" aria-hidden="true" tabindex="-1"></a><span class="fu">today</span>()</span>
+<span id="cb59-75"><a href="#cb59-75" aria-hidden="true" tabindex="-1"></a><span class="fu">now</span>()</span>
+<span id="cb59-76"><a href="#cb59-76" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb59-77"><a href="#cb59-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-78"><a href="#cb59-78" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>时间日期转换</span>
+<span id="cb59-79"><a href="#cb59-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-82"><a href="#cb59-82" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb59-83"><a href="#cb59-83" aria-hidden="true" tabindex="-1"></a><span class="co"># 将日期型转换为时间型</span></span>
+<span id="cb59-84"><a href="#cb59-84" aria-hidden="true" tabindex="-1"></a><span class="fu">as_datetime</span>(<span class="fu">today</span>())</span>
+<span id="cb59-85"><a href="#cb59-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-86"><a href="#cb59-86" aria-hidden="true" tabindex="-1"></a><span class="co"># 将时间型转换为日期型</span></span>
+<span id="cb59-87"><a href="#cb59-87" aria-hidden="true" tabindex="-1"></a><span class="fu">as_date</span>(<span class="fu">now</span>())</span>
+<span id="cb59-88"><a href="#cb59-88" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb59-89"><a href="#cb59-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-90"><a href="#cb59-90" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb59-91"><a href="#cb59-91" aria-hidden="true" tabindex="-1"></a>可根据需要使用 ymd_h/myd_hm/dmy_hms等任意组合识别日期时间值，使用参数tz可以指定时区。</span>
+<span id="cb59-92"><a href="#cb59-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-95"><a href="#cb59-95" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb59-96"><a href="#cb59-96" aria-hidden="true" tabindex="-1"></a><span class="fu">ymd</span>(<span class="st">"20220301"</span>)</span>
+<span id="cb59-97"><a href="#cb59-97" aria-hidden="true" tabindex="-1"></a><span class="fu">ymd_hms</span>(<span class="st">"20220301-131300"</span>)</span>
+<span id="cb59-98"><a href="#cb59-98" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb59-99"><a href="#cb59-99" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb59-100"><a href="#cb59-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-101"><a href="#cb59-101" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>创建时间日期</span>
+<span id="cb59-102"><a href="#cb59-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-105"><a href="#cb59-105" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb59-106"><a href="#cb59-106" aria-hidden="true" tabindex="-1"></a><span class="fu">make_date</span>(<span class="dv">2020</span>, <span class="dv">8</span>, <span class="dv">27</span>)</span>
+<span id="cb59-107"><a href="#cb59-107" aria-hidden="true" tabindex="-1"></a><span class="fu">make_datetime</span>(<span class="dv">2020</span>, <span class="dv">8</span>, <span class="dv">27</span>, <span class="dv">21</span>, <span class="dv">27</span>, <span class="dv">15</span>)</span>
+<span id="cb59-108"><a href="#cb59-108" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb59-109"><a href="#cb59-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-110"><a href="#cb59-110" aria-hidden="true" tabindex="-1"></a><span class="fu">### 格式化输出日期时间</span></span>
+<span id="cb59-111"><a href="#cb59-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-112"><a href="#cb59-112" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span><span class="in">`format()`</span>函数</span>
+<span id="cb59-113"><a href="#cb59-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-116"><a href="#cb59-116" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb59-117"><a href="#cb59-117" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">make_date</span>(<span class="dv">2022</span>, <span class="dv">4</span>, <span class="dv">22</span>)</span>
+<span id="cb59-118"><a href="#cb59-118" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span>(d, <span class="st">"%Y/%m/%d"</span>)</span>
+<span id="cb59-119"><a href="#cb59-119" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb59-120"><a href="#cb59-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-121"><a href="#cb59-121" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span><span class="in">`stamp()`</span>函数，按给定模版的格式输出</span>
+<span id="cb59-122"><a href="#cb59-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-125"><a href="#cb59-125" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb59-126"><a href="#cb59-126" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">make_datetime</span>(<span class="dv">2022</span>, <span class="dv">4</span>, <span class="dv">22</span>, <span class="dv">17</span>, <span class="dv">34</span>, <span class="dv">15</span>)</span>
+<span id="cb59-127"><a href="#cb59-127" aria-hidden="true" tabindex="-1"></a>fmt <span class="ot">&lt;-</span> <span class="fu">stamp</span>(<span class="st">"Created on Sunday, jan 1, 1999 3:34 pm"</span>) <span class="co"># 模版，自动匹配时间组件</span></span>
+<span id="cb59-128"><a href="#cb59-128" aria-hidden="true" tabindex="-1"></a><span class="fu">fmt</span>(t)</span>
+<span id="cb59-129"><a href="#cb59-129" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb59-130"><a href="#cb59-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-131"><a href="#cb59-131" aria-hidden="true" tabindex="-1"></a><span class="fu">### 提取日期时间数据的组建</span></span>
+<span id="cb59-132"><a href="#cb59-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-133"><a href="#cb59-133" aria-hidden="true" tabindex="-1"></a><span class="in">```{r date-time, fig.cap = "时间组件、描述、示例", echo = FALSE}</span></span>
+<span id="cb59-134"><a href="#cb59-134" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb59-135"><a href="#cb59-135" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"images/datetime.jpg"</span>, <span class="at">dpi =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb59-136"><a href="#cb59-136" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb59-137"><a href="#cb59-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-140"><a href="#cb59-140" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb59-141"><a href="#cb59-141" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">ymd_hms</span>(<span class="st">"2022-04-22 17:41:45"</span>)</span>
+<span id="cb59-142"><a href="#cb59-142" aria-hidden="true" tabindex="-1"></a><span class="co"># 提取年份，类似的还有month()、day()、hour()、minute()、second()</span></span>
+<span id="cb59-143"><a href="#cb59-143" aria-hidden="true" tabindex="-1"></a><span class="fu">year</span>(t)</span>
+<span id="cb59-144"><a href="#cb59-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-145"><a href="#cb59-145" aria-hidden="true" tabindex="-1"></a><span class="co"># 提取季度</span></span>
+<span id="cb59-146"><a href="#cb59-146" aria-hidden="true" tabindex="-1"></a><span class="fu">quarter</span>(t)</span>
+<span id="cb59-147"><a href="#cb59-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-148"><a href="#cb59-148" aria-hidden="true" tabindex="-1"></a><span class="co"># 计算时间是当年的第几天</span></span>
+<span id="cb59-149"><a href="#cb59-149" aria-hidden="true" tabindex="-1"></a><span class="fu">yday</span>(t)</span>
+<span id="cb59-150"><a href="#cb59-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-151"><a href="#cb59-151" aria-hidden="true" tabindex="-1"></a><span class="co"># 关于星期</span></span>
+<span id="cb59-152"><a href="#cb59-152" aria-hidden="true" tabindex="-1"></a><span class="fu">weekdays</span>(t)</span>
+<span id="cb59-153"><a href="#cb59-153" aria-hidden="true" tabindex="-1"></a><span class="fu">wday</span>(t)  <span class="co"># 日期是本周的第几天，注意默认周日为第1天</span></span>
+<span id="cb59-154"><a href="#cb59-154" aria-hidden="true" tabindex="-1"></a><span class="fu">wday</span>(t, <span class="at">label =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb59-155"><a href="#cb59-155" aria-hidden="true" tabindex="-1"></a><span class="fu">week</span>(t)  <span class="co"># 本周是当年的第几周</span></span>
+<span id="cb59-156"><a href="#cb59-156" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb59-157"><a href="#cb59-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-158"><a href="#cb59-158" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb59-159"><a href="#cb59-159" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>使用<span class="sc">\*\*\_</span>tz()函数修改时区：</span>
+<span id="cb59-160"><a href="#cb59-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-161"><a href="#cb59-161" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`tz()`</span>显示当前时区</span>
+<span id="cb59-162"><a href="#cb59-162" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`with_tz()`</span>将时间数据转换为另一个时区的同一时间</span>
+<span id="cb59-163"><a href="#cb59-163" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`force_tz()`</span>将时间数据的时区强制转换为另一个时区</span>
+<span id="cb59-164"><a href="#cb59-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-167"><a href="#cb59-167" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb59-168"><a href="#cb59-168" aria-hidden="true" tabindex="-1"></a><span class="fu">tz</span>(t)</span>
+<span id="cb59-169"><a href="#cb59-169" aria-hidden="true" tabindex="-1"></a><span class="fu">with_tz</span>(t, <span class="at">tz =</span> <span class="st">"America/New_York"</span>)</span>
+<span id="cb59-170"><a href="#cb59-170" aria-hidden="true" tabindex="-1"></a><span class="fu">force_tz</span>(t, <span class="at">tz =</span> <span class="st">"America/New_York"</span>)</span>
+<span id="cb59-171"><a href="#cb59-171" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb59-172"><a href="#cb59-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-173"><a href="#cb59-173" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>模糊提取到不同的时间单位，以下函数均需设定取整单位，默认为second</span>
+<span id="cb59-174"><a href="#cb59-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-175"><a href="#cb59-175" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>使用<span class="in">`round_date()`</span>四舍五入时间</span>
+<span id="cb59-176"><a href="#cb59-176" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>使用<span class="in">`floor_date()`</span>和<span class="in">`ceiling_date()`</span>向上或向下取整时间</span>
+<span id="cb59-177"><a href="#cb59-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-180"><a href="#cb59-180" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb59-181"><a href="#cb59-181" aria-hidden="true" tabindex="-1"></a><span class="fu">round_date</span>(t, <span class="at">unit =</span> <span class="st">"hour"</span>)  <span class="co"># 按小时四舍五入取整</span></span>
+<span id="cb59-182"><a href="#cb59-182" aria-hidden="true" tabindex="-1"></a><span class="fu">floor_date</span>(t, <span class="at">unit =</span> <span class="st">"hour"</span>)</span>
+<span id="cb59-183"><a href="#cb59-183" aria-hidden="true" tabindex="-1"></a><span class="fu">ceiling_date</span>(t, <span class="at">unit =</span> <span class="st">"hour"</span>)</span>
+<span id="cb59-184"><a href="#cb59-184" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb59-185"><a href="#cb59-185" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb59-186"><a href="#cb59-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-187"><a href="#cb59-187" aria-hidden="true" tabindex="-1"></a><span class="fu">### 时间段数据</span></span>
+<span id="cb59-188"><a href="#cb59-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-189"><a href="#cb59-189" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span><span class="in">`interval()`</span>函数计算两个时间点的时间间隔，返回时间段数据。通常需要对时间段进行进一步识别。</span>
+<span id="cb59-190"><a href="#cb59-190" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-193"><a href="#cb59-193" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb59-194"><a href="#cb59-194" aria-hidden="true" tabindex="-1"></a>begin <span class="ot">&lt;-</span> <span class="fu">ymd_hm</span>(<span class="st">"2019-08-10, 14:00"</span>)</span>
+<span id="cb59-195"><a href="#cb59-195" aria-hidden="true" tabindex="-1"></a>end <span class="ot">&lt;-</span> <span class="fu">ymd_hm</span>(<span class="st">"2022-4-26, 9:10"</span>)</span>
+<span id="cb59-196"><a href="#cb59-196" aria-hidden="true" tabindex="-1"></a>gap <span class="ot">&lt;-</span> <span class="fu">interval</span>(begin, end)</span>
+<span id="cb59-197"><a href="#cb59-197" aria-hidden="true" tabindex="-1"></a>gap  <span class="co"># 返回时间段数据</span></span>
+<span id="cb59-198"><a href="#cb59-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-199"><a href="#cb59-199" aria-hidden="true" tabindex="-1"></a><span class="co"># 计算时间段有几天，同理可以计算有几个月、几分钟等</span></span>
+<span id="cb59-200"><a href="#cb59-200" aria-hidden="true" tabindex="-1"></a><span class="fu">time_length</span>(gap, <span class="st">"day"</span>)</span>
+<span id="cb59-201"><a href="#cb59-201" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb59-202"><a href="#cb59-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-203"><a href="#cb59-203" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span><span class="in">`duration()`</span>函数和<span class="in">`period()`</span>函数计算数值+时间单位存储时段的长度。 <span class="in">`period()`</span>函数考虑到了闰年和闰秒，所以在国内更推荐使用。</span>
+<span id="cb59-204"><a href="#cb59-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-207"><a href="#cb59-207" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb59-208"><a href="#cb59-208" aria-hidden="true" tabindex="-1"></a><span class="fu">period</span>(<span class="dv">100</span>, <span class="at">units =</span> <span class="st">"seconds"</span>)  <span class="co"># 100天有多少秒、共几个星期</span></span>
+<span id="cb59-209"><a href="#cb59-209" aria-hidden="true" tabindex="-1"></a><span class="fu">period</span>(<span class="fu">c</span>(<span class="dv">90</span>, <span class="dv">5</span>), <span class="fu">c</span>(<span class="st">"second"</span>, <span class="st">"minute"</span>))</span>
+<span id="cb59-210"><a href="#cb59-210" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb59-211"><a href="#cb59-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-212"><a href="#cb59-212" aria-hidden="true" tabindex="-1"></a>(关于<span class="in">`period()`</span>和<span class="in">`durarion()`</span>两个函数及其附属函数的更多用法)<span class="sc">\[</span>.todo<span class="sc">\]</span></span>
+<span id="cb59-213"><a href="#cb59-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-214"><a href="#cb59-214" aria-hidden="true" tabindex="-1"></a>(日期/时间的计算)<span class="sc">\[</span>.todo<span class="sc">\]</span></span>
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+</body></html>
